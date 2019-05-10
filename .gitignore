@@ -10,5 +10,6 @@ xcuserdata
 node_modules/
 packages/grn-cli/commands/init/template/ios
 packages/grn-cli/commands/init/template/android
+packages/grn-cli/.git
 RNTester/js/node_modules
 RNTester/js/publish
