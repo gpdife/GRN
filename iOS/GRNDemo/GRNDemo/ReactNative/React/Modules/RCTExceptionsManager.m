@@ -37,13 +37,13 @@ RCT_EXPORT_METHOD(reportSoftException:(NSString *)message
     [_delegate handleSoftJSExceptionWithMessage:message stack:stack exceptionId:exceptionId];
   }
   
-#ifdef CRN_OPT
+#ifdef GRN_OPT
   
   NSString *description = [@"Report-Soft-Exception: " stringByAppendingString:message];
   NSDictionary *errorInfo = @{ NSLocalizedDescriptionKey: description, RCTJSStackTraceKey: stack };
   NSError *errord = [NSError errorWithDomain:RCTErrorDomain code:0 userInfo:errorInfo];
   [errord setErrorTag:@"error_from_report_soft"];
-  [errord setErrorBridge:[RCTBridge realCRNBridge:_bridge]];
+  [errord setErrorBridge:[RCTBridge realGRNBridge:_bridge]];
   RCTFatal(errord);
   
 #endif
@@ -67,10 +67,10 @@ RCT_EXPORT_METHOD(reportFatalException:(NSString *)message
   } else {
     NSString *description = [@"Unhandled JS Exception: " stringByAppendingString:message];
     NSDictionary *errorInfo = @{ NSLocalizedDescriptionKey: description, RCTJSStackTraceKey: stack };
-#ifdef CRN_OPT
+#ifdef GRN_OPT
     NSError *errord = [NSError errorWithDomain:RCTErrorDomain code:0 userInfo:errorInfo];
     [errord setErrorTag:@"error_from_report_fatal"];
-    [errord setErrorBridge:[RCTBridge realCRNBridge:_bridge]];
+    [errord setErrorBridge:[RCTBridge realGRNBridge:_bridge]];
     RCTFatal(errord);
 #else
     RCTFatal([NSError errorWithDomain:RCTErrorDomain code:0 userInfo:errorInfo]);

@@ -266,21 +266,21 @@ public class ReactRootView extends SizeMonitoringFrameLayout
         long showPeriod = System.currentTimeMillis() - mStartTime;
         boolean isSucA = mStartTime > 0 && showPeriod >= 0;
         boolean isSucB = mReactInstanceManager != null
-                && mReactInstanceManager.getCRNInstanceInfo() != null
-                && mReactInstanceManager.getCRNInstanceInfo().loadReportListener != null;
+                && mReactInstanceManager.getGRNInstanceInfo() != null
+                && mReactInstanceManager.getGRNInstanceInfo().loadReportListener != null;
 
         if (mAllowStatistic) {
-          if (mReactInstanceManager != null && mReactInstanceManager.getCRNInstanceInfo() != null) {
-            mReactInstanceManager.getCRNInstanceInfo().isRendered = true;
+          if (mReactInstanceManager != null && mReactInstanceManager.getGRNInstanceInfo() != null) {
+            mReactInstanceManager.getGRNInstanceInfo().isRendered = true;
           }
           if (mDisplayCallback != null) {
             mDisplayCallback.reactRootViewPageDisplay();
           }
           if (isSucA && isSucB) {
-            mReactInstanceManager.getCRNInstanceInfo()
+            mReactInstanceManager.getGRNInstanceInfo()
                     .loadReportListener.onLoadComponentTime(mReactInstanceManager, showPeriod);
           } else {
-            FLog.e("o_crn_statistic_error",
+            FLog.e("o_grn_statistic_error",
                     "isSucA:" + isSucA + "|isSucB:" + isSucB + "|period:" + showPeriod);
           }
           mAllowStatistic = false;

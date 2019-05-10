@@ -113,7 +113,7 @@ void ProxyExecutor::invokeCallback(const double callbackId, const folly::dynamic
 }
 
 // GRN BEGIN
-void ProxyExecutor::setCRNModuleIdConfig(const folly::dynamic &config) {
+void ProxyExecutor::setGRNModuleIdConfig(const folly::dynamic &config) {
   //nothing in here
 }
 // GRN END

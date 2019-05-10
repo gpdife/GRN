@@ -33,20 +33,20 @@ import com.facebook.react.uimanager.DisplayMetricsHolder;
 import java.io.File;
 import java.util.ArrayList;
 
-import ctrip.grn.instance.CRNInstanceInfo;
-import ctrip.grn.instance.CRNInstanceState;
-import ctrip.grn.instance.CRNLoadReportListener;
-import ctrip.grn.instance.CRNPageInfo;
-import ctrip.grn.instance.CRNReactContextLoadedListener;
+import ctrip.grn.instance.GRNInstanceInfo;
+import ctrip.grn.instance.GRNInstanceState;
+import ctrip.grn.instance.GRNLoadReportListener;
+import ctrip.grn.instance.GRNPageInfo;
+import ctrip.grn.instance.GRNReactContextLoadedListener;
 import ctrip.grn.utils.ReactNativeJson;
-import ctrip.wireless.android.grn.extend.CRNProvider;
+import ctrip.wireless.android.grn.extend.GRNProvider;
 import ctrip.wireless.android.grn.ContextHolder;
 import ctrip.wireless.android.grn.utils.FileUtil;
 import ctrip.wireless.android.grn.utils.LogUtil;
 import ctrip.wireless.android.grn.utils.StringUtil;
 import ctrip.wireless.android.grn.utils.ThreadUtils;
 
-public class CRNInstanceManager {
+public class GRNInstanceManager {
 
 
     /**
@@ -67,12 +67,12 @@ public class CRNInstanceManager {
     private static final String PREFS_DEBUG_SERVER_HOST_KEY = "debug_http_host";
     private final static String CONTAINER_VIEW_RELEASE_MESSAGE = "containerViewDidReleased";
 
-    private static ArrayList<String> mInUsedCRNProduct = new ArrayList<>();
+    private static ArrayList<String> mInUsedGRNProduct = new ArrayList<>();
 
     /**
      * 所有Instance性能监控回调
      */
-    private static CRNLoadReportListener mPerformanReportListener = new CRNLoadReportListener() {
+    private static GRNLoadReportListener mPerformanReportListener = new GRNLoadReportListener() {
         @Override
         public void onLoadComponentTime(ReactInstanceManager mng, long renderTime) {
             // TODO 业务开始渲染回调
@@ -83,7 +83,7 @@ public class CRNInstanceManager {
      * 预创建ReactInstanceManager
      */
     public static void prepareReactInstanceIfNeed() {
-        int readyCount = CRNInstanceCacheManager.getCacheCommonReactInstanceCount();
+        int readyCount = GRNInstanceCacheManager.getCacheCommonReactInstanceCount();
         if (readyCount >= 2) {
             LogUtil.e("GRN Instance ready count ="+readyCount);
             return;
@@ -92,12 +92,12 @@ public class CRNInstanceManager {
         ThreadUtils.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                CRNInstanceInfo crnInstanceInfo = new CRNInstanceInfo();
-                crnInstanceInfo.businessURL = CRNURL.COMMON_BUNDLE_PATH;
-                crnInstanceInfo.instanceState = CRNInstanceState.Loading;
-                crnInstanceInfo.errorReportListener = CRNErrorHandler.getErrorReportListener();
-                crnInstanceInfo.loadReportListener = mPerformanReportListener;
-                createBundleInstance(new CRNURL(CRNURL.COMMON_BUNDLE_PATH), null, crnInstanceInfo, null);
+                GRNInstanceInfo grnInstanceInfo = new GRNInstanceInfo();
+                grnInstanceInfo.businessURL = GRNURL.COMMON_BUNDLE_PATH;
+                grnInstanceInfo.instanceState = GRNInstanceState.Loading;
+                grnInstanceInfo.errorReportListener = GRNErrorHandler.getErrorReportListener();
+                grnInstanceInfo.loadReportListener = mPerformanReportListener;
+                createBundleInstance(new GRNURL(GRNURL.COMMON_BUNDLE_PATH), null, grnInstanceInfo, null);
             }
         }, 1000);
     }
@@ -106,13 +106,13 @@ public class CRNInstanceManager {
      * 创建OnlineBundle、CacheUnbundle、AllUnbundle统一入口
      * @param rnURL rnURL
      * @param bundleScript bundleScript
-     * @param crnInstanceInfo crnInstanceInfo
+     * @param grnInstanceInfo grnInstanceInfo
      * @param callBack callBack
      * @return ReactInstanceManagerpre
      */
-    private static ReactInstanceManager createBundleInstance(final CRNURL rnURL,
+    private static ReactInstanceManager createBundleInstance(final GRNURL rnURL,
                                                              String bundleScript,
-                                                             CRNInstanceInfo crnInstanceInfo,
+                                                             GRNInstanceInfo grnInstanceInfo,
                                                              final ReactInstanceLoadedCallBack callBack) {
 
         if (rnURL == null || TextUtils.isEmpty(rnURL.getUrl())) {
@@ -121,17 +121,17 @@ public class CRNInstanceManager {
             return null;
         }
 
-        final boolean isOnlineBundle = rnURL.getRnSourceType() == CRNURL.SourceType.Online ;
+        final boolean isOnlineBundle = rnURL.getRnSourceType() == GRNURL.SourceType.Online ;
         final boolean isNormalBundle = !isOnlineBundle && !TextUtils.isEmpty(bundleScript);
-        final boolean isCommonBundle = CRNURL.COMMON_BUNDLE_PATH.equalsIgnoreCase(rnURL.getUrl());
+        final boolean isCommonBundle = GRNURL.COMMON_BUNDLE_PATH.equalsIgnoreCase(rnURL.getUrl());
         final boolean isUnbundleBizURL =  rnURL.isUnbundleURL();
-        final boolean isCRNUnbundle = isCommonBundle || isUnbundleBizURL;
+        final boolean isGRNUnbundle = isCommonBundle || isUnbundleBizURL;
 
         ReactInstanceManagerBuilder builder = ReactInstanceManager.builder();
         builder.setApplication(ContextHolder.application);
         builder.setInitialLifecycleState(LifecycleState.BEFORE_CREATE);
-        builder.setCRNInstanceInfo(crnInstanceInfo);
-        for (ReactPackage reactPackage: CRNProvider.provideReactPackages()) {
+        builder.setGRNInstanceInfo(grnInstanceInfo);
+        for (ReactPackage reactPackage: GRNProvider.provideReactPackages()) {
             builder.addPackage(reactPackage);
         }
 
@@ -147,19 +147,19 @@ public class CRNInstanceManager {
         else if (isNormalBundle) {
             builder.setUseDeveloperSupport(false);
             builder.setBundleScript(bundleScript, rnURL.getUrl(), false);
-            builder.setNativeModuleCallExceptionHandler(CRNErrorHandler.getNativeExceptionHandler());
+            builder.setNativeModuleCallExceptionHandler(GRNErrorHandler.getNativeExceptionHandler());
             PreferenceManager.getDefaultSharedPreferences(ContextHolder.context)
                     .edit().remove(PREFS_DEBUG_SERVER_HOST_KEY).apply();
         }
-        else if (isCRNUnbundle){
+        else if (isGRNUnbundle){
             builder.setUseDeveloperSupport(false);
-            builder.setJSBundleFile(CRNURL.COMMON_BUNDLE_PATH);
-            builder.setNativeModuleCallExceptionHandler(CRNErrorHandler.getNativeExceptionHandler());
+            builder.setJSBundleFile(GRNURL.COMMON_BUNDLE_PATH);
+            builder.setNativeModuleCallExceptionHandler(GRNErrorHandler.getNativeExceptionHandler());
             PreferenceManager.getDefaultSharedPreferences(ContextHolder.context)
                     .edit().remove(PREFS_DEBUG_SERVER_HOST_KEY).apply();
         }
         final ReactInstanceManager instanceManager = builder.build();
-        instanceManager.setReactContextLoadedListener(new CRNReactContextLoadedListener() {
+        instanceManager.setReactContextLoadedListener(new GRNReactContextLoadedListener() {
             boolean isInstanceLoaded = false;
 
             @Override
@@ -171,30 +171,30 @@ public class CRNInstanceManager {
                     isInstanceLoaded = true;
                 }
                 int resultStatus = 0;
-                if (reactInstance == null || reactInstance.getCRNInstanceInfo() == null || reactInstance.getCatalystInstance() == null)  {
+                if (reactInstance == null || reactInstance.getGRNInstanceInfo() == null || reactInstance.getCatalystInstance() == null)  {
                     resultStatus = -301;
                 }
-                else if (reactInstance.getCRNInstanceInfo().instanceState == CRNInstanceState.Error) {
+                else if (reactInstance.getGRNInstanceInfo().instanceState == GRNInstanceState.Error) {
                     resultStatus = -505;
                 }
                 else {
-                    CRNInstanceInfo instanceInfo = reactInstance.getCRNInstanceInfo();
+                    GRNInstanceInfo instanceInfo = reactInstance.getGRNInstanceInfo();
                     if (isOnlineBundle || isNormalBundle) {
-                        instanceInfo.instanceState = CRNInstanceState.Dirty;
+                        instanceInfo.instanceState = GRNInstanceState.Dirty;
                         reactInstance.getCatalystInstance().setSourceURL(rnURL.getUrl());
-                    } else if (isCRNUnbundle) {
+                    } else if (isGRNUnbundle) {
                         if (isUnbundleBizURL) {
-                            instanceInfo.instanceState = CRNInstanceState.Ready;
-                            CRNUnbundlePackage unbundlePackage = new CRNUnbundlePackage(rnURL);
+                            instanceInfo.instanceState = GRNInstanceState.Ready;
+                            GRNUnbundlePackage unbundlePackage = new GRNUnbundlePackage(rnURL);
                             if (unbundlePackage.getModuleConfigHashMap() == null || unbundlePackage.getModuleConfigHashMap().isEmpty()) {
                                 //极少，无此错误
                                 resultStatus = -305;
                             } else {
-                                reactInstance.getCatalystInstance().setCRNModuleIdConfig(unbundlePackage.getModuleConfigHashMap());
+                                reactInstance.getCatalystInstance().setGRNModuleIdConfig(unbundlePackage.getModuleConfigHashMap());
                                 resultStatus = emitReRenderMessage(reactInstance, unbundlePackage.getMainModuleId(), rnURL.getUrl(), false);
                             }
                         } else {
-                            instanceInfo.instanceState = CRNInstanceState.Ready;
+                            instanceInfo.instanceState = GRNInstanceState.Ready;
                             resultStatus = -306;
                         }
 
@@ -216,18 +216,18 @@ public class CRNInstanceManager {
      * @param rnURL rnURL
      * @param callBack callBack
      */
-    private static ReactInstanceManager createOnlineReactInstance(CRNURL rnURL, ReactInstanceLoadedCallBack callBack) {
+    private static ReactInstanceManager createOnlineReactInstance(GRNURL rnURL, ReactInstanceLoadedCallBack callBack) {
         File file = new File(ContextHolder.context.getFilesDir(), "ReactNativeDevBundle.js");
         if (file.exists()) {
             file.delete();
         }
-        CRNInstanceInfo crnInstanceInfo = new CRNInstanceInfo();
-        crnInstanceInfo.businessURL = rnURL.getUrl();
-        crnInstanceInfo.instanceState = CRNInstanceState.Loading;
-        crnInstanceInfo.originalInstanceStatus = CRNInstanceState.Loading;
-        crnInstanceInfo.errorReportListener = CRNErrorHandler.getErrorReportListener();
-        crnInstanceInfo.loadReportListener = mPerformanReportListener;
-        return createBundleInstance(rnURL, "{}", crnInstanceInfo, callBack);
+        GRNInstanceInfo grnInstanceInfo = new GRNInstanceInfo();
+        grnInstanceInfo.businessURL = rnURL.getUrl();
+        grnInstanceInfo.instanceState = GRNInstanceState.Loading;
+        grnInstanceInfo.originalInstanceStatus = GRNInstanceState.Loading;
+        grnInstanceInfo.errorReportListener = GRNErrorHandler.getErrorReportListener();
+        grnInstanceInfo.loadReportListener = mPerformanReportListener;
+        return createBundleInstance(rnURL, "{}", grnInstanceInfo, callBack);
     }
 
 
@@ -236,55 +236,55 @@ public class CRNInstanceManager {
      * @param rnURL rnURL
      * @param callBack callBack
      */
-    public static ReactInstanceManager getReactInstance(final CRNURL rnURL, CRNPageInfo crnPageInfo, final ReactInstanceLoadedCallBack callBack) {
+    public static ReactInstanceManager getReactInstance(final GRNURL rnURL, GRNPageInfo grnPageInfo, final ReactInstanceLoadedCallBack callBack) {
         ReactInstanceManager reactInstance = null;
         int errorStatus = 0;
         boolean needCallbackRightNow = false;
-        if (rnURL == null || !CRNURL.isCRNURL(rnURL.getUrl())) {
+        if (rnURL == null || !GRNURL.isGRNURL(rnURL.getUrl())) {
             if (rnURL == null) {
                 errorStatus = -101;
-            } else if (!CRNURL.isCRNURL(rnURL.getUrl())) {
+            } else if (!GRNURL.isGRNURL(rnURL.getUrl())) {
                 errorStatus = -102;
             }
             needCallbackRightNow = true;
-        } else if (rnURL.getRnSourceType() == CRNURL.SourceType.Online) {
+        } else if (rnURL.getRnSourceType() == GRNURL.SourceType.Online) {
             reactInstance = createOnlineReactInstance(rnURL, callBack);
         } else {
-            String crnURLStr = rnURL.getUrl();
+            String grnURLStr = rnURL.getUrl();
             if(rnURL.isUnbundleURL()) { //unbundle格式，处理cache策略
                 ReactInstanceManager readyCachedInstance = null;
                 ReactInstanceManager dirtyCachedInstance = null;
 
-                ReactInstanceManager readyToUseInstance = CRNInstanceCacheManager.getInstanceIfExist(rnURL);
+                ReactInstanceManager readyToUseInstance = GRNInstanceCacheManager.getInstanceIfExist(rnURL);
                 if (readyToUseInstance != null) {
-                    if (readyToUseInstance.getCRNInstanceInfo().instanceState == CRNInstanceState.Dirty) {
+                    if (readyToUseInstance.getGRNInstanceInfo().instanceState == GRNInstanceState.Dirty) {
                         dirtyCachedInstance = readyToUseInstance;
-                    } else if (readyToUseInstance.getCRNInstanceInfo().instanceState == CRNInstanceState.Ready) {
+                    } else if (readyToUseInstance.getGRNInstanceInfo().instanceState == GRNInstanceState.Ready) {
                         readyCachedInstance = readyToUseInstance;
                     }
                 }
 
-                CRNUnbundlePackage unbundlePackage = new CRNUnbundlePackage(rnURL);
+                GRNUnbundlePackage unbundlePackage = new GRNUnbundlePackage(rnURL);
                 if (dirtyCachedInstance != null) {
                     reactInstance = dirtyCachedInstance;
-                    reactInstance.getCRNInstanceInfo().originalInstanceStatus = CRNInstanceState.Dirty;
-                    reactInstance.getCRNInstanceInfo().countTimeoutError = 0;
-                    reactInstance.getCRNInstanceInfo().countJSFatalError = 0;
-                    reactInstance.getCRNInstanceInfo().countLogFatalError = 0;
-                    reactInstance.getCRNInstanceInfo().countNativeFatalError = 0;
+                    reactInstance.getGRNInstanceInfo().originalInstanceStatus = GRNInstanceState.Dirty;
+                    reactInstance.getGRNInstanceInfo().countTimeoutError = 0;
+                    reactInstance.getGRNInstanceInfo().countJSFatalError = 0;
+                    reactInstance.getGRNInstanceInfo().countLogFatalError = 0;
+                    reactInstance.getGRNInstanceInfo().countNativeFatalError = 0;
                     needCallbackRightNow = true;
                 } else if (readyCachedInstance != null) {
                     if (unbundlePackage.getModuleConfigHashMap() == null || unbundlePackage.getModuleConfigHashMap().isEmpty()) {
                         errorStatus = -103;
                     } else {
-                        readyCachedInstance.getCRNInstanceInfo().businessURL = crnURLStr;
-                        readyCachedInstance.getCRNInstanceInfo().isUnbundle = true;
-                        readyCachedInstance.getCRNInstanceInfo().inUseProductName = rnURL.getProductName();
-                        readyCachedInstance.getCRNInstanceInfo().loadReportListener = mPerformanReportListener;
-                        readyCachedInstance.getCRNInstanceInfo().errorReportListener = CRNErrorHandler.getErrorReportListener();
-                        readyCachedInstance.getCatalystInstance().setCRNModuleIdConfig(unbundlePackage.getModuleConfigHashMap());
-                        readyCachedInstance.getCRNInstanceInfo().originalInstanceStatus = CRNInstanceState.Ready;
-                        int emitMsgRet = emitReRenderMessage(readyCachedInstance, unbundlePackage.getMainModuleId(), crnURLStr, true);
+                        readyCachedInstance.getGRNInstanceInfo().businessURL = grnURLStr;
+                        readyCachedInstance.getGRNInstanceInfo().isUnbundle = true;
+                        readyCachedInstance.getGRNInstanceInfo().inUseProductName = rnURL.getProductName();
+                        readyCachedInstance.getGRNInstanceInfo().loadReportListener = mPerformanReportListener;
+                        readyCachedInstance.getGRNInstanceInfo().errorReportListener = GRNErrorHandler.getErrorReportListener();
+                        readyCachedInstance.getCatalystInstance().setGRNModuleIdConfig(unbundlePackage.getModuleConfigHashMap());
+                        readyCachedInstance.getGRNInstanceInfo().originalInstanceStatus = GRNInstanceState.Ready;
+                        int emitMsgRet = emitReRenderMessage(readyCachedInstance, unbundlePackage.getMainModuleId(), grnURLStr, true);
                         if (emitMsgRet == 0) {
                             errorStatus = 0;
                             reactInstance = readyCachedInstance;
@@ -301,14 +301,14 @@ public class CRNInstanceManager {
             }
 
             if (reactInstance == null && errorStatus == 0) {
-                CRNInstanceInfo instanceInfo = new CRNInstanceInfo();
+                GRNInstanceInfo instanceInfo = new GRNInstanceInfo();
                 instanceInfo.isUnbundle = true;
-                instanceInfo.businessURL = crnURLStr;
-                instanceInfo.originalInstanceStatus = CRNInstanceState.Loading;
-                instanceInfo.instanceState = CRNInstanceState.Loading;
+                instanceInfo.businessURL = grnURLStr;
+                instanceInfo.originalInstanceStatus = GRNInstanceState.Loading;
+                instanceInfo.instanceState = GRNInstanceState.Loading;
                 instanceInfo.inUseProductName = rnURL.getProductName();
                 instanceInfo.loadReportListener = mPerformanReportListener;
-                instanceInfo.errorReportListener = CRNErrorHandler.getErrorReportListener();
+                instanceInfo.errorReportListener = GRNErrorHandler.getErrorReportListener();
                 String bundleScript = null;
                 if(!rnURL.isUnbundleURL()) {
                     bundleScript = FileUtil.readFileAsString(new File(rnURL.getAbsoluteFilePath()));
@@ -326,11 +326,11 @@ public class CRNInstanceManager {
                     , Toast.LENGTH_SHORT).show();
         }
 
-        if (reactInstance != null && reactInstance.getCRNInstanceInfo() != null) {
-            reactInstance.getCRNInstanceInfo().countTimeoutError = 0;
-            reactInstance.getCRNInstanceInfo().countJSFatalError = 0;
-            reactInstance.getCRNInstanceInfo().countLogFatalError = 0;
-            reactInstance.getCRNInstanceInfo().countNativeFatalError = 0;
+        if (reactInstance != null && reactInstance.getGRNInstanceInfo() != null) {
+            reactInstance.getGRNInstanceInfo().countTimeoutError = 0;
+            reactInstance.getGRNInstanceInfo().countJSFatalError = 0;
+            reactInstance.getGRNInstanceInfo().countLogFatalError = 0;
+            reactInstance.getGRNInstanceInfo().countNativeFatalError = 0;
         }
 
         if (needCallbackRightNow) {
@@ -347,18 +347,18 @@ public class CRNInstanceManager {
      * @param manager manager
      */
     private static void cacheReactInstance(ReactInstanceManager manager) {
-        CRNInstanceCacheManager.cacheReactInstanceIfNeed(manager);
+        GRNInstanceCacheManager.cacheReactInstanceIfNeed(manager);
     }
 
     /**
      * 离开RN容器页面，减少ReactInstanceManager的引用计数
      * @param  manager manager
      */
-    public static void decreaseReactInstanceRetainCount(ReactInstanceManager manager, CRNURL crnurl) {
-        synchronized (CRNInstanceManager.class) {
-            if (manager != null && manager.getCRNInstanceInfo() != null) {
-                manager.getCRNInstanceInfo().inUseCount -= 1;
-                CRNInstanceCacheManager.performLRUCheck();
+    public static void decreaseReactInstanceRetainCount(ReactInstanceManager manager, GRNURL grnurl) {
+        synchronized (GRNInstanceManager.class) {
+            if (manager != null && manager.getGRNInstanceInfo() != null) {
+                manager.getGRNInstanceInfo().inUseCount -= 1;
+                GRNInstanceCacheManager.performLRUCheck();
             }
         }
     }
@@ -368,9 +368,9 @@ public class CRNInstanceManager {
      * @param manager manager
      */
     public static void increaseReactInstanceRetainCount(ReactInstanceManager manager) {
-        synchronized (CRNInstanceManager.class) {
-            if (manager != null && manager.getCRNInstanceInfo() != null) {
-                manager.getCRNInstanceInfo().inUseCount += 1;
+        synchronized (GRNInstanceManager.class) {
+            if (manager != null && manager.getGRNInstanceInfo() != null) {
+                manager.getGRNInstanceInfo().inUseCount += 1;
             }
         }
     }
@@ -379,8 +379,8 @@ public class CRNInstanceManager {
      * 重置无法使用Dirty状态下的instance为error
      * @param url url
      */
-    public static void invalidateDirtyBridgeForURL(CRNURL url) {
-        CRNInstanceCacheManager.invalidateDirtyBridgeForURL(url);
+    public static void invalidateDirtyBridgeForURL(GRNURL url) {
+        GRNInstanceCacheManager.invalidateDirtyBridgeForURL(url);
     }
 
     /**
@@ -394,7 +394,7 @@ public class CRNInstanceManager {
             mainModuleId = "666666";
         }
 
-        if (mng.getCRNInstanceInfo() == null) {
+        if (mng.getGRNInstanceInfo() == null) {
             status = -104;
         }
 
@@ -407,13 +407,13 @@ public class CRNInstanceManager {
             com.alibaba.fastjson.JSONObject params = new com.alibaba.fastjson.JSONObject();
             params.put("moduleId", mainModuleId);
             params.put("packagePath", businessUrl == null ? "" : businessUrl);
-            params.put("productName", mng.getCRNInstanceInfo().inUseProductName);
+            params.put("productName", mng.getGRNInstanceInfo().inUseProductName);
             if (!emitDeviceEventMessage(mng, REQUIRE_BUSINESS_MODULE_EVENT, ReactNativeJson.convertJsonToMap(params))) {
                 status = -103;
             }
 
         }
-        mng.getCRNInstanceInfo().instanceState = CRNInstanceState.Dirty;
+        mng.getGRNInstanceInfo().instanceState = GRNInstanceState.Dirty;
         return status; //status 不为0，后续invokeError会将mng状态设置为Error
     }
 
@@ -443,11 +443,11 @@ public class CRNInstanceManager {
      * @param instanceManager instanceManager
      */
     public static boolean isReactInstanceReady(ReactInstanceManager instanceManager) {
-        if (instanceManager != null && instanceManager.getCRNInstanceInfo() != null ) {
-            CRNInstanceInfo crnInfo = instanceManager.getCRNInstanceInfo();
-            if (crnInfo.instanceState == CRNInstanceState.Dirty ||
-                    crnInfo.instanceState == CRNInstanceState.Ready) {
-                if (crnInfo.countJSFatalError > 0 || crnInfo.countLogFatalError > 0 || crnInfo.countNativeFatalError > 0 || crnInfo.countTimeoutError > 0) {
+        if (instanceManager != null && instanceManager.getGRNInstanceInfo() != null ) {
+            GRNInstanceInfo grnInfo = instanceManager.getGRNInstanceInfo();
+            if (grnInfo.instanceState == GRNInstanceState.Dirty ||
+                    grnInfo.instanceState == GRNInstanceState.Ready) {
+                if (grnInfo.countJSFatalError > 0 || grnInfo.countLogFatalError > 0 || grnInfo.countNativeFatalError > 0 || grnInfo.countTimeoutError > 0) {
                     return false;
                 }
                 return true;
@@ -457,30 +457,30 @@ public class CRNInstanceManager {
     }
 
     /**
-     * 进入CRNPage
-     * @param crnurl crn业务Url
+     * 进入GRNPage
+     * @param grnurl grn业务Url
      */
-    public static void enterCRNPage(ReactInstanceManager reactInstanceManager, CRNURL crnurl) {
-        if (crnurl != null && crnurl.getProductName() != null) {
-            mInUsedCRNProduct.add(crnurl.getProductName());
+    public static void enterGRNPage(ReactInstanceManager reactInstanceManager, GRNURL grnurl) {
+        if (grnurl != null && grnurl.getProductName() != null) {
+            mInUsedGRNProduct.add(grnurl.getProductName());
         }
-        CRNInstanceManager.increaseReactInstanceRetainCount(reactInstanceManager);
+        GRNInstanceManager.increaseReactInstanceRetainCount(reactInstanceManager);
     }
 
     /**
-     * 离开CRNPage
-     * @param crnurl crn业务Url
+     * 离开GRNPage
+     * @param grnurl grn业务Url
      */
-    public static void exitCRNPage(ReactInstanceManager mReactInstanceManager, CRNURL crnurl) {
-        if (crnurl != null && crnurl.getProductName() != null) {
-            int outPageIndex = mInUsedCRNProduct.lastIndexOf(crnurl.getProductName());
-            if (outPageIndex != -1 && outPageIndex >= 0 && outPageIndex < mInUsedCRNProduct.size() ) {
-                mInUsedCRNProduct.remove(outPageIndex);
+    public static void exitGRNPage(ReactInstanceManager mReactInstanceManager, GRNURL grnurl) {
+        if (grnurl != null && grnurl.getProductName() != null) {
+            int outPageIndex = mInUsedGRNProduct.lastIndexOf(grnurl.getProductName());
+            if (outPageIndex != -1 && outPageIndex >= 0 && outPageIndex < mInUsedGRNProduct.size() ) {
+                mInUsedGRNProduct.remove(outPageIndex);
             }
         }
         if (mReactInstanceManager != null) {
-            CRNInstanceManager.emitDeviceEventMessage(mReactInstanceManager, CONTAINER_VIEW_RELEASE_MESSAGE, null);
-            CRNInstanceManager.decreaseReactInstanceRetainCount(mReactInstanceManager, crnurl);
+            GRNInstanceManager.emitDeviceEventMessage(mReactInstanceManager, CONTAINER_VIEW_RELEASE_MESSAGE, null);
+            GRNInstanceManager.decreaseReactInstanceRetainCount(mReactInstanceManager, grnurl);
         }
     }
 
@@ -488,11 +488,11 @@ public class CRNInstanceManager {
      * 查询当前业务是否有使用的Page
      * @param url url
      */
-    public static boolean hasCRNPage(CRNURL url) {
+    public static boolean hasGRNPage(GRNURL url) {
         if (url == null || TextUtils.isEmpty(url.getProductName())) {
             return false;
         }
-        for (String productName : mInUsedCRNProduct) {
+        for (String productName : mInUsedGRNProduct) {
             if (StringUtil.equalsIgnoreCase(productName, url.getProductName())) {
                 return true;
             }

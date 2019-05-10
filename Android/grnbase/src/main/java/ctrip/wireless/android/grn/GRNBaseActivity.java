@@ -24,49 +24,49 @@ import android.view.View;
 import android.widget.Toast;
 
 import ctrip.wireless.android.grn.business.R;
-import ctrip.wireless.android.grn.core.CRNURL;
+import ctrip.wireless.android.grn.core.GRNURL;
 
 
-public class CRNBaseActivity extends FragmentActivity implements
-        CRNBaseFragment.OnLoadRNErrorListener, CRNBaseFragment.OnReactViewDisplayListener {
+public class GRNBaseActivity extends FragmentActivity implements
+        GRNBaseFragment.OnLoadRNErrorListener, GRNBaseFragment.OnReactViewDisplayListener {
 
     public static final String INTENT_COMPONENT_NAME = "ComponentName";
-    private static final String CRN_FRAGMENT_TAG = "crn_fragment_tag";
+    private static final String GRN_FRAGMENT_TAG = "grn_fragment_tag";
 
-    private CRNBaseFragment mCRNBaseFragment;
-    private CRNURL mCRNURL;
+    private GRNBaseFragment mGRNBaseFragment;
+    private GRNURL mGRNURL;
     private View mLoadingView;
     private boolean displaying = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCRNURL = (CRNURL) getIntent().getSerializableExtra(INTENT_COMPONENT_NAME);
-        if (mCRNURL == null || !CRNURL.isCRNURL(mCRNURL.getUrl())) {
+        mGRNURL = (GRNURL) getIntent().getSerializableExtra(INTENT_COMPONENT_NAME);
+        if (mGRNURL == null || !GRNURL.isGRNURL(mGRNURL.getUrl())) {
             onErrorBrokeCallback(-1003, "");
             return;
         }
 
         setContentView(R.layout.rn_activity);
         mLoadingView = findViewById(R.id.rnLoadingView);
-        renderCRNBaseFragment();
+        renderGRNBaseFragment();
     }
 
-    private void renderCRNBaseFragment() {
+    private void renderGRNBaseFragment() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if (fragmentTransaction == null) {
             return;
         }
-        mCRNBaseFragment = new CRNBaseFragment();
-        mCRNBaseFragment.setLoadRNErrorListener(CRNBaseActivity.this);
-        mCRNBaseFragment.setReactViewDisplayListener(CRNBaseActivity.this);
+        mGRNBaseFragment = new GRNBaseFragment();
+        mGRNBaseFragment.setLoadRNErrorListener(GRNBaseActivity.this);
+        mGRNBaseFragment.setReactViewDisplayListener(GRNBaseActivity.this);
         try {
             Bundle bundle = new Bundle();
-            bundle.putString(CRNBaseFragment.CRNURL_KEY, mCRNURL.getUrl());
-            mCRNBaseFragment.setArguments(bundle);
+            bundle.putString(GRNBaseFragment.GRNURL_KEY, mGRNURL.getUrl());
+            mGRNBaseFragment.setArguments(bundle);
         } catch (Exception ignore) {
         }
-        fragmentTransaction.add(R.id.rnFragmentView, mCRNBaseFragment, CRN_FRAGMENT_TAG).commitAllowingStateLoss();
+        fragmentTransaction.add(R.id.rnFragmentView, mGRNBaseFragment, GRN_FRAGMENT_TAG).commitAllowingStateLoss();
     }
 
     @Override
@@ -77,20 +77,20 @@ public class CRNBaseActivity extends FragmentActivity implements
 
     @Override
     public void onErrorBrokeCallback(int errCode, String message) {
-        Toast.makeText(this, "CRN错误:" + message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "GRN错误:" + message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (mCRNBaseFragment != null) {
-            mCRNBaseFragment.onActivityResult(requestCode, resultCode, data);
+        if (mGRNBaseFragment != null) {
+            mGRNBaseFragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (KeyEvent.KEYCODE_BACK == keyCode && mCRNBaseFragment != null && displaying) {
-            mCRNBaseFragment.goBack();
+        if (KeyEvent.KEYCODE_BACK == keyCode && mGRNBaseFragment != null && displaying) {
+            mGRNBaseFragment.goBack();
             return true;
         } else if (KeyEvent.KEYCODE_MENU == keyCode) {
             return true;
@@ -101,9 +101,9 @@ public class CRNBaseActivity extends FragmentActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mCRNBaseFragment != null) {
-            mCRNBaseFragment.setReactViewDisplayListener(null);
-            mCRNBaseFragment.setLoadRNErrorListener(null);
+        if (mGRNBaseFragment != null) {
+            mGRNBaseFragment.setReactViewDisplayListener(null);
+            mGRNBaseFragment.setLoadRNErrorListener(null);
         }
     }
 

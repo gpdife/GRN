@@ -23,8 +23,8 @@
 #endif
 
 
-#ifndef CRN_OPT
-#define CRN_OPT
+#ifndef GRN_OPT
+#define GRN_OPT
 #endif
 
 /**

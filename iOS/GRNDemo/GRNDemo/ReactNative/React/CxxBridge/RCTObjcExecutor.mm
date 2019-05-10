@@ -101,9 +101,9 @@ public:
     RCTAssert(NO, @"RAM bundles are not supported in RCTObjcExecutor");
   }
   
-#ifdef CRN_OPT
+#ifdef GRN_OPT
   
-  void registerCRNNativeRequire(std::unordered_map<std::string, std::string> moduleIdConfig) override {
+  void registerGRNNativeRequire(std::unordered_map<std::string, std::string> moduleIdConfig) override {
   }
   
 #endif

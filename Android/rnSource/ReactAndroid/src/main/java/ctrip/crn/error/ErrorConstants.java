@@ -11,12 +11,12 @@ public class ErrorConstants {
     /**
      * fatal error prefix
      */
-    public static final String CRN_FATAL_ERROR = "CRN_FATAL_ERROR";
+    public static final String GRN_FATAL_ERROR = "GRN_FATAL_ERROR";
 
     /**
      * instance 创建过程埋点tag
      */
-    public static final String CRN_STATISTIC_INFO = "CRN_STATISTIC_INFO";
+    public static final String GRN_STATISTIC_INFO = "GRN_STATISTIC_INFO";
 
 
 }

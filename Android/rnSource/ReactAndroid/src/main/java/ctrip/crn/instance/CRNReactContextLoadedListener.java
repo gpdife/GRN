@@ -6,7 +6,7 @@ import com.facebook.react.ReactInstanceManager;
  * Created by neo on 12/12/2017.
  */
 
-public interface CRNReactContextLoadedListener {
+public interface GRNReactContextLoadedListener {
 
     /**
      * instance加载完回调

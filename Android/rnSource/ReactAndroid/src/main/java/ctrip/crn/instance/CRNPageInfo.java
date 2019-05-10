@@ -8,24 +8,24 @@ import java.util.TimeZone;
  * Created by dev on 2018/8/16.
  */
 
-public class CRNPageInfo {
+public class GRNPageInfo {
 
     private static int guid = 0;
 
-    public String crnPageID;
-    public String crnPageName;
+    public String grnPageID;
+    public String grnPageName;
 
-    public CRNPageInfo() {
-        this.crnPageID = generateCRNPageID();
+    public GRNPageInfo() {
+        this.grnPageID = generateGRNPageID();
     }
 
-    public static CRNPageInfo newCRNPageInfo(String crnPageName) {
-        CRNPageInfo crnPageInfo = new CRNPageInfo();
-        crnPageInfo.crnPageName = crnPageName;
-        return crnPageInfo;
+    public static GRNPageInfo newGRNPageInfo(String grnPageName) {
+        GRNPageInfo grnPageInfo = new GRNPageInfo();
+        grnPageInfo.grnPageName = grnPageName;
+        return grnPageInfo;
     }
 
-    private static String generateCRNPageID() {
+    private static String generateGRNPageID() {
         Calendar calendar = Calendar.getInstance();
         String ret = "";
         if (calendar != null) {

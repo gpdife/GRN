@@ -86,7 +86,7 @@ class CatalystInstanceImpl : public jni::HybridClass<CatalystInstanceImpl> {
 
   //GRN BEGIN
 
-  void setCRNModuleIdConfig(WritableNativeMap::jhybridobject map);
+  void setGRNModuleIdConfig(WritableNativeMap::jhybridobject map);
 
   void loadScriptFromScript(jni::alias_ref<jstring> script, const std::string& sourceURL);
 

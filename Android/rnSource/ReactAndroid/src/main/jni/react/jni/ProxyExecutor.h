@@ -54,7 +54,7 @@ public:
     std::unique_ptr<const JSBigString> jsonValue) override;
   virtual std::string getDescription() override;
 // GRN BEGIN
-  virtual void setCRNModuleIdConfig(const folly::dynamic& config) override;
+  virtual void setGRNModuleIdConfig(const folly::dynamic& config) override;
 // GRN END
 private:
   jni::global_ref<jobject> m_executor;

@@ -113,7 +113,7 @@ static MethodCallResult invokeInner(RCTBridge *bridge, RCTModuleData *moduleData
     NSString *message = [NSString stringWithFormat:
                          @"Exception '%@' was thrown while invoking %s on target %@ with params %@\ncallstack: %@",
                          exception, method.JSMethodName, moduleData.name, objcParams, exception.callStackSymbols];
-#ifdef CRN_OPT
+#ifdef GRN_OPT
     NSError *error = RCTErrorWithMessage(message);
     [error setErrorTag:@"error_from_invoke_inner"];
     [error setErrorBridge:bridge];

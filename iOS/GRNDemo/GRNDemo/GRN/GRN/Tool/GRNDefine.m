@@ -1,15 +1,15 @@
 //
-//  CRNDefine.m
-//  CRNDemo
+//  GRNDefine.m
+//  GRNDemo
 //
 //  Created by GRN on 16/11/8.
 //  Copyright © 2016年 ctrip. All rights reserved.
 //
 
-#import "CRNDefine.h"
+#import "GRNDefine.h"
 
 
-@implementation CRNDefine
+@implementation GRNDefine
 
 NSString *getAppVersion() {
     static NSString *currentVersion = nil;

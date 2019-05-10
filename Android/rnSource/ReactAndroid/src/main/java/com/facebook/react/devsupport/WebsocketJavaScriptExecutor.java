@@ -193,9 +193,9 @@ public class WebsocketJavaScriptExecutor implements JavaJSExecutor {
   //实现自由设置JS全局变量的接口
 
   @Override
-  public void setCRNGlobalVariable(String propertyName, String jsonEncodedValue) {
+  public void setGRNGlobalVariable(String propertyName, String jsonEncodedValue) {
     if (mWebSocketClient != null) {
-      mWebSocketClient.injectCRNGlobalObject(propertyName, jsonEncodedValue);
+      mWebSocketClient.injectGRNGlobalObject(propertyName, jsonEncodedValue);
     }
   }
 

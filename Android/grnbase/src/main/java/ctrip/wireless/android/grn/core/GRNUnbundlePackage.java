@@ -27,24 +27,24 @@ import java.util.HashMap;
 import java.util.Properties;
 
 
-public class CRNUnbundlePackage {
+public class GRNUnbundlePackage {
 
-    public final static String UNBUNDLE_CONFIG_FILEV2 = "_crn_config_v2";
+    public final static String UNBUNDLE_CONFIG_FILEV2 = "_grn_config_v2";
     private final static String UNBUNDLE_MODULE_NAME_KEY = "main_module";
     private final static String UNBUNDLE_PATH_NAME_KEY = "module_path";
     private final static String UNBUNDLE_PATH_DIFF_KEY = "module_diff";
 
-    private CRNURL mCRNURL;
+    private GRNURL mGRNURL;
     private String mRequirePath;
     private String mMainModuleId;
     private HashMap<String, String> mModuleConfigMap;
 
     /**
-     * CRNUnbundle
-     * @param crnurl crnurl
+     * GRNUnbundle
+     * @param grnurl grnurl
      */
-    public CRNUnbundlePackage(CRNURL crnurl) {
-        mCRNURL = crnurl;
+    public GRNUnbundlePackage(GRNURL grnurl) {
+        mGRNURL = grnurl;
         readUnbundleConfigInfo();
     }
 
@@ -54,7 +54,7 @@ public class CRNUnbundlePackage {
             mMainModuleId = (String) mProperties.get(UNBUNDLE_MODULE_NAME_KEY);
             //设置js-modules
             String path = (String) mProperties.get(UNBUNDLE_PATH_NAME_KEY);
-            mRequirePath = mCRNURL.getUnbundleWorkPath() + '/' + path;
+            mRequirePath = mGRNURL.getUnbundleWorkPath() + '/' + path;
             mModuleConfigMap = getModuleConfigMapFromProperties(mProperties);
 
             //mModuleConfigMap为空时候，赋值modulePath，记录js 模块所在的目录
@@ -63,14 +63,14 @@ public class CRNUnbundlePackage {
             }
 
             //设置js-diffs
-            String diffFullPath = mCRNURL.getUnbundleWorkPath() + "/js-diffs";
+            String diffFullPath = mGRNURL.getUnbundleWorkPath() + "/js-diffs";
             mModuleConfigMap.put("moduleDiff", diffFullPath);
         }
     }
 
     private Properties parseUnbundleConfig() {
         Properties properties = new Properties();
-        final String workPath = mCRNURL.getUnbundleWorkPath();
+        final String workPath = mGRNURL.getUnbundleWorkPath();
         File file = new File(workPath + '/' + UNBUNDLE_CONFIG_FILEV2);
         if (file.exists()) {
             InputStream is = null;

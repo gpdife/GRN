@@ -140,9 +140,9 @@ void NativeToJsBridge::loadApplicationSync(
   }
 }
 
-#ifdef CRN_OPT
-  void NativeToJsBridge::configCRNRequire(std::unordered_map<std::string, std::string> moduleIdConfig) {
-    m_executor->registerCRNNativeRequire(std::move(moduleIdConfig));
+#ifdef GRN_OPT
+  void NativeToJsBridge::configGRNRequire(std::unordered_map<std::string, std::string> moduleIdConfig) {
+    m_executor->registerGRNNativeRequire(std::move(moduleIdConfig));
   }
 #endif
   

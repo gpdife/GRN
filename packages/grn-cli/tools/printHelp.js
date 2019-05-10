@@ -45,7 +45,7 @@ function printHelp(type) {
             console.log(
                 [
                     "",
-                    " Usage: crn-cli start [options]",
+                    " Usage: grn-cli start [options]",
                     "",
                     " Options:",
                     "",
@@ -53,7 +53,7 @@ function printHelp(type) {
                     "",
                     " Example:",
                     "",
-                    " $ crn-cli start --port 5389 ",
+                    " $ grn-cli start --port 5389 ",
                     "",
                 ].join("\n")
             );
@@ -62,7 +62,7 @@ function printHelp(type) {
             console.log(
                 [
                     "",
-                    " Usage: crn-cli run-ios [options]",
+                    " Usage: grn-cli run-ios [options]",
                     "",
                     " Options:",
                     "",
@@ -71,7 +71,7 @@ function printHelp(type) {
                     "",
                     " Example:",
                     "",
-                    " $ crn-cli run-ios --port 5389 --url /rn_CRNDemo/crn_config?CRNType=1&CRNModuleName=xxx",
+                    " $ grn-cli run-ios --port 5389 --url /rn_GRNDemo/grn_config?GRNType=1&GRNModuleName=xxx",
                     "",
                 ].join("\n")
             );
@@ -80,7 +80,7 @@ function printHelp(type) {
             console.log(
                 [
                     "",
-                    " Usage: crn-cli run-android [options]",
+                    " Usage: grn-cli run-android [options]",
                     "",
                     " Options:",
                     "",
@@ -89,7 +89,7 @@ function printHelp(type) {
                     "",
                     " Example:",
                     "",
-                    " $ crn-cli run-android --port 5389 --url /rn_CRNDemo/crn_config?CRNType=1&CRNModuleName=xxx",
+                    " $ grn-cli run-android --port 5389 --url /rn_GRNDemo/grn_config?GRNType=1&GRNModuleName=xxx",
                     "",
                 ].join("\n")
             );
@@ -98,18 +98,18 @@ function printHelp(type) {
             console.log(
                 [
                     "",
-                    " Usage: crn-cli pack [options]",
+                    " Usage: grn-cli pack [options]",
                     "",
                     " Options:",
                     "",
                     " --entry-file      业务包入口文件,默认index.js",
-                    " --package-name    业务包名称,默认CRNDemo",
+                    " --package-name    业务包名称,默认GRNDemo",
                     " --dev             打包环境,默认false",
                     " --bundle-output   打包输出目录,默认publish",
                     "",
                     " Example:",
                     "",
-                    " $ crn-cli pack --entry-file index.js --package-name CRNDemo --dev false --bundle-output publish",
+                    " $ grn-cli pack --entry-file index.js --package-name GRNDemo --dev false --bundle-output publish",
                     "",
                 ].join("\n")
             );

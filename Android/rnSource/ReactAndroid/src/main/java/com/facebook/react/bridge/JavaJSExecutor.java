@@ -56,7 +56,7 @@ public interface JavaJSExecutor {
   //实现自由设置JS全局变量的接口
 
   @DoNotStrip
-  public void setCRNGlobalVariable(String propertyName, String jsonEncodedValue);
+  public void setGRNGlobalVariable(String propertyName, String jsonEncodedValue);
 
   //GRN END
 }

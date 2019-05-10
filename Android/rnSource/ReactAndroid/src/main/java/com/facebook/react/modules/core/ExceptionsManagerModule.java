@@ -53,8 +53,8 @@ public class ExceptionsManagerModule extends BaseJavaModule {
     if (mDevSupportManager.getDevSupportEnabled()) {
       mDevSupportManager.showNewJSError(title, details, exceptionId);
       //GRN BEGIN
-    } else if (mInstanceManager != null && mInstanceManager.getCRNInstanceInfo().errorReportListener != null){
-      mInstanceManager.getCRNInstanceInfo().errorReportListener.reportSoftException(mInstanceManager, title, details, exceptionId);
+    } else if (mInstanceManager != null && mInstanceManager.getGRNInstanceInfo().errorReportListener != null){
+      mInstanceManager.getGRNInstanceInfo().errorReportListener.reportSoftException(mInstanceManager, title, details, exceptionId);
     }
     //GRN END
   }
@@ -63,8 +63,8 @@ public class ExceptionsManagerModule extends BaseJavaModule {
     if (mDevSupportManager.getDevSupportEnabled()) {
       mDevSupportManager.showNewJSError(title, details, exceptionId);
       //GRN BEGIN
-    } else if(mInstanceManager != null && mInstanceManager.getCRNInstanceInfo().errorReportListener != null) {
-      mInstanceManager.getCRNInstanceInfo().errorReportListener.reportFatalException(mInstanceManager, title, details, exceptionId);
+    } else if(mInstanceManager != null && mInstanceManager.getGRNInstanceInfo().errorReportListener != null) {
+      mInstanceManager.getGRNInstanceInfo().errorReportListener.reportFatalException(mInstanceManager, title, details, exceptionId);
     }
     //GRN END
   }
@@ -74,8 +74,8 @@ public class ExceptionsManagerModule extends BaseJavaModule {
     if (mDevSupportManager.getDevSupportEnabled()) {
       mDevSupportManager.updateJSError(title, details, exceptionId);
       //GRN BEGIN
-    } else if(mInstanceManager != null && mInstanceManager.getCRNInstanceInfo().errorReportListener != null) {
-      mInstanceManager.getCRNInstanceInfo().errorReportListener.reportFatalException(mInstanceManager, title, details, exceptionId);
+    } else if(mInstanceManager != null && mInstanceManager.getGRNInstanceInfo().errorReportListener != null) {
+      mInstanceManager.getGRNInstanceInfo().errorReportListener.reportFatalException(mInstanceManager, title, details, exceptionId);
     }
     //GRN END
   }

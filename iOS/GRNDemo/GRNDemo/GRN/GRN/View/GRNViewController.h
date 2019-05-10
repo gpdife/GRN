@@ -1,28 +1,28 @@
 //
-//  CRNViewController.h
-//  CRNDemo
+//  GRNViewController.h
+//  GRNDemo
 //
 //  Created by GRN on 2019/3/5.
 //  Copyright © 2019 com.ctrip. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "CRNDefine.h"
+#import "GRNDefine.h"
 
 #import <UIKit/UIKit.h>
-#import "CRNURL.h"
-#import "CRNView.h"
+#import "GRNURL.h"
+#import "GRNView.h"
 
 #import <React/RCTBridgeModule.h>
 
 
-@interface CRNViewController : UIViewController
+@interface GRNViewController : UIViewController
 
-@property (nonatomic, readonly) CRNURL *crnURL;
+@property (nonatomic, readonly) GRNURL *grnURL;
 
-- (instancetype)initWithURL:(CRNURL *)url;
+- (instancetype)initWithURL:(GRNURL *)url;
 
-- (instancetype)initWithURL:(CRNURL *)url
+- (instancetype)initWithURL:(GRNURL *)url
        andInitialProperties:(NSDictionary *)initialProperties;
 
 @end

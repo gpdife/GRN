@@ -4,7 +4,7 @@ package ctrip.grn.instance;
  * Created by neo on 12/12/2017.
  */
 
-public enum CRNInstanceState {
+public enum GRNInstanceState {
 
     /**
      * init
@@ -35,7 +35,7 @@ public enum CRNInstanceState {
     public String name;
 
 
-    CRNInstanceState(String named) {
+    GRNInstanceState(String named) {
         name = named;
     }
 }

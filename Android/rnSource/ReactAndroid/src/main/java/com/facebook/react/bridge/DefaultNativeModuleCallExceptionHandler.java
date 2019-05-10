@@ -35,7 +35,7 @@ public class DefaultNativeModuleCallExceptionHandler implements NativeModuleCall
       errorMsg.append("\n\n").append(((JSException) e).getStack());
     }
 
-    FLog.e(ErrorConstants.CRN_FATAL_ERROR, errorMsg.toString());
+    FLog.e(ErrorConstants.GRN_FATAL_ERROR, errorMsg.toString());
 
     //GRN END
   }

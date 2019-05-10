@@ -6,7 +6,7 @@ import com.facebook.react.ReactInstanceManager;
   * @author Leone
   * @date 8/8/16
   */
-public interface CRNLoadReportListener {
+public interface GRNLoadReportListener {
 
     /**
      * instance加载完成回调

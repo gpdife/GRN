@@ -4989,7 +4989,7 @@
 					"RCT_DEBUG=1",
 					"RCT_DEV=1",
 					"RCT_NSASSERT=1",
-					CRN_OPT,
+					GRN_OPT,
 				);
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -5007,7 +5007,7 @@
 				CLANG_STATIC_ANALYZER_MODE = deep;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					CRN_OPT,
+					GRN_OPT,
 				);
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -5187,7 +5187,7 @@
 					"RCT_DEV=1",
 					"RCT_NSASSERT=1",
 					"RCT_METRO_PORT=${RCT_METRO_PORT}",
-					CRN_OPT,
+					GRN_OPT,
 				);
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				OTHER_LDFLAGS = (
@@ -5210,7 +5210,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"RCT_METRO_PORT=${RCT_METRO_PORT}",
-					CRN_OPT,
+					GRN_OPT,
 				);
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				OTHER_LDFLAGS = (
@@ -5443,7 +5443,7 @@
 					"RCT_DEBUG=1",
 					"RCT_DEV=1",
 					"RCT_NSASSERT=1",
-					CRN_OPT,
+					GRN_OPT,
 				);
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -5461,7 +5461,7 @@
 				CLANG_STATIC_ANALYZER_MODE = deep;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					CRN_OPT,
+					GRN_OPT,
 				);
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				OTHER_LDFLAGS = "-ObjC";

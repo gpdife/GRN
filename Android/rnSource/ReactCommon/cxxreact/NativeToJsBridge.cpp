@@ -221,13 +221,13 @@ void NativeToJsBridge::setGlobalVariable(std::string propName,
 
 //GRN BEGIN
 
-void NativeToJsBridge::setCRNModuleIdConfig(const folly::dynamic& config) {
+void NativeToJsBridge::setGRNModuleIdConfig(const folly::dynamic& config) {
   runOnExecutorQueue([config = std::move(config)]
     (JSExecutor* executor) {
     if (executor == nullptr) {
       return;
     }
-    executor->setCRNModuleIdConfig(config);
+    executor->setGRNModuleIdConfig(config);
   });
 }
 

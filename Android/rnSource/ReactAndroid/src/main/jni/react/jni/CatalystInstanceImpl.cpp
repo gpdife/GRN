@@ -113,7 +113,7 @@ void CatalystInstanceImpl::registerNatives() {
     makeNativeMethod("getJavaScriptContext", CatalystInstanceImpl::getJavaScriptContext),
     makeNativeMethod("jniHandleMemoryPressure", CatalystInstanceImpl::handleMemoryPressure),
 // GRN BEGIN
-    makeNativeMethod("setCRNModuleIdConfig", CatalystInstanceImpl::setCRNModuleIdConfig),
+    makeNativeMethod("setGRNModuleIdConfig", CatalystInstanceImpl::setGRNModuleIdConfig),
     makeNativeMethod("loadScriptFromScript", CatalystInstanceImpl::loadScriptFromScript),
 // GRN END
   });
@@ -262,9 +262,9 @@ void CatalystInstanceImpl::setGlobalVariable(std::string propName,
 
 //GRN BEGIN
 
-void CatalystInstanceImpl::setCRNModuleIdConfig(WritableNativeMap::jhybridobject map) {
+void CatalystInstanceImpl::setGRNModuleIdConfig(WritableNativeMap::jhybridobject map) {
   auto arguments = cthis(wrap_alias(map));
-  return instance_->setCRNModuleIdConfig(arguments->consume());
+  return instance_->setGRNModuleIdConfig(arguments->consume());
 }
 
 void CatalystInstanceImpl::loadScriptFromScript(jni::alias_ref<jstring> script, const std::string& sourceURL) {

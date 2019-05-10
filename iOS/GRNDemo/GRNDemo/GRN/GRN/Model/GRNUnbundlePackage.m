@@ -1,28 +1,28 @@
 //
-//  CRNPackage.m
+//  GRNPackage.m
 //  CTBusiness
 //
 //  Created by GRN on 16/7/21.
 //  Copyright © 2016年 Ctrip. All rights reserved.
 //
 
-#import "CRNUnbundlePackage.h"
-#import "CRNURL.h"
+#import "GRNUnbundlePackage.h"
+#import "GRNURL.h"
 
-#define kUnbundleConfigFileNameV2         @"_crn_config_v2"
+#define kUnbundleConfigFileNameV2         @"_grn_config_v2"
 #define kUnbundleConfigMainModuleName   @"main_module"
 #define kUnbundleConfigRequirePathName  @"module_path"
 
-@interface CRNUnbundlePackage()
+@interface GRNUnbundlePackage()
 @property (nonatomic, strong) NSDictionary *moduleIdConfig;
 @property (nonatomic, strong) NSString *entryModuleId;
 @property (nonatomic, strong) NSString *requirePath;
-@property (nonatomic, strong) CRNURL *rnURL;
+@property (nonatomic, strong) GRNURL *rnURL;
 @end
 
-@implementation CRNUnbundlePackage
+@implementation GRNUnbundlePackage
 
-- (CRNUnbundlePackage *)initWithURL:(CRNURL *)url {
+- (GRNUnbundlePackage *)initWithURL:(GRNURL *)url {
     if (self = [super init]) {
         if (!url.isUnbundleRNURL) {
             NSAssert(false, @"Error: Unbundle package not support online HTTP ReactNative Package!");

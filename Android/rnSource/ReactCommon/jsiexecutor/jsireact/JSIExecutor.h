@@ -97,9 +97,9 @@ class JSIExecutor : public JSExecutor {
   std::string getDescription() override;
 
   //GRN BEGIN
-  void setCRNModuleIdConfig(const folly::dynamic& config) override;
-  std::string readScriptFromFileForCRN(const std::string& solidFile, const std::string &diffFile);
-  void loadModuleForCRN(std::string &modulePath, std::string &moduleDiffPath);
+  void setGRNModuleIdConfig(const folly::dynamic& config) override;
+  std::string readScriptFromFileForGRN(const std::string& solidFile, const std::string &diffFile);
+  void loadModuleForGRN(std::string &modulePath, std::string &moduleDiffPath);
   //GRN END
 
   void* getJavaScriptContext() override;
@@ -133,8 +133,8 @@ class JSIExecutor : public JSExecutor {
   RuntimeInstaller runtimeInstaller_;
 //GRN BEGIN
 
-      folly::dynamic m_CRNJSModuleConfig;
-      bool m_isBindCRNNativeRequire = false;
+      folly::dynamic m_GRNJSModuleConfig;
+      bool m_isBindGRNNativeRequire = false;
 
     //GRN END
   folly::Optional<jsi::Function> callFunctionReturnFlushedQueue_;

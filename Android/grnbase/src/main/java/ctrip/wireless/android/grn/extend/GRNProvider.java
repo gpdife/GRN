@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CRNProvider {
+public class GRNProvider {
 
     public static List<ReactPackage> provideReactPackages() {
         // TODO 在此加入Packages

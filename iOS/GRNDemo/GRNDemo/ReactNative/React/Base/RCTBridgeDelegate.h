@@ -77,7 +77,7 @@
  */
 - (NSDictionary<NSString *, Class> *)extraLazyModuleClassesForBridge:(RCTBridge *)bridge;
 
-#ifdef CRN_OPT
+#ifdef GRN_OPT
 //bridge初始化完成回调
 - (void)bridgeInitialized:(RCTBridge*)bridge;
 //reactView渲染完成回调，UI可以交互(TTI, time to intreactive)

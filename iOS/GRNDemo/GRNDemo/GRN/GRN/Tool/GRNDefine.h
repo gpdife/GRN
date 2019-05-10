@@ -1,6 +1,6 @@
 //
-//  CRNDefine.h
-//  CRNDemo
+//  GRNDefine.h
+//  GRNDemo
 //
 //  Created by GRN on 16/11/8.
 //  Copyright © 2016年 ctrip. All rights reserved.
@@ -9,11 +9,11 @@
 
 #import <Foundation/Foundation.h>
 
-#ifndef CRN_DEV
+#ifndef GRN_DEV
 #if DEBUG
-#define CRN_DEV 1
+#define GRN_DEV 1
 #else
-#define CRN_DEV 0
+#define GRN_DEV 0
 #endif
 #endif
 
@@ -27,24 +27,24 @@
 
 
 //GRN const
-#define kDefaultCRNUnbundleMainModuleName   @"CRNApp"
-#define kCRNCommonJsBundleDirName           @"rn_common"
-#define kCRNCommonJsBundleFileName          @"common_ios.js"
+#define kDefaultGRNUnbundleMainModuleName   @"GRNApp"
+#define kGRNCommonJsBundleDirName           @"rn_common"
+#define kGRNCommonJsBundleFileName          @"common_ios.js"
 
-#define kCRNModuleName      @"CRNModuleName="
-#define kCRNModuleType      @"CRNType=1"
+#define kGRNModuleName      @"GRNModuleName="
+#define kGRNModuleType      @"GRNType=1"
 
 //Notifications
-#define kCRNViewDidCreateNotification       @"kCRNViewDidCreateNotification"
-#define kCRNViewDidReleasedNotification     @"kCRNViewDidReleasedNotification"
+#define kGRNViewDidCreateNotification       @"kGRNViewDidCreateNotification"
+#define kGRNViewDidReleasedNotification     @"kGRNViewDidReleasedNotification"
 
 
-#define kCRNStartLoadEvent                  @"CRNStartLoadEvent"
-#define kCRNLoadSuccessEvent                @"CRNLoadSuccessEvent"
-#define kCRNPageRenderSuccess               @"CRNPageRenderSuccess"
+#define kGRNStartLoadEvent                  @"GRNStartLoadEvent"
+#define kGRNLoadSuccessEvent                @"GRNLoadSuccessEvent"
+#define kGRNPageRenderSuccess               @"GRNPageRenderSuccess"
 
-#define CRNViewLoadFailedNotification       @"CRNViewLoadFailedNotification"
-#define CRNViewDidRenderSuccess             @"CRNViewDidRenderSuccess"
+#define GRNViewLoadFailedNotification       @"GRNViewLoadFailedNotification"
+#define GRNViewDidRenderSuccess             @"GRNViewDidRenderSuccess"
 
 
 #define dispatch_main_sync(block)\
@@ -62,7 +62,7 @@
     }
 
 
-@interface CRNDefine : NSObject
+@interface GRNDefine : NSObject
 
 NSString *getAppVersion(void);
 

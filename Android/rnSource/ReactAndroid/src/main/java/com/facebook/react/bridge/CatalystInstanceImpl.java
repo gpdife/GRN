@@ -326,7 +326,7 @@ public class CatalystInstanceImpl implements CatalystInstance {
   }
 //GRN BEGIN
 
-  public void loadCRNScriptFromScript(String script, String sourceURL) {
+  public void loadGRNScriptFromScript(String script, String sourceURL) {
     setSourceURL(sourceURL);
     loadScriptFromScript(script, sourceURL);
   }
@@ -337,10 +337,10 @@ public class CatalystInstanceImpl implements CatalystInstance {
 
   public native void loadScriptFromScript(String script, String sourceURL);
 
-  public native void setCRNModuleIdConfig(WritableNativeMap map);
+  public native void setGRNModuleIdConfig(WritableNativeMap map);
 
   @Override
-  public void setCRNModuleIdConfig(HashMap<String, String> moduleIdConfig) {
+  public void setGRNModuleIdConfig(HashMap<String, String> moduleIdConfig) {
     WritableNativeMap map = new WritableNativeMap();
     Iterator<HashMap.Entry<String, String>> it = moduleIdConfig.entrySet().iterator();
     Map.Entry<String, String> entry;
@@ -352,14 +352,14 @@ public class CatalystInstanceImpl implements CatalystInstance {
       map.putString(key, value);
     }
     try {
-      setCRNModuleIdConfig(map);
+      setGRNModuleIdConfig(map);
     } catch (Throwable ex) {
       ex.printStackTrace();
     }
   }
 
   @Override
-  public void setCRNGlobalVariable(String propertyName, String jsonEncodedValue) {
+  public void setGRNGlobalVariable(String propertyName, String jsonEncodedValue) {
     try {
       setGlobalVariable(propertyName, jsonEncodedValue);
     } catch (Throwable ex) {

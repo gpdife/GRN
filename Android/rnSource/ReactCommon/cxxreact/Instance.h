@@ -42,7 +42,7 @@ public:
                         std::shared_ptr<MessageQueueThread> jsQueue,
                         std::shared_ptr<ModuleRegistry> moduleRegistry);
   //GRN BEGIN
-  void setCRNModuleIdConfig(const folly::dynamic& config);
+  void setGRNModuleIdConfig(const folly::dynamic& config);
 
   void loadScriptFromScript(std::unique_ptr<const JSBigString> script, const std::string& sourceURL);
   //GRN END

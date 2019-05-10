@@ -1,17 +1,17 @@
 //
-//  CRNPackage.h
+//  GRNPackage.h
 //  CTBusiness
 //
 //  Created by GRN on 16/7/21.
 //  Copyright © 2016年 Ctrip. All rights reserved.
 //
 
-#import "CRNPlugin.h"
-#import "CRNURL.h"
+#import "GRNPlugin.h"
+#import "GRNURL.h"
 
-@interface CRNUnbundlePackage : NSObject
+@interface GRNUnbundlePackage : NSObject
 
-- (CRNUnbundlePackage *)initWithURL:(CRNURL *)url;
+- (GRNUnbundlePackage *)initWithURL:(GRNURL *)url;
 
 //主入口moduleid
 @property (nonatomic, readonly) NSString *mainModuleId;

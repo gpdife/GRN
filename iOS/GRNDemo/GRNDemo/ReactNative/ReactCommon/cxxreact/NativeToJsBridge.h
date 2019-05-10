@@ -57,8 +57,8 @@ public:
    */
   void invokeCallback(double callbackId, folly::dynamic&& args);
 
-#ifdef CRN_OPT
-  void configCRNRequire(std::unordered_map<std::string, std::string> moduleIdConfig);
+#ifdef GRN_OPT
+  void configGRNRequire(std::unordered_map<std::string, std::string> moduleIdConfig);
 #endif
   
   /**

@@ -57,7 +57,7 @@ public abstract class JSBundleLoader {
           int end_index = script.indexOf("</url>");
           String sourceUrl = script.substring("<url>".length(), end_index);
           String realScript = script.substring(end_index + "</url>".length());
-          delegate.loadCRNScriptFromScript(realScript, "file://" + sourceUrl);
+          delegate.loadGRNScriptFromScript(realScript, "file://" + sourceUrl);
         } else {
           delegate.loadScriptFromFile(fileName, assetUrl, loadSynchronously);
         }

@@ -107,8 +107,8 @@ import java.util.concurrent.Future;
 import javax.annotation.Nullable;
 
 import ctrip.grn.error.ErrorConstants;
-import ctrip.grn.instance.CRNInstanceInfo;
-import ctrip.grn.instance.CRNReactContextLoadedListener;
+import ctrip.grn.instance.GRNInstanceInfo;
+import ctrip.grn.instance.GRNReactContextLoadedListener;
 
 /**
  * This class is managing instances of {@link CatalystInstance}. It exposes a way to configure
@@ -184,9 +184,9 @@ public class ReactInstanceManager {
     return mhasLoaedReactNativeContext;
   }
 
-  protected CRNReactContextLoadedListener mCRNReactContextLoadedListen;
-  public void setReactContextLoadedListener(CRNReactContextLoadedListener reactContextLoadedListener) {
-    mCRNReactContextLoadedListen = reactContextLoadedListener;
+  protected GRNReactContextLoadedListener mGRNReactContextLoadedListen;
+  public void setReactContextLoadedListener(GRNReactContextLoadedListener reactContextLoadedListener) {
+    mGRNReactContextLoadedListen = reactContextLoadedListener;
   }
 
   protected CatalystInstance catalystInstance;
@@ -205,18 +205,18 @@ public class ReactInstanceManager {
   }
 
 
-  public void setCRNGlobalVariable(final String propertyName, final String jsonEncodedValue) {
-    setCRNGlobalVariable(propertyName, jsonEncodedValue, false);
+  public void setGRNGlobalVariable(final String propertyName, final String jsonEncodedValue) {
+    setGRNGlobalVariable(propertyName, jsonEncodedValue, false);
   }
 
-  public void setCRNGlobalVariable(final String propertyName, final String jsonEncodedValue, boolean sync) {
+  public void setGRNGlobalVariable(final String propertyName, final String jsonEncodedValue, boolean sync) {
     if (catalystInstance != null && catalystInstance.getReactQueueConfiguration() != null
             && catalystInstance.getReactQueueConfiguration().getJSQueueThread() != null) {
       try {
         Future future = catalystInstance.getReactQueueConfiguration().getJSQueueThread().callOnQueue(new Callable<Integer>() {
           @Override
           public Integer call() throws Exception {
-            catalystInstance.setCRNGlobalVariable(propertyName, jsonEncodedValue);
+            catalystInstance.setGRNGlobalVariable(propertyName, jsonEncodedValue);
             return 1;
           }
         });
@@ -231,7 +231,7 @@ public class ReactInstanceManager {
           Future future = catalystInstance.getReactQueueConfiguration().getJSQueueThread().callOnQueue(new Callable<Integer>() {
             @Override
             public Integer call() {
-              mDebugExecutor.setCRNGlobalVariable(propertyName, jsonEncodedValue);
+              mDebugExecutor.setGRNGlobalVariable(propertyName, jsonEncodedValue);
               return 1;
             }
           });
@@ -245,9 +245,9 @@ public class ReactInstanceManager {
     }
   }
 
-  private CRNInstanceInfo mCRNInstanceInfo = null;
-  public CRNInstanceInfo getCRNInstanceInfo() {
-    return mCRNInstanceInfo;
+  private GRNInstanceInfo mGRNInstanceInfo = null;
+  public GRNInstanceInfo getGRNInstanceInfo() {
+    return mGRNInstanceInfo;
   }
 
   public ReactRootView getAttachedRootView() {
@@ -328,13 +328,13 @@ public class ReactInstanceManager {
     @Nullable JSIModulePackage jsiModulePackage,
     @Nullable Map<String, RequestHandler> customPackagerCommandHandlers,
     //GRN BEGIN
-    CRNInstanceInfo crnInstanceInfo
+    GRNInstanceInfo grnInstanceInfo
     //GRN END
     ) {
     Log.d(ReactConstants.TAG, "ReactInstanceManager.ctor()");
     //GRN BEGIN
 
-    mCRNInstanceInfo = crnInstanceInfo == null ? CRNInstanceInfo.getCRNInstanceInfo() : crnInstanceInfo;
+    mGRNInstanceInfo = grnInstanceInfo == null ? GRNInstanceInfo.getGRNInstanceInfo() : grnInstanceInfo;
 
     //GRN END
     initializeSoLoaderIfNecessary(applicationContext);
@@ -1129,7 +1129,7 @@ public class ReactInstanceManager {
             },
             "create_react_context");
     ReactMarker.logMarker(REACT_CONTEXT_THREAD_START);
-    mCreateReactContextThread.setName("ReactInstanceManager_" + ((getCRNInstanceInfo() != null) ? getCRNInstanceInfo().instanceID : "null"));
+    mCreateReactContextThread.setName("ReactInstanceManager_" + ((getGRNInstanceInfo() != null) ? getGRNInstanceInfo().instanceID : "null"));
     mCreateReactContextThread.start();
   }
 
@@ -1168,12 +1168,12 @@ public class ReactInstanceManager {
           @Override
           public void run() {
             //GRN BEGIN
-            if (mCRNReactContextLoadedListen != null) {
+            if (mGRNReactContextLoadedListen != null) {
 
               mhasLoaedReactNativeContext = true;
 
-              mCRNReactContextLoadedListen.onReactContextLoaded(ReactInstanceManager.this);
-              mCRNReactContextLoadedListen = null;
+              mGRNReactContextLoadedListen.onReactContextLoaded(ReactInstanceManager.this);
+              mGRNReactContextLoadedListen = null;
             }
 
             //GRN END
@@ -1308,9 +1308,9 @@ public class ReactInstanceManager {
       catalystInstance.setGlobalVariable("__RCTProfileIsProfiling", "true");
     }
     // GRN BEGIN
-    if (getCRNInstanceInfo() != null && getCRNInstanceInfo().extroInfo != null) {
-      for (String key : getCRNInstanceInfo().extroInfo.keySet()) {
-        catalystInstance.setGlobalVariable(key, getCRNInstanceInfo().extroInfo.get(key));
+    if (getGRNInstanceInfo() != null && getGRNInstanceInfo().extroInfo != null) {
+      for (String key : getGRNInstanceInfo().extroInfo.keySet()) {
+        catalystInstance.setGlobalVariable(key, getGRNInstanceInfo().extroInfo.get(key));
       }
     }
     // GRN END
@@ -1323,7 +1323,7 @@ public class ReactInstanceManager {
 //GRN BEGIN
 
     String cStatus = catalystInstance != null && !catalystInstance.isDestroyed()?"success":"fail";
-    FLog.e(ErrorConstants.CRN_STATISTIC_INFO
+    FLog.e(ErrorConstants.GRN_STATISTIC_INFO
             , "create ReactContext success && create CatalystInstanceImpl " + cStatus
                     + " currentURL: " + catalystInstance.getSourceURL());
 

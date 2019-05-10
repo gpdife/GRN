@@ -1,5 +1,5 @@
 //
-//  CRNURL.h
+//  GRNURL.h
 //  CTBusiness
 //
 //  Created by GRN on 5/26/16.
@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 
 
-@interface CRNURL : NSObject
+@interface GRNURL : NSObject
 
-+ (BOOL)isCRNURL:(NSString *)url;
++ (BOOL)isGRNURL:(NSString *)url;
 
 + (NSURL *)commonJSURL;
 

@@ -9,26 +9,26 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.Vector;
 
-import ctrip.grn.error.CRNErrorReportListener;
+import ctrip.grn.error.GRNErrorReportListener;
 
 /**
  * Created by neo on 12/12/2017.
  */
 
-public class CRNInstanceInfo {
+public class GRNInstanceInfo {
 
     /**
-     * buid CRNInstanceInfo
+     * buid GRNInstanceInfo
      */
-    public static CRNInstanceInfo getCRNInstanceInfo() {
-        CRNInstanceInfo crnInstanceInfo = new CRNInstanceInfo();
-        crnInstanceInfo.usedTimestamp = System.currentTimeMillis();
-        crnInstanceInfo.inUseCount = 0;
-        crnInstanceInfo.businessURL = "";
-        return crnInstanceInfo;
+    public static GRNInstanceInfo getGRNInstanceInfo() {
+        GRNInstanceInfo grnInstanceInfo = new GRNInstanceInfo();
+        grnInstanceInfo.usedTimestamp = System.currentTimeMillis();
+        grnInstanceInfo.inUseCount = 0;
+        grnInstanceInfo.businessURL = "";
+        return grnInstanceInfo;
     }
 
-    public  CRNInstanceInfo() {
+    public  GRNInstanceInfo() {
         this.instanceID = makeInstanceID();
     }
 
@@ -79,13 +79,13 @@ public class CRNInstanceInfo {
      * 是否全量缓存包
      */
     @DoNotStrip
-    public CRNInstanceState originalInstateState;
+    public GRNInstanceState originalInstateState;
 
     /**
      * 原始Instance状态
      */
     @DoNotStrip
-    public CRNInstanceState originalInstanceStatus;
+    public GRNInstanceState originalInstanceStatus;
 
     /**
      * 是否拆分包
@@ -103,7 +103,7 @@ public class CRNInstanceInfo {
      * instance状态
      */
     @DoNotStrip
-    public CRNInstanceState instanceState = CRNInstanceState.None;
+    public GRNInstanceState instanceState = GRNInstanceState.None;
 
     /**
      * 是否已经绘制过
@@ -121,13 +121,13 @@ public class CRNInstanceInfo {
      * 报错回调
      */
     @DoNotStrip
-    public CRNErrorReportListener errorReportListener;
+    public GRNErrorReportListener errorReportListener;
 
     /**
      * 加载完成回调
      */
     @DoNotStrip
-    public CRNLoadReportListener loadReportListener;
+    public GRNLoadReportListener loadReportListener;
 
     /**
      * js报错标记

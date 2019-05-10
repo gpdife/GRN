@@ -67,8 +67,8 @@ public:
    */
   virtual void registerBundle(uint32_t bundleId, const std::string& bundlePath) = 0;
 
-#ifdef CRN_OPT
-  virtual void registerCRNNativeRequire(std::unordered_map<std::string, std::string> moduleIdConfig) = 0;
+#ifdef GRN_OPT
+  virtual void registerGRNNativeRequire(std::unordered_map<std::string, std::string> moduleIdConfig) = 0;
 #endif
   
   /**

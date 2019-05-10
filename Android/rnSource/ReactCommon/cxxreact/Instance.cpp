@@ -182,8 +182,8 @@ void Instance::handleMemoryPressure(int pressureLevel) {
 
 //GRN BEGIN
 
-void Instance::setCRNModuleIdConfig(const folly::dynamic &config) {
-  nativeToJsBridge_->setCRNModuleIdConfig(config);
+void Instance::setGRNModuleIdConfig(const folly::dynamic &config) {
+  nativeToJsBridge_->setGRNModuleIdConfig(config);
 }
 
 void Instance::loadScriptFromScript(std::unique_ptr<const JSBigString> script, const std::string& sourceURL) {

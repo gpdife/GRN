@@ -50,8 +50,8 @@ RCT_NOT_IMPLEMENTED(-(instancetype)initWithCoder:(nonnull NSCoder *)aDecoder)
     if (!self->_contentHasAppeared) {
       self->_contentHasAppeared = YES;
       
-#ifdef CRN_OPT
-      RCTBridge *bridged = [RCTBridge realCRNBridge:self->_bridge];
+#ifdef GRN_OPT
+      RCTBridge *bridged = [RCTBridge realGRNBridge:self->_bridge];
       if ([bridged.delegate respondsToSelector:@selector(reactViewRenderSuccess:forBridge:)]) {
         [bridged.delegate reactViewRenderSuccess:self forBridge:bridged];
       }

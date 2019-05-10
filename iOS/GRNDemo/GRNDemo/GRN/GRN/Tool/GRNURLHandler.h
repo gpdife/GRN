@@ -1,5 +1,5 @@
 //
-//  CRNDispatcher.h
+//  GRNDispatcher.h
 //  CTBusiness
 //
 //  Created by GRN on 5/16/16.
@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CRNDefine.h"
-#import "CRNURL.h"
+#import "GRNDefine.h"
+#import "GRNURL.h"
 
-@interface CRNURLHandler : NSObject
+@interface GRNURLHandler : NSObject
 
-// CRNURL分发
+// GRNURL分发
 + (BOOL)openURLString:(NSString *)urlString fromViewController:(UIViewController *)vc;
 
-+ (BOOL)openURL:(CRNURL *)url fromViewController:(UIViewController *)vc;
++ (BOOL)openURL:(GRNURL *)url fromViewController:(UIViewController *)vc;
 
 @end

@@ -1,6 +1,6 @@
 //
 //  AppDelegate.m
-//  CRNDemo
+//  GRNDemo
 //
 //  Created by GRN on 2019/1/25.
 //  Copyright © 2019 com.ctrip. All rights reserved.
@@ -8,10 +8,10 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
-#import "CRNBridgeManager.h"
-#import "CRNURLHandler.h"
-#import "CRNUtils.h"
-#import "CRNDefine.h"
+#import "GRNBridgeManager.h"
+#import "GRNURLHandler.h"
+#import "GRNUtils.h"
+#import "GRNDefine.h"
 
 @interface AppDelegate ()
 
@@ -30,11 +30,11 @@
     BOOL isDisablePreload = [[NSUserDefaults standardUserDefaults] boolForKey:@"disable_common_preload"];
     if (!isDisablePreload) {
         //预加载common
-        [[CRNBridgeManager sharedCRNBridgeManager] prepareBridgeIfNeed];
+        [[GRNBridgeManager sharedGRNBridgeManager] prepareBridgeIfNeed];
     }
     [self initWindow];
     
-#if CRN_DEV
+#if GRN_DEV
     BOOL isRNDev = NO;
     NSString *rnDebugURLPath = @"/tmp/.__RN_Debug_URL.log";
     NSString *rnURLStr = nil;
@@ -46,9 +46,9 @@
         isRNDev = YES;
     }
     if (isRNDev){
-        [CRNUtils showToast:[NSString stringWithFormat:@"将进入RN：%@",rnURLStr]];
+        [GRNUtils showToast:[NSString stringWithFormat:@"将进入RN：%@",rnURLStr]];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [CRNURLHandler openURLString:rnURLStr fromViewController:self.vc];
+            [GRNURLHandler openURLString:rnURLStr fromViewController:self.vc];
             remove([rnDebugURLPath UTF8String]);
         });
     }

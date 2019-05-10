@@ -33,19 +33,19 @@ import com.facebook.react.ReactRootView;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 
 import ctrip.wireless.android.grn.business.R;
-import ctrip.grn.instance.CRNInstanceState;
-import ctrip.grn.instance.CRNPageInfo;
+import ctrip.grn.instance.GRNInstanceState;
+import ctrip.grn.instance.GRNPageInfo;
 import ctrip.grn.utils.ReactNativeJson;
-import ctrip.wireless.android.grn.core.CRNErrorCode;
-import ctrip.wireless.android.grn.core.CRNInstanceManager;
-import ctrip.wireless.android.grn.core.CRNURL;
+import ctrip.wireless.android.grn.core.GRNErrorCode;
+import ctrip.wireless.android.grn.core.GRNInstanceManager;
+import ctrip.wireless.android.grn.core.GRNURL;
 import ctrip.wireless.android.grn.utils.ThreadUtils;
 
-public final class CRNBaseFragment extends Fragment
+public final class GRNBaseFragment extends Fragment
         implements DefaultHardwareBackBtnHandler
-        , ReactRootView.OnReactRootViewDisplayCallback, CRNInstanceManager.ReactInstanceLoadedCallBack {
+        , ReactRootView.OnReactRootViewDisplayCallback, GRNInstanceManager.ReactInstanceLoadedCallBack {
 
-    public final static String CRNURL_KEY = "CRNURLKey";
+    public final static String GRNURL_KEY = "GRNURLKey";
 
     /**
      * ReactRootView Displayed
@@ -63,7 +63,7 @@ public final class CRNBaseFragment extends Fragment
 
 
     private FrameLayout mRNContainer;
-    private CRNURL mCRNURL;
+    private GRNURL mGRNURL;
     private ReactInstanceManager mReactInstanceManager;
     private ReactRootView mReactRootView;
     // 错误回调
@@ -73,7 +73,7 @@ public final class CRNBaseFragment extends Fragment
     // ReactView是否展示
     private boolean mReactRootViewDisplay;
     // 页面信息
-    private CRNPageInfo crnPageInfo;
+    private GRNPageInfo grnPageInfo;
     // 页面创建时间
     private long createViewTime;
     // 页面加载超时设置
@@ -90,13 +90,13 @@ public final class CRNBaseFragment extends Fragment
             if (mReactRootViewDisplay || mLoadingTimeout) {
                 ThreadUtils.removeCallback(mCheckTimeoutRun);
             } else if (mReactBeatCount > MAX_BEAT_COUNT
-                    && (mCRNURL != null && !TextUtils.isEmpty(mCRNURL.getUrl())
-                    && !mCRNURL.getUrl().startsWith("http://"))) {
+                    && (mGRNURL != null && !TextUtils.isEmpty(mGRNURL.getUrl())
+                    && !mGRNURL.getUrl().startsWith("http://"))) {
                 mLoadingTimeout = true;
-                if (mReactInstanceManager != null && mReactInstanceManager.getCRNInstanceInfo() != null) {
-                    mReactInstanceManager.getCRNInstanceInfo().countTimeoutError++;
+                if (mReactInstanceManager != null && mReactInstanceManager.getGRNInstanceInfo() != null) {
+                    mReactInstanceManager.getGRNInstanceInfo().countTimeoutError++;
                 }
-                invokeError(CRNErrorCode.RENDER_TIMEOUT, "GRN load timeout(>10s) error, show retry page：", mFragmentDisplaying);
+                invokeError(GRNErrorCode.RENDER_TIMEOUT, "GRN load timeout(>10s) error, show retry page：", mFragmentDisplaying);
             } else {
                 ThreadUtils.postDelayed(mCheckTimeoutRun, 1000);
             }
@@ -105,10 +105,10 @@ public final class CRNBaseFragment extends Fragment
 
 
     /**
-     * CRNBaseFragment
+     * GRNBaseFragment
      */
-    public CRNBaseFragment() {
-        crnPageInfo = CRNPageInfo.newCRNPageInfo("CRNBaseFragment");
+    public GRNBaseFragment() {
+        grnPageInfo = GRNPageInfo.newGRNPageInfo("GRNBaseFragment");
         createViewTime = System.currentTimeMillis();
     }
 
@@ -124,23 +124,23 @@ public final class CRNBaseFragment extends Fragment
         View view = View.inflate(getActivity(), R.layout.rn_fragment, null);
         mRNContainer = view.findViewById(R.id.rnRootContainer);
 
-        if (getArguments() != null && getArguments().containsKey(CRNURL_KEY) && !TextUtils.isEmpty(getArguments().getString(CRNURL_KEY))) {
-            mCRNURL = new CRNURL(getArguments().getString(CRNURL_KEY));
-            loadCRNView();
+        if (getArguments() != null && getArguments().containsKey(GRNURL_KEY) && !TextUtils.isEmpty(getArguments().getString(GRNURL_KEY))) {
+            mGRNURL = new GRNURL(getArguments().getString(GRNURL_KEY));
+            loadGRNView();
         } else {
-            invokeError(CRNErrorCode.ILLEGAL_ARGUMENTS, "Trying to load ReactInstance which CRNURL is null.", true);
+            invokeError(GRNErrorCode.ILLEGAL_ARGUMENTS, "Trying to load ReactInstance which GRNURL is null.", true);
         }
         return view;
     }
 
-    private void loadCRNView() {
-        mReactInstanceManager = CRNInstanceManager.getReactInstance(mCRNURL, crnPageInfo, CRNBaseFragment.this);
-        if (mReactInstanceManager != null && mReactInstanceManager.getCRNInstanceInfo() != null) {
-            mReactInstanceManager.getCRNInstanceInfo().usedCount++;
+    private void loadGRNView() {
+        mReactInstanceManager = GRNInstanceManager.getReactInstance(mGRNURL, grnPageInfo, GRNBaseFragment.this);
+        if (mReactInstanceManager != null && mReactInstanceManager.getGRNInstanceInfo() != null) {
+            mReactInstanceManager.getGRNInstanceInfo().usedCount++;
         }
 
-        // 记录进入CRNPage
-        CRNInstanceManager.enterCRNPage(mReactInstanceManager, mCRNURL);
+        // 记录进入GRNPage
+        GRNInstanceManager.enterGRNPage(mReactInstanceManager, mGRNURL);
 
         // 开始超时设置
         mReactBeatCount = 0;
@@ -155,8 +155,8 @@ public final class CRNBaseFragment extends Fragment
         boolean hasError = false;
         if (reactInstanceManager == null || getActivity() == null
                 || emitMsgRet != 0
-                || reactInstanceManager.getCRNInstanceInfo() == null
-                || reactInstanceManager.getCRNInstanceInfo().instanceState == CRNInstanceState.Error) {
+                || reactInstanceManager.getGRNInstanceInfo() == null
+                || reactInstanceManager.getGRNInstanceInfo().instanceState == GRNInstanceState.Error) {
             hasError = true;
         }
 
@@ -170,32 +170,32 @@ public final class CRNBaseFragment extends Fragment
             mReactRootView = new ReactRootView(getActivity());
             mReactRootView.markEntryRootView(true);
             mReactRootView.setAllowStatistic(true);
-            mReactRootView.setReactRootViewDisplayCallback(CRNBaseFragment.this);
+            mReactRootView.setReactRootViewDisplayCallback(GRNBaseFragment.this);
             if (mRNContainer != null) {
                 mRNContainer.removeAllViews();
                 mRNContainer.addView(mReactRootView, new FrameLayout.LayoutParams(-1, -1));
             }
-            mReactRootView.startReactApplication(mReactInstanceManager, mCRNURL.getModuleName(), getLaunchOptions(mCRNURL));
+            mReactRootView.startReactApplication(mReactInstanceManager, mGRNURL.getModuleName(), getLaunchOptions(mGRNURL));
 
             // 更新超时设置
-            if (CRNInstanceManager.isReactInstanceReady(mReactInstanceManager)) {
+            if (GRNInstanceManager.isReactInstanceReady(mReactInstanceManager)) {
                 instanceHostResume();
                 mReactBeatCount = 0;
                 ThreadUtils.removeCallback(mCheckTimeoutRun);
                 ThreadUtils.post(mCheckTimeoutRun);
             }
         } else {
-            invokeError(CRNErrorCode.LOAD_INSTANCE_FAIL,"Trying to load ReactInstance but failed.", true);
+            invokeError(GRNErrorCode.LOAD_INSTANCE_FAIL,"Trying to load ReactInstance but failed.", true);
         }
     }
 
-    private Bundle getLaunchOptions(CRNURL crnurl) {
+    private Bundle getLaunchOptions(GRNURL grnurl) {
         Bundle bundle = new Bundle();
-        bundle.putString("containerSequenceId", crnPageInfo.crnPageID);
-        if (crnurl != null && crnurl.getUrl() != null) {
-            bundle.putBundle("urlQuery", ReactNativeJson.bundleFromMap(crnurl.getUrlQuery()));
-            bundle.putString("url", crnurl.getUrl());
-            bundle.putString("initialProperties", crnurl.initParams);
+        bundle.putString("containerSequenceId", grnPageInfo.grnPageID);
+        if (grnurl != null && grnurl.getUrl() != null) {
+            bundle.putBundle("urlQuery", ReactNativeJson.bundleFromMap(grnurl.getUrlQuery()));
+            bundle.putString("url", grnurl.getUrl());
+            bundle.putString("initialProperties", grnurl.initParams);
         }
         return bundle;
     }
@@ -203,7 +203,7 @@ public final class CRNBaseFragment extends Fragment
     private void instanceHostResume() {
         if (getActivity() != null) {
             if (mReactInstanceManager != null) {
-                mReactInstanceManager.onHostResume(getActivity(), CRNBaseFragment.this);
+                mReactInstanceManager.onHostResume(getActivity(), GRNBaseFragment.this);
             }
         }
     }
@@ -217,13 +217,13 @@ public final class CRNBaseFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        if (CRNInstanceManager.isReactInstanceReady(mReactInstanceManager)) {
+        if (GRNInstanceManager.isReactInstanceReady(mReactInstanceManager)) {
             instanceHostResume();
         }
 
         if (mReactInstanceManager != null &&
-                mReactInstanceManager.getCRNInstanceInfo() != null &&
-                mReactInstanceManager.getCRNInstanceInfo().isRendered) {
+                mReactInstanceManager.getGRNInstanceInfo() != null &&
+                mReactInstanceManager.getGRNInstanceInfo().isRendered) {
         }
     }
 
@@ -234,12 +234,12 @@ public final class CRNBaseFragment extends Fragment
         if (mDisplayListener != null) {
             mDisplayListener.reactViewDisplayed();
         }
-        Toast.makeText(getContext(), (mCRNURL.isUnbundleURL() ? "GRN" : "RN") + "页面显示时间：" + ((System.currentTimeMillis() - createViewTime)/1000f) + "秒", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), (mGRNURL.isUnbundleURL() ? "GRN" : "RN") + "页面显示时间：" + ((System.currentTimeMillis() - createViewTime)/1000f) + "秒", Toast.LENGTH_SHORT).show();
     }
 
     public void invokeError(final int errorCode, final String message, boolean isFatal) {
-        if (isFatal && mReactInstanceManager != null && mReactInstanceManager.getCRNInstanceInfo() != null) {
-            mReactInstanceManager.getCRNInstanceInfo().instanceState = CRNInstanceState.Error;
+        if (isFatal && mReactInstanceManager != null && mReactInstanceManager.getGRNInstanceInfo() != null) {
+            mReactInstanceManager.getGRNInstanceInfo().instanceState = GRNInstanceState.Error;
         }
 
         ThreadUtils.runOnUiThread(new Runnable() {
@@ -272,7 +272,7 @@ public final class CRNBaseFragment extends Fragment
     public void onPause() {
         super.onPause();
         if (getActivity() != null) {
-            if (CRNInstanceManager.isReactInstanceReady(mReactInstanceManager)) {
+            if (GRNInstanceManager.isReactInstanceReady(mReactInstanceManager)) {
                 try {
                     mReactInstanceManager.onHostPause(getActivity());
                 } catch (AssertionError ignore) {
@@ -309,8 +309,8 @@ public final class CRNBaseFragment extends Fragment
             }
         }
 
-        // 记录离开CRNPage
-        CRNInstanceManager.exitCRNPage(mReactInstanceManager, mCRNURL);
+        // 记录离开GRNPage
+        GRNInstanceManager.exitGRNPage(mReactInstanceManager, mGRNURL);
 
         if (getActivity() != null && mReactInstanceManager != null) {
             mReactInstanceManager.onHostDestroy(getActivity());
@@ -328,7 +328,7 @@ public final class CRNBaseFragment extends Fragment
     public void goBack() {
         if (getActivity() != null) {
             getActivity().getWindow().getDecorView().clearAnimation();
-            if (CRNInstanceManager.isReactInstanceReady(mReactInstanceManager)) {
+            if (GRNInstanceManager.isReactInstanceReady(mReactInstanceManager)) {
                 mReactInstanceManager.onBackPressed();
             } else {
                 getActivity().onBackPressed();

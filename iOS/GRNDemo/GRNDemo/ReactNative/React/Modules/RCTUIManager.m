@@ -692,7 +692,7 @@ RCT_EXPORT_METHOD(removeSubviewsFromContainerWithID:(nonnull NSNumber *)containe
   if (removedChildren.count != atIndices.count) {
     NSString *message = [NSString stringWithFormat:@"removedChildren count (%tu) was not what we expected (%tu)",
                          removedChildren.count, atIndices.count];
-#ifdef CRN_OPT
+#ifdef GRN_OPT
     NSError *errord = RCTErrorWithMessage(message);
     [errord setErrorTag:@"error_from_remove_container"];
     [errord setErrorBridge:_bridge];

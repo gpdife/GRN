@@ -1,55 +1,55 @@
 //
-//  CRNView.m
-//  CRNDemo
+//  GRNView.m
+//  GRNDemo
 //
 //  Created by GRN on 2019/3/5.
 //  Copyright © 2019 com.ctrip. All rights reserved.
 //
 
-#import "CRNView.h"
+#import "GRNView.h"
 #import <React/RCTBridgeDelegate.h>
-#import "CRNBridgeManager.h"
+#import "GRNBridgeManager.h"
 #import <React/RCTBridge+Private.h>
 #import <React/RCTEventDispatcher.h>
-#import "CRNUnbundlePackage.h"
+#import "GRNUnbundlePackage.h"
 #import <React/RCTExceptionsManager.h>
 #import <React/RCTRootView.h>
 
-@interface CRNView () {
+@interface GRNView () {
     double createViewTime;
 }
 @property (nonatomic, strong) RCTRootView *reactView;
-@property (nonatomic, strong) CRNURL *url;
+@property (nonatomic, strong) GRNURL *url;
 @property (nonatomic, strong) RCTBridge *currentBridge;
 @property (nonatomic, strong) NSDictionary *initialProps;
 @property (nonatomic, strong) NSDictionary *launchOptions;
 
 @end
 
-@implementation CRNView
+@implementation GRNView
 
 -(void)dealloc {
     if (self.currentBridge != NULL) {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCRNViewDidReleasedNotification
+        [[NSNotificationCenter defaultCenter] postNotificationName:kGRNViewDidReleasedNotification
                                                             object:nil
                                                           userInfo:@{@"bridge":self.currentBridge}];
         
         NSDictionary *tmpDict = [self.currentBridge.pluginObjectsDict copy];
-        for (CRNPlugin *plugIn in tmpDict) {
-            if ([plugIn isKindOfClass:[CRNPlugin class]]) {
+        for (GRNPlugin *plugIn in tmpDict) {
+            if ([plugIn isKindOfClass:[GRNPlugin class]]) {
                 [plugIn clear];
             }
         }
         @synchronized(self.currentBridge.pluginObjectsDict) {
             [self.currentBridge.pluginObjectsDict removeAllObjects];
         }
-        self.currentBridge.crnView = nil;
+        self.currentBridge.grnView = nil;
     }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (id)initWithURL:(CRNURL *)rnURL
+- (id)initWithURL:(GRNURL *)rnURL
             frame:(CGRect)frame
 initialProperties:(NSDictionary *)props
     launchOptions:(NSDictionary *)options {
@@ -80,7 +80,7 @@ initialProperties:(NSDictionary *)props
 
 - (RCTBridge *)makeCurrentBridge {
     [self.url readUnbundleFilePathIfNeed];
-    RCTBridge *bridge = [[CRNBridgeManager sharedCRNBridgeManager] bridgeForURL:self.url
+    RCTBridge *bridge = [[GRNBridgeManager sharedGRNBridgeManager] bridgeForURL:self.url
                                                                  viewCreateTime:createViewTime
                                                                  moduleProvider:nil
                                                                    launchOption:self.launchOptions];
@@ -88,7 +88,7 @@ initialProperties:(NSDictionary *)props
     bridge.enterViewTime = createViewTime;
     bridge.isRenderSuccess = NO;
     
-    bridge.crnView = self;
+    bridge.grnView = self;
     self.currentBridge = bridge;
     [self addNotificationsForCurrentBridge];
     return bridge;
@@ -96,18 +96,18 @@ initialProperties:(NSDictionary *)props
 
 - (void)addNotificationsForCurrentBridge {
     if (self.currentBridge) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCRNViewDidCreateNotification
+        [[NSNotificationCenter defaultCenter] postNotificationName:kGRNViewDidCreateNotification
                                                             object:nil
                                                           userInfo:@{@"bridge":self.currentBridge}];
     }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(crnViewLoadFailedNotification:)
-                                                 name:CRNViewLoadFailedNotification
+                                             selector:@selector(grnViewLoadFailedNotification:)
+                                                 name:GRNViewLoadFailedNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(crnViewDidRenderNotifation:)
-                                                 name:CRNViewDidRenderSuccess
+                                             selector:@selector(grnViewDidRenderNotifation:)
+                                                 name:GRNViewDidRenderSuccess
                                                object:nil];
     
 }
@@ -116,18 +116,18 @@ initialProperties:(NSDictionary *)props
 
 #pragma mark - --- load API
 
-- (void)loadCRNViewWithURL:(CRNURL *)url_ {
+- (void)loadGRNViewWithURL:(GRNURL *)url_ {
     if (url_ == nil) {
         return;
     }
     
     self.url = url_;
 
-    [self loadCRNViewWhenWorkDirExist];
+    [self loadGRNViewWhenWorkDirExist];
     
 }
 
-- (void)loadCRNViewWhenWorkDirExist {    
+- (void)loadGRNViewWhenWorkDirExist {    
     [self makeCurrentBridge];
     NSMutableDictionary *props = [NSMutableDictionary dictionary];
     if (self.initialProps) {
@@ -137,7 +137,7 @@ initialProperties:(NSDictionary *)props
     
     NSString *moduleName = self.url.rnModuleName;
     if (self.url.isUnbundleRNURL) {
-        moduleName = kDefaultCRNUnbundleMainModuleName;
+        moduleName = kDefaultGRNUnbundleMainModuleName;
     }
     self.reactView = [[RCTRootView alloc] initWithBridge:self.currentBridge
                                               moduleName:moduleName
@@ -151,7 +151,7 @@ initialProperties:(NSDictionary *)props
     self.reactView.contentMode = UIViewContentModeCenter;
     self.reactView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     self.currentBridge = self.reactView.bridge;
-    eCRNBridgeState originalBridgeState = self.reactView.bridge.originalBridgeState;
+    eGRNBridgeState originalBridgeState = self.reactView.bridge.originalBridgeState;
     BOOL isCacheBridge =  (originalBridgeState == Bridge_State_Dirty) || (originalBridgeState == Bridge_State_Ready);
     if (!isCacheBridge) {
         [self showLoadingView];
@@ -181,25 +181,25 @@ initialProperties:(NSDictionary *)props
 
 #pragma mark - Notification handle
 
-- (void)crnViewLoadFailedNotification:(NSNotification *)notification {
-    if (self.viewDelegate && [self.viewDelegate respondsToSelector:@selector(crnViewLoadFailed:errorCode:)]) {
+- (void)grnViewLoadFailedNotification:(NSNotification *)notification {
+    if (self.viewDelegate && [self.viewDelegate respondsToSelector:@selector(grnViewLoadFailed:errorCode:)]) {
         dispatch_main_sync(^{
             RCTBridge *tmpBridge = [notification.userInfo valueForKey:@"bridge"];
             int errorCode = [[notification.userInfo valueForKey:@"errorCode"] intValue];
             if ([tmpBridge isEqual:self.currentBridge]) {
                 tmpBridge.bridgeState = Bridge_State_Error;
-                [self.viewDelegate crnViewLoadFailed:self errorCode:@(errorCode)];
+                [self.viewDelegate grnViewLoadFailed:self errorCode:@(errorCode)];
             }
         });
     }
 }
 
-- (void)crnViewDidRenderNotifation:(NSNotification *)notification {
-    if (self.viewDelegate && [self.viewDelegate respondsToSelector:@selector(crnViewWillAppear:)]) {
+- (void)grnViewDidRenderNotifation:(NSNotification *)notification {
+    if (self.viewDelegate && [self.viewDelegate respondsToSelector:@selector(grnViewWillAppear:)]) {
         dispatch_main_sync(^{
             RCTBridge *tmpBridge = [notification.userInfo valueForKey:@"bridge"];
-            if ([tmpBridge.crnView isEqual:self]) {
-                [self.viewDelegate crnViewWillAppear:self];
+            if ([tmpBridge.grnView isEqual:self]) {
+                [self.viewDelegate grnViewWillAppear:self];
             }
         });
     }

@@ -1,17 +1,17 @@
 //
-//  CRNUtils.m
-//  CTCRN
+//  GRNUtils.m
+//  CTGRN
 //
 //  Created by GRN on 2019/2/22.
 //  Copyright © 2019 zlp. All rights reserved.
 //
 
-#import "CRNUtils.h"
-#import "CRNDefine.h"
+#import "GRNUtils.h"
+#import "GRNDefine.h"
 #import "CTToastTipView.h"
 #import <React/RCTBridge.h>
 
-@implementation CRNUtils
+@implementation GRNUtils
 
 + (NSString *)getPackageNameFromURLString:(NSString *)urlString {
     if ([[urlString lowercaseString] hasPrefix:@"http"]) {

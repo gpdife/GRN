@@ -23,14 +23,14 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.NativeModuleCallExceptionHandler;
 import com.facebook.react.bridge.ReadableArray;
 
-import ctrip.grn.error.CRNErrorReportListener;
+import ctrip.grn.error.GRNErrorReportListener;
 import ctrip.wireless.android.grn.ContextHolder;
 import ctrip.wireless.android.grn.utils.LogUtil;
 
 
-public class CRNErrorHandler {
+public class GRNErrorHandler {
 
-    private static CRNErrorReportListener errorReportListener = new CRNErrorReportListener() {
+    private static GRNErrorReportListener errorReportListener = new GRNErrorReportListener() {
         @Override
         public void reportFatalException(ReactInstanceManager instanceManager, String title, ReadableArray details, int exceptionId) {
             // TODO 可再次统计错误信息
@@ -62,7 +62,7 @@ public class CRNErrorHandler {
         }
     };
 
-    public static CRNErrorReportListener getErrorReportListener() {
+    public static GRNErrorReportListener getErrorReportListener() {
         return  errorReportListener;
     }
 

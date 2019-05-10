@@ -46,8 +46,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import ctrip.wireless.android.grn.core.CRNInstanceManager;
-import ctrip.wireless.android.grn.core.CRNURL;
+import ctrip.wireless.android.grn.core.GRNInstanceManager;
+import ctrip.wireless.android.grn.core.GRNURL;
 import ctrip.wireless.android.grn.core.PackageManager;
 import ctrip.wireless.android.grn.utils.FileUtil;
 
@@ -59,15 +59,15 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter simpleAdapter;
     SharedPreferences localSP;
 
-    private static final String CRN_DEMO_SP_NAME = "crnDemoSP";
-    private static final String CRN_DEMO_PRELOAD_COMMON = "PreloadCommon";
-    private static final String CRN_DEMO_ADDRESS_LIST = "addressList";
+    private static final String GRN_DEMO_SP_NAME = "grnDemoSP";
+    private static final String GRN_DEMO_PRELOAD_COMMON = "PreloadCommon";
+    private static final String GRN_DEMO_ADDRESS_LIST = "addressList";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        localSP = getSharedPreferences(CRN_DEMO_SP_NAME, Context.MODE_PRIVATE);
+        localSP = getSharedPreferences(GRN_DEMO_SP_NAME, Context.MODE_PRIVATE);
 
         // 测试使用：删除webapp目录
         FileUtil.delDir(PackageManager.getFileWebappPath());
@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
         // 安装rn_commom
         PackageManager.installPackageForProduct("rn_common");
 
-        if (localSP.getBoolean(CRN_DEMO_PRELOAD_COMMON, true)) {
-            CRNInstanceManager.prepareReactInstanceIfNeed();
+        if (localSP.getBoolean(GRN_DEMO_PRELOAD_COMMON, true)) {
+            GRNInstanceManager.prepareReactInstanceIfNeed();
         }
 
         setContentView(R.layout.activity_main);
@@ -86,16 +86,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        spinner = findViewById(R.id.crnBundleSpinner);
+        spinner = findViewById(R.id.grnBundleSpinner);
         rnSpinner = findViewById(R.id.rnBundleSpinner);
 
         initSpinner();
 
-        findViewById(R.id.loadCRN).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.loadGRN).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 PackageManager.installPackageForProduct(spinner.getSelectedItem() + "");
-                startCRNBaseActivity("/" + spinner.getSelectedItem() + "/_crn_config?CRNModuleName=CRNApp&CRNType=1");
+                startGRNBaseActivity("/" + spinner.getSelectedItem() + "/_grn_config?GRNModuleName=GRNApp&GRNType=1");
             }
         });
 
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 PackageManager.installPackageForProduct(rnSpinner.getSelectedItem() + "");
-                startCRNBaseActivity("/" + rnSpinner.getSelectedItem() + "/main.js?CRNModuleName=RNTesterApp&CRNType=1");
+                startGRNBaseActivity("/" + rnSpinner.getSelectedItem() + "/main.js?GRNModuleName=RNTesterApp&GRNType=1");
             }
         });
 
@@ -122,13 +122,13 @@ public class MainActivity extends AppCompatActivity {
         initOnlineList();
 
         Switch preloadSwitch = findViewById(R.id.preloadCommon);
-        boolean preloadCommon = localSP.getBoolean(CRN_DEMO_PRELOAD_COMMON, true);
+        boolean preloadCommon = localSP.getBoolean(GRN_DEMO_PRELOAD_COMMON, true);
         preloadSwitch.setChecked(preloadCommon);
         preloadSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean open) {
-                localSP.edit().putBoolean(CRN_DEMO_PRELOAD_COMMON, open).commit();
-                Toast.makeText(MainActivity.this, "已" + (open ? "打开" : "关闭") +  "CRN预加载，重启APP生效", Toast.LENGTH_SHORT).show();
+                localSP.edit().putBoolean(GRN_DEMO_PRELOAD_COMMON, open).commit();
+                Toast.makeText(MainActivity.this, "已" + (open ? "打开" : "关闭") +  "GRN预加载，重启APP生效", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -136,16 +136,16 @@ public class MainActivity extends AppCompatActivity {
     private void initOnlineList() {
         onlineListView = findViewById(R.id.onlineList);
         List<String> list = new ArrayList<>();
-        String listString = localSP.getString(CRN_DEMO_ADDRESS_LIST, "");
+        String listString = localSP.getString(GRN_DEMO_ADDRESS_LIST, "");
         if (!TextUtils.isEmpty(listString)) {
             list.addAll(Arrays.asList(listString.split(",")));
         }
-        simpleAdapter = new ArrayAdapter(this, R.layout.crn_spinner_item, list);
+        simpleAdapter = new ArrayAdapter(this, R.layout.grn_spinner_item, list);
         onlineListView.setAdapter(simpleAdapter);
         onlineListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startCRNBaseActivity((String) simpleAdapter.getItem(i));
+                startGRNBaseActivity((String) simpleAdapter.getItem(i));
             }
         });
     }
@@ -153,18 +153,18 @@ public class MainActivity extends AppCompatActivity {
     private void initSpinner() {
         try {
             String[] webappDirs = getAssets().list("webapp");
-            List<String> crnBundles = new ArrayList<>();
+            List<String> grnBundles = new ArrayList<>();
             List<String> rnBundles = new ArrayList<>();
             for (String webappDir : webappDirs) {
-                if (webappDir.toLowerCase().contains("_crn")) {
-                    crnBundles.add(webappDir);
+                if (webappDir.toLowerCase().contains("_grn")) {
+                    grnBundles.add(webappDir);
                 } else if (webappDir.toLowerCase().contains("_rn")) {
                     rnBundles.add(webappDir);
                 }
             }
-            Collections.reverse(crnBundles);
+            Collections.reverse(grnBundles);
             Collections.reverse(rnBundles);
-            ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, R.layout.crn_spinner_item, crnBundles.toArray(new String[crnBundles.size()])) {
+            ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, R.layout.grn_spinner_item, grnBundles.toArray(new String[grnBundles.size()])) {
                 public View getView(int position, View convertView, ViewGroup parent) {
                     View view = super.getView(position, convertView, parent);
                     view.setPadding(0, view.getPaddingTop(),view.getPaddingRight(),view.getPaddingBottom());
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
 
             spinner.setAdapter(adapter);
 
-            ArrayAdapter<CharSequence> rnAdapter = new ArrayAdapter(this, R.layout.crn_spinner_item, rnBundles.toArray(new String[rnBundles.size()])) {
+            ArrayAdapter<CharSequence> rnAdapter = new ArrayAdapter(this, R.layout.grn_spinner_item, rnBundles.toArray(new String[rnBundles.size()])) {
                 public View getView(int position, View convertView, ViewGroup parent) {
                     View view = super.getView(position, convertView, parent);
                     view.setPadding(0, view.getPaddingTop(),view.getPaddingRight(),view.getPaddingBottom());
@@ -190,17 +190,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void onlineClick(String onlineUrl) {
         addToLocalUrls(onlineUrl);
-        startCRNBaseActivity(onlineUrl);
+        startGRNBaseActivity(onlineUrl);
     }
 
     private boolean addToLocalUrls(String url) {
-        String listString = localSP.getString(CRN_DEMO_ADDRESS_LIST, "");
+        String listString = localSP.getString(GRN_DEMO_ADDRESS_LIST, "");
         if (!listString.contains(url)) {
             listString += url;
             if (!TextUtils.isEmpty(listString)) {
                 listString += ",";
             }
-            localSP.edit().putString(CRN_DEMO_ADDRESS_LIST, listString).apply();
+            localSP.edit().putString(GRN_DEMO_ADDRESS_LIST, listString).apply();
             simpleAdapter.add(url);
             simpleAdapter.notifyDataSetChanged();
             return true;
@@ -220,13 +220,13 @@ public class MainActivity extends AppCompatActivity {
         File entryFile = new File("/sdcard/.__RN_Debug_URL.log");
         if (entryFile != null && entryFile.exists()) {
             String url = FileUtil.readFileAsString(entryFile);
-            if (!CRNURL.isCRNURL(url)) {
+            if (!GRNURL.isGRNURL(url)) {
                 Toast.makeText(MainActivity.this, "GRN URL is illegal!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             addToLocalUrls(url);
-            startCRNBaseActivity(url.trim());
+            startGRNBaseActivity(url.trim());
             entryFile.delete();
         }
     }
@@ -253,17 +253,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void startCRNBaseActivity(String url) {
-        if (!CRNURL.isCRNURL(url)) {
+    private void startGRNBaseActivity(String url) {
+        if (!GRNURL.isGRNURL(url)) {
             Toast.makeText(MainActivity.this, "GRN URL is illegal!", Toast.LENGTH_SHORT).show();
             return;
         }
-        CRNURL crnurl = new CRNURL(url);
-        if (crnurl.getRnSourceType() != CRNURL.SourceType.Online) {
-            PackageManager.installPackageForProduct(crnurl.getProductName());
+        GRNURL grnurl = new GRNURL(url);
+        if (grnurl.getRnSourceType() != GRNURL.SourceType.Online) {
+            PackageManager.installPackageForProduct(grnurl.getProductName());
         }
-        Intent intent = new Intent(MainActivity.this, CRNBaseActivity.class);
-        intent.putExtra(CRNBaseActivity.INTENT_COMPONENT_NAME, crnurl);
+        Intent intent = new Intent(MainActivity.this, GRNBaseActivity.class);
+        intent.putExtra(GRNBaseActivity.INTENT_COMPONENT_NAME, grnurl);
         startActivity(intent);
     }
 

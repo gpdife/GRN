@@ -8,7 +8,7 @@
 
 #import "RCTBridge+GRN.h"
 #import <objc/runtime.h>
-#import "CRNView.h"
+#import "GRNView.h"
 
 
 @implementation RCTBridge(GRN)
@@ -40,20 +40,20 @@
     }
 }
 
-- (void)setBridgeState:(eCRNBridgeState)bridgeState {
+- (void)setBridgeState:(eGRNBridgeState)bridgeState {
     objc_setAssociatedObject(self, @selector(bridgeState), [NSNumber numberWithInt:bridgeState], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (eCRNBridgeState)bridgeState {
+- (eGRNBridgeState)bridgeState {
     NSNumber *value = objc_getAssociatedObject(self, _cmd);
     return [value intValue];
 }
 
 
-- (void)setOriginalBridgeState:(eCRNBridgeState)originalBridgeState {
+- (void)setOriginalBridgeState:(eGRNBridgeState)originalBridgeState {
     objc_setAssociatedObject(self, @selector(originalBridgeState), [NSNumber numberWithInt:originalBridgeState], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
-- (eCRNBridgeState)originalBridgeState {
+- (eGRNBridgeState)originalBridgeState {
     NSNumber *value = objc_getAssociatedObject(self, _cmd);
     return [value intValue];
 }
@@ -87,7 +87,7 @@
 
 - (NSString *)rnProductName {
     if (self.productName.length == 0) {
-        if (self.crnURL.isUnbundleRNURL) {
+        if (self.grnURL.isUnbundleRNURL) {
             NSURL *tmpURL = self.businessURL?self.businessURL:self.bundleURL;
             NSString *ret = [RCTBridge productNameFromFileURL:tmpURL];
             if (ret == NULL) {
@@ -99,12 +99,12 @@
     return self.productName;
 }
 
--(CRNURL *)crnURL {
+-(GRNURL *)grnURL {
     id value = objc_getAssociatedObject(self, _cmd);
     return value;
 }
-- (void)setCrnURL:(CRNURL *)crnURL {
-    objc_setAssociatedObject(self, @selector(crnURL), crnURL, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setCrnURL:(GRNURL *)grnURL {
+    objc_setAssociatedObject(self, @selector(grnURL), grnURL, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 -(NSURL *)businessURL {
@@ -181,16 +181,16 @@
     objc_setAssociatedObject(self, @selector(pluginObjectsDict), pluginObjectsDict, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (CRNView *)crnView {
+- (GRNView *)grnView {
     id value = objc_getAssociatedObject(self, _cmd);
     return value;
 }
-- (void)setCrnView:(CRNView *)crnView {
-    objc_setAssociatedObject(self, @selector(crnView), crnView, OBJC_ASSOCIATION_ASSIGN);
+- (void)setCrnView:(GRNView *)grnView {
+    objc_setAssociatedObject(self, @selector(grnView), grnView, OBJC_ASSOCIATION_ASSIGN);
 }
 
 
-+ (NSString *)bridgeStateDesc:(eCRNBridgeState)bridgeState {
++ (NSString *)bridgeStateDesc:(eGRNBridgeState)bridgeState {
     NSString *state = @"";
     switch (bridgeState) {
         case Bridge_State_Dirty:

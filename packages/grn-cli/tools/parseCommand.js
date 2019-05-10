@@ -5,7 +5,6 @@ const optimistModule = require('optimist');
 function parseCommandLine(config, args) {
   let optimist = new optimistModule();
   args = args || process.argv;
-  console.log(args)
   // optimist default API requires you to write the command name three time
   // This is a small wrapper to accept an object instead
   for (let i = 0; i < config.length; ++i) {

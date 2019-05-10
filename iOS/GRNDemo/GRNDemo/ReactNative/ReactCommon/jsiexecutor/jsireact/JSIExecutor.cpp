@@ -16,7 +16,7 @@
 
 #include <sstream>
 #include <stdexcept>
-#ifdef CRN_OPT
+#ifdef GRN_OPT
 #include <sys/stat.h>
 #endif
 using namespace facebook::jsi;
@@ -198,9 +198,9 @@ void JSIExecutor::registerBundle(
       ReactMarker::REGISTER_JS_SEGMENT_STOP, tag.c_str());
 }
 
-#ifdef CRN_OPT
+#ifdef GRN_OPT
   
-  void JSIExecutor::registerCRNNativeRequire(std::unordered_map<std::string, std::string> moduleIdConfig) {
+  void JSIExecutor::registerGRNNativeRequire(std::unordered_map<std::string, std::string> moduleIdConfig) {
     runtime_->global().setProperty(
                                    *runtime_,
                                    "nativeRequire",
@@ -212,12 +212,12 @@ void JSIExecutor::registerBundle(
                                                                            Runtime& rt,
                                                                            const facebook::jsi::Value&,
                                                                            const facebook::jsi::Value* args,
-                                                                           size_t count) { return CRNNativeRequire(args, count); }));
+                                                                           size_t count) { return GRNNativeRequire(args, count); }));
     
     m_moduleIdConfig = moduleIdConfig;
   }
   
-  Value JSIExecutor::CRNNativeRequire(const Value* args, size_t count) {
+  Value JSIExecutor::GRNNativeRequire(const Value* args, size_t count) {
     if (count > 2 || count == 0) {
       throw std::invalid_argument("Got wrong number of args");
     }
@@ -225,12 +225,12 @@ void JSIExecutor::registerBundle(
     uint32_t moduleId = folly::to<uint32_t>(args[0].getNumber());
     uint32_t bundleId = count == 2 ? folly::to<uint32_t>(args[1].getNumber()) : 0;
     
-    CRNLoadModule(bundleId, moduleId);
+    GRNLoadModule(bundleId, moduleId);
     
     return facebook::jsi::Value();
   }
   
-  void JSIExecutor::CRNLoadModule(uint32_t bundleId, uint32_t moduleId) {
+  void JSIExecutor::GRNLoadModule(uint32_t bundleId, uint32_t moduleId) {
     std::string jsFileAbsPath;
     try {
       std::string key = std::to_string(moduleId);
@@ -249,20 +249,20 @@ void JSIExecutor::registerBundle(
       return;
     }
     
-    std::string code = readCRNJSFileContent(jsFileAbsPath);
+    std::string code = readGRNJSFileContent(jsFileAbsPath);
     std::string name = folly::to<std::string>(moduleId, ".js");
     runtime_->evaluateJavaScript(
                                  std::make_unique<StringBuffer>(code), name);
   }
   
-  std::string JSIExecutor::readCRNJSFileContent(std::string jsFileAbsPath) {
+  std::string JSIExecutor::readGRNJSFileContent(std::string jsFileAbsPath) {
     if (jsFileAbsPath.length() == 0) {
       return NULL;
     }
     
     std::unordered_map<std::string,std::string>::iterator it = m_jsSourceCache.find(jsFileAbsPath);
     if (it != m_jsSourceCache.end()) {
-      printf("readCRNJSFileContent find cache =%s", jsFileAbsPath.c_str());
+      printf("readGRNJSFileContent find cache =%s", jsFileAbsPath.c_str());
       return  m_jsSourceCache.at(jsFileAbsPath);
     }
     

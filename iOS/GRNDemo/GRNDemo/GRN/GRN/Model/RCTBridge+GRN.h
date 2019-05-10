@@ -7,20 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CRNURL.h"
+#import "GRNURL.h"
 
 #import <React/RCTBridge.h>
 
 
-@class CRNView;
+@class GRNView;
 
-typedef enum eCRNBridgeState {
+typedef enum eGRNBridgeState {
     Bridge_State_None = 0,
     Bridge_State_Loading = 1,
     Bridge_State_Ready = 2,
     Bridge_State_Dirty = 3,
     Bridge_State_Error = 4,
-} eCRNBridgeState;
+} eGRNBridgeState;
 
 @interface RCTBridge(GRN)
 
@@ -32,9 +32,9 @@ typedef enum eCRNBridgeState {
 
 @property (nonatomic, readonly) NSString *cachedKey;
 
-@property (nonatomic, readwrite) eCRNBridgeState originalBridgeState;
+@property (nonatomic, readwrite) eGRNBridgeState originalBridgeState;
 
-@property (nonatomic, readwrite) eCRNBridgeState bridgeState;
+@property (nonatomic, readwrite) eGRNBridgeState bridgeState;
 
 //该bridge当前被多少业务使用
 @property (nonatomic, readwrite) NSUInteger inUseCount;
@@ -43,7 +43,7 @@ typedef enum eCRNBridgeState {
 
 @property (nonatomic, readonly) NSString *rnProductName;
 
-@property (nonatomic, readwrite) CRNURL *crnURL;
+@property (nonatomic, readwrite) GRNURL *grnURL;
 
 //业务url
 @property (nonatomic, readwrite) NSURL *businessURL;
@@ -63,6 +63,6 @@ typedef enum eCRNBridgeState {
 //plugin 列表
 @property (nonatomic, strong) NSMutableDictionary *pluginObjectsDict;
 
-@property (nonatomic, weak) CRNView *crnView;
+@property (nonatomic, weak) GRNView *grnView;
 
 @end

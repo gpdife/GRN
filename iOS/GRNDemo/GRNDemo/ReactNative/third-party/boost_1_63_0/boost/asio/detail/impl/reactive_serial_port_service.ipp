@@ -77,7 +77,7 @@ boost::system::error_code reactive_serial_port_service::open(
     ::cfmakeraw(&ios);
 #else
     ios.c_iflag &= ~(IGNBRK | BRKINT | PARMRK
-        | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
+        | ISTRIP | INLCR | IGNCR | IGRNL | IXON);
     ios.c_oflag &= ~OPOST;
     ios.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
     ios.c_cflag &= ~(CSIZE | PARENB);

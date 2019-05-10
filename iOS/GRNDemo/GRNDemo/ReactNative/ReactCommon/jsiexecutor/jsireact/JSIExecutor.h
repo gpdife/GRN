@@ -86,8 +86,8 @@ class JSIExecutor : public JSExecutor {
   void registerBundle(uint32_t bundleId, const std::string& bundlePath)
       override;
   
-#ifdef CRN_OPT
-  virtual void registerCRNNativeRequire(std::unordered_map<std::string, std::string> moduleIdConfig) override;
+#ifdef GRN_OPT
+  virtual void registerGRNNativeRequire(std::unordered_map<std::string, std::string> moduleIdConfig) override;
 #endif
   
   void callFunction(
@@ -135,13 +135,13 @@ class JSIExecutor : public JSExecutor {
   folly::Optional<jsi::Function> flushedQueue_;
   folly::Optional<jsi::Function> callFunctionReturnResultAndFlushedQueue_;
   
-#ifdef CRN_OPT
+#ifdef GRN_OPT
   std::unordered_map<std::string, std::string> m_moduleIdConfig;
   std::unordered_map<std::string, std::string> m_jsSourceCache;
   
-  jsi::Value CRNNativeRequire(const jsi::Value* args, size_t count);
-  void CRNLoadModule(uint32_t bundleId, uint32_t moduleId);
-  std::string readCRNJSFileContent(std::string jsFileAbsPath);
+  jsi::Value GRNNativeRequire(const jsi::Value* args, size_t count);
+  void GRNLoadModule(uint32_t bundleId, uint32_t moduleId);
+  std::string readGRNJSFileContent(std::string jsFileAbsPath);
 #endif
   
 };

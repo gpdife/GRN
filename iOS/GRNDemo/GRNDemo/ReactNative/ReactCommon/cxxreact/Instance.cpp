@@ -180,9 +180,9 @@ void Instance::handleMemoryPressure(int pressureLevel) {
   nativeToJsBridge_->handleMemoryPressure(pressureLevel);
 }
   
-#ifdef CRN_OPT
-  void Instance::configCRNRequire(std::unordered_map<std::string, std::string> moduleIdConfig) {
-    nativeToJsBridge_->configCRNRequire(std::move(moduleIdConfig));
+#ifdef GRN_OPT
+  void Instance::configGRNRequire(std::unordered_map<std::string, std::string> moduleIdConfig) {
+    nativeToJsBridge_->configGRNRequire(std::move(moduleIdConfig));
   }
 #endif
   

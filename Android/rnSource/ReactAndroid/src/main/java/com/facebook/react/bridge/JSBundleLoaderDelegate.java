@@ -32,7 +32,7 @@ public interface JSBundleLoaderDelegate {
    */
   void loadScriptFromFile(String fileName, String sourceURL, boolean loadSynchronously);
 
-  void loadCRNScriptFromScript(String fileName, String sourceURL);
+  void loadGRNScriptFromScript(String fileName, String sourceURL);
 
   /**
    * Load a delta bundle from Metro.

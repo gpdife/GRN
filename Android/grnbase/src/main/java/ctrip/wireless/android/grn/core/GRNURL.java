@@ -26,16 +26,16 @@ import java.util.Map;
 import ctrip.wireless.android.grn.utils.LogUtil;
 import ctrip.wireless.android.grn.utils.StringUtil;
 
-public class CRNURL implements Serializable {
+public class GRNURL implements Serializable {
 
-    public static final String DEFAULT_MODULE_NAME = "CRNApp";
-    public static final String CRN_MODULE_NAME_KEY = "crnmodulename";
-    public static final String CRN_TYPE_URL_PARAM = "crntype=1";
+    public static final String DEFAULT_MODULE_NAME = "GRNApp";
+    public static final String GRN_MODULE_NAME_KEY = "grnmodulename";
+    public static final String GRN_TYPE_URL_PARAM = "grntype=1";
 
     public final static String RN_COMMON_PACKAGE_NAME = "rn_common";
     public final static String COMMON_BUNDLE_PATH = getRNBundleWorkPath() + "/" + RN_COMMON_PACKAGE_NAME + "/common_android.js";
 
-    private final static String UNBUNDLE_FILE = "_crn_unbundle";
+    private final static String UNBUNDLE_FILE = "_grn_unbundle";
     private final static String IGNORE_CACHE_URL_PARAM = "ignorecached=1";
 
 
@@ -56,7 +56,7 @@ public class CRNURL implements Serializable {
 
     private SourceType rnSourceType;
 
-    public CRNURL(String urlStr_) {
+    public GRNURL(String urlStr_) {
         this.urlStr = urlStr_;
         this.rnSourceType = getRNSourceTypeFromUrl(urlStr_);
         this.absoluteFilePath = getRNFileAbsolutePath(urlStr_, this.rnSourceType);
@@ -127,7 +127,7 @@ public class CRNURL implements Serializable {
             while (it.hasNext()) {
                 entry = it.next();
                 String key = entry.getKey();
-                if (CRN_MODULE_NAME_KEY.equalsIgnoreCase(key)) {
+                if (GRN_MODULE_NAME_KEY.equalsIgnoreCase(key)) {
                     moduleName = entry.getValue();
                     break;
                 }
@@ -148,16 +148,16 @@ public class CRNURL implements Serializable {
     }
 
     /**
-     * url是否是crn url
+     * url是否是grn url
      *
      * @param url url
      * @return boolean
      */
-    public static boolean isCRNURL(String url) {
+    public static boolean isGRNURL(String url) {
         return !TextUtils.isEmpty(url)
                 && url.indexOf('?') > -1
-                && StringUtil.toLowerCase(url).contains(StringUtil.toLowerCase(CRN_MODULE_NAME_KEY))
-                && StringUtil.toLowerCase(url).contains(StringUtil.toLowerCase(CRN_TYPE_URL_PARAM));
+                && StringUtil.toLowerCase(url).contains(StringUtil.toLowerCase(GRN_MODULE_NAME_KEY))
+                && StringUtil.toLowerCase(url).contains(StringUtil.toLowerCase(GRN_TYPE_URL_PARAM));
     }
 
     /**

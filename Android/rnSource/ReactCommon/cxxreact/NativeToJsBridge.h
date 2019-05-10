@@ -76,7 +76,7 @@ public:
 
    //GRN BEGIN
 
-      void setCRNModuleIdConfig(const folly::dynamic& config);
+      void setGRNModuleIdConfig(const folly::dynamic& config);
 
     //GRN END
 

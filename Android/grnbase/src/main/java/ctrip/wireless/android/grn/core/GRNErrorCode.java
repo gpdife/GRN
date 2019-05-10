@@ -15,7 +15,7 @@
  */
 package ctrip.wireless.android.grn.core;
 
-public class CRNErrorCode {
+public class GRNErrorCode {
     public static int RENDER_TIMEOUT = 10001;
     public static int ILLEGAL_ARGUMENTS = 10002;
     public static int LOAD_INSTANCE_FAIL = 10003;

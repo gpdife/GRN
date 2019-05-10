@@ -1,26 +1,26 @@
 //
-//  CRNViewController.m
-//  CRNDemo
+//  GRNViewController.m
+//  GRNDemo
 //
 //  Created by GRN on 2019/3/5.
 //  Copyright © 2019 com.ctrip. All rights reserved.
 //
 
-#import "CRNDefine.h"
+#import "GRNDefine.h"
 
-#import "CRNViewController.h"
-#import "CRNView.h"
+#import "GRNViewController.h"
+#import "GRNView.h"
 #import <React/RCTDefines.h>
 #import <React/RCTBridge+Private.h>
 #import <React/RCTEventDispatcher.h>
 #import <React/UIView+React.h>
-#import "CRNBridgeManager.h"
-#import "CRNPlugin.h"
-#import "CRNUnbundlePackage.h"
+#import "GRNBridgeManager.h"
+#import "GRNPlugin.h"
+#import "GRNUnbundlePackage.h"
 
-@interface CRNViewController ()<CRNViewDelegate,CRNViewLoadingDelegate>
-@property (nonatomic, strong) CRNURL *url;
-@property (nonatomic, strong) CRNView *rctView;
+@interface GRNViewController ()<GRNViewDelegate,GRNViewLoadingDelegate>
+@property (nonatomic, strong) GRNURL *url;
+@property (nonatomic, strong) GRNView *rctView;
 
 @property (nonatomic, strong) NSDictionary *initialProperties;
 
@@ -29,30 +29,30 @@
 
 @end
 
-@implementation CRNViewController
+@implementation GRNViewController
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     NSDictionary *tmpDict = [self.rctBridge.pluginObjectsDict copy];
-    for (CRNPlugin *plugIn in tmpDict) {
-        if ([plugIn isKindOfClass:[CRNPlugin class]]) {
+    for (GRNPlugin *plugIn in tmpDict) {
+        if ([plugIn isKindOfClass:[GRNPlugin class]]) {
             [plugIn clear];
         }
     }
     @synchronized(self.rctBridge.pluginObjectsDict) {
         [self.rctBridge.pluginObjectsDict removeAllObjects];
     }
-    self.rctBridge.crnView = nil;
+    self.rctBridge.grnView = nil;
 
 }
 
-- (instancetype)initWithURL:(CRNURL *)url_
+- (instancetype)initWithURL:(GRNURL *)url_
 {
     return [self initWithURL:url_ andInitialProperties:nil];
 }
 
-- (instancetype)initWithURL:(CRNURL *)url andInitialProperties:(NSDictionary *)initialProperties
+- (instancetype)initWithURL:(GRNURL *)url andInitialProperties:(NSDictionary *)initialProperties
 {
     if (self = [super init]) {
         self.url = url;
@@ -62,7 +62,7 @@
     return self;
 }
 
--(CRNURL *)crnURL
+-(GRNURL *)grnURL
 {
     return self.url;
 }
@@ -74,7 +74,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.rctView = [[CRNView alloc] initWithURL:self.url
+    self.rctView = [[GRNView alloc] initWithURL:self.url
                                           frame:self.view.bounds
                               initialProperties:self.initialProperties
                                   launchOptions:nil];
@@ -85,7 +85,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self.rctView loadCRNViewWithURL:self.crnURL];
+    [self.rctView loadGRNViewWithURL:self.grnURL];
 
 }
 
@@ -106,16 +106,16 @@
     [super viewDidAppear:animated];
 }
 
-#pragma mark ---- CRNViewDelegate
-- (void)crnViewLoadFailed:(CRNView *)view errorCode:(NSNumber *)code {
+#pragma mark ---- GRNViewDelegate
+- (void)grnViewLoadFailed:(GRNView *)view errorCode:(NSNumber *)code {
     
 }
 
-- (void)crnViewWillAppear:(CRNView *)view {
+- (void)grnViewWillAppear:(GRNView *)view {
     
 }
 
-#pragma mark ---- CRNViewLoadingDelegate
+#pragma mark ---- GRNViewLoadingDelegate
 - (void)showLoadingView {
 
 }

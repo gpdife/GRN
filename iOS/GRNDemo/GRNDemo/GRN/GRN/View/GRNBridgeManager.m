@@ -1,29 +1,29 @@
 //
-//  CRNBridgeManager.m
-//  CRNDemo
+//  GRNBridgeManager.m
+//  GRNDemo
 //
 //  Created by GRN on 2019/3/5.
 //  Copyright © 2019 com.ctrip. All rights reserved.
 //
 
 
-#import "CRNDefine.h"
-#import "CRNBridgeManager.h"
+#import "GRNDefine.h"
+#import "GRNBridgeManager.h"
 #import <React/RCTJavaScriptLoader.h>
 #import <React/RCTBridge+Private.h>
 #import "RCTBridge+GRN.h"
 #import <React/RCTBridgeDelegate.h>
 #import <React/RCTAssert.h>
-#import "CRNUnbundlePackage.h"
+#import "GRNUnbundlePackage.h"
 #import <React/RCTJavaScriptExecutor.h>
 #import <React/RCTExceptionsManager.h>
 #import <React/RCTLog.h>
 #import <React/RCTBridge.h>
-#import "CRNUtils.h"
+#import "GRNUtils.h"
 
 #define kMaxIdealDirtyBridgeCount 5
 
-@interface CRNBridgeManager(){
+@interface GRNBridgeManager(){
     
 }
 
@@ -35,17 +35,17 @@
 
 @end
 
-static CRNBridgeManager *g_bridgeManager = NULL;
+static GRNBridgeManager *g_bridgeManager = NULL;
 
 static int g_bridge_GUID = 0;
 
-@implementation CRNBridgeManager
+@implementation GRNBridgeManager
 
-+ (CRNBridgeManager *)sharedCRNBridgeManager {
++ (GRNBridgeManager *)sharedGRNBridgeManager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         if (g_bridgeManager == NULL) {
-            g_bridgeManager = [[CRNBridgeManager alloc] init];
+            g_bridgeManager = [[GRNBridgeManager alloc] init];
         }
     });
     return g_bridgeManager;
@@ -56,12 +56,12 @@ static int g_bridge_GUID = 0;
     if (self = [super init]) {
         self.cachedBridgeList = [NSMutableArray array];
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(CRNViewControllerDidReleased:)
-                                                     name:kCRNViewDidReleasedNotification
+                                                 selector:@selector(GRNViewControllerDidReleased:)
+                                                     name:kGRNViewDidReleasedNotification
                                                    object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(CRNViewControllerDidUsed:)
-                                                     name:kCRNViewDidCreateNotification
+                                                 selector:@selector(GRNViewControllerDidUsed:)
+                                                     name:kGRNViewDidCreateNotification
                                                    object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(bridgeDidLoadSuccess:)
@@ -103,7 +103,7 @@ static int g_bridge_GUID = 0;
         if (![self.cachedBridgeList containsObject:inBridge]) {
             NSString *inBridgeCacheKey = inBridge.cachedKey;
             BOOL isContain = NO;
-            NSString *commonJsKey =  [RCTBridge keyFromURL:[CRNURL commonJSURL]];
+            NSString *commonJsKey =  [RCTBridge keyFromURL:[GRNURL commonJSURL]];
             for (RCTBridge *bridge in self.cachedBridgeList) {
                 if (bridge.cachedKey == inBridgeCacheKey &&
                     ![commonJsKey isEqualToString:inBridgeCacheKey]) {
@@ -143,7 +143,7 @@ static int g_bridge_GUID = 0;
 }
 
 - (RCTBridge*)createNewUnbundleBridge {
-    if (access([[CRNURL commonJSPath] UTF8String], 0) == 0 ) {
+    if (access([[GRNURL commonJSPath] UTF8String], 0) == 0 ) {
         __weak id weakSelf = self;
         RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:weakSelf launchOptions:nil];
         bridge.isUnbundlePackage = YES;
@@ -160,7 +160,7 @@ static int g_bridge_GUID = 0;
     NSString *moduleId  = NULL;
     
     {
-        CRNUnbundlePackage *unbundlePackage = [[CRNUnbundlePackage alloc] initWithURL:bridge.crnURL];
+        GRNUnbundlePackage *unbundlePackage = [[GRNUnbundlePackage alloc] initWithURL:bridge.grnURL];
         moduleId = unbundlePackage.mainModuleId;
         RCTBridge *cxxBridge = bridge.batchedBridge;
         if ([cxxBridge respondsToSelector:@selector(updateModuleIdConfig:)]) {
@@ -181,13 +181,13 @@ static int g_bridge_GUID = 0;
     return 0;
 }
 
-+ (BOOL)hasInUseBridgeForURL:(CRNURL*)url {
++ (BOOL)hasInUseBridgeForURL:(GRNURL*)url {
     if (url == NULL) {
         return  NO;
     }
     NSString *pkgName = url.packageName;
-    for (RCTBridge *bridge in [CRNBridgeManager sharedCRNBridgeManager].cachedBridgeList) {
-        if ([pkgName isEqualToString:bridge.crnURL.packageName] &&
+    for (RCTBridge *bridge in [GRNBridgeManager sharedGRNBridgeManager].cachedBridgeList) {
+        if ([pkgName isEqualToString:bridge.grnURL.packageName] &&
             bridge.bridgeState == Bridge_State_Dirty && bridge.inUseCount > 0) {
             return YES;
         }
@@ -195,21 +195,21 @@ static int g_bridge_GUID = 0;
     return NO;
 }
 
-+ (void)invalidateDirtyBridgeForURL:(CRNURL *)url {
++ (void)invalidateDirtyBridgeForURL:(GRNURL *)url {
     if (url == NULL) {
         return;
     }
     
     NSString *pkgName = url.packageName;
-    for (RCTBridge *bridge in [CRNBridgeManager sharedCRNBridgeManager].cachedBridgeList) {
-        if ([pkgName isEqualToString:bridge.crnURL.packageName]) {
+    for (RCTBridge *bridge in [GRNBridgeManager sharedGRNBridgeManager].cachedBridgeList) {
+        if ([pkgName isEqualToString:bridge.grnURL.packageName]) {
             bridge.bridgeState = Bridge_State_Error;
         }
     }
 }
 
 
-- (RCTBridge *)bridgeForURL:(CRNURL *)url
+- (RCTBridge *)bridgeForURL:(GRNURL *)url
              viewCreateTime:(double)viewCreateTime
              moduleProvider:(RCTBridgeModuleListProvider)block
                launchOption:(NSDictionary *)options
@@ -226,7 +226,7 @@ static int g_bridge_GUID = 0;
     if (!isIgnoreCache) {
         BOOL reuseInstance = [self isReuseInstance:url];
         for (RCTBridge *bridge in self.cachedBridgeList) {
-            BOOL isSame = reuseInstance?[url.packageName isEqualToString:bridge.crnURL.packageName] : [urlKey isEqualToString:bridge.cachedKey];
+            BOOL isSame = reuseInstance?[url.packageName isEqualToString:bridge.grnURL.packageName] : [urlKey isEqualToString:bridge.cachedKey];
             BOOL canUse;
             if (reuseInstance) {
                 canUse = isSame && bridge.bridgeState == Bridge_State_Dirty;
@@ -235,10 +235,10 @@ static int g_bridge_GUID = 0;
             }
             if (canUse) {
                 resultBridge = bridge;
-                resultBridge.crnURL = url;
+                resultBridge.grnURL = url;
                 resultBridge.originalBridgeState = Bridge_State_Dirty;
-                [CRNUtils emitEventForBridge:resultBridge
-                                        name:kCRNStartLoadEvent
+                [GRNUtils emitEventForBridge:resultBridge
+                                        name:kGRNStartLoadEvent
                                         info:@{@"startLoadTime":@(viewCreateTime*1000)}];
                 break;
             }
@@ -247,17 +247,17 @@ static int g_bridge_GUID = 0;
     
     if (resultBridge == nil){
         if (url.isUnbundleRNURL) {  //业务URL没有缓存Bridge，如果是unbundle，获取common Bridge
-            NSString *commonUrlKey = [RCTBridge keyFromURL:[CRNURL commonJSURL]];
+            NSString *commonUrlKey = [RCTBridge keyFromURL:[GRNURL commonJSURL]];
             for (RCTBridge *bridge in self.cachedBridgeList) {
                 if ([bridge.cachedKey isEqualToString:commonUrlKey] &&
                     bridge.inUseCount == 0 &&
                     bridge.bridgeState == Bridge_State_Ready) {
                     resultBridge = bridge;
                     resultBridge.businessURL = url.rnBundleURL;
-                    resultBridge.crnURL = url;
+                    resultBridge.grnURL = url;
                     resultBridge.originalBridgeState = Bridge_State_Ready;
-                    [CRNUtils emitEventForBridge:resultBridge
-                                            name:kCRNStartLoadEvent
+                    [GRNUtils emitEventForBridge:resultBridge
+                                            name:kGRNStartLoadEvent
                                             info:@{@"startLoadTime":@(viewCreateTime*1000)}];
                     
                     [self emitRequirePackageEntryMessage:resultBridge isFromCacheBridge:YES];
@@ -271,7 +271,7 @@ static int g_bridge_GUID = 0;
                 resultBridge.bridgeState = Bridge_State_Loading;
                 resultBridge.businessURL = url.rnBundleURL;
                 resultBridge.originalBridgeState = Bridge_State_Loading;
-                resultBridge.crnURL = url;
+                resultBridge.grnURL = url;
             }
             
             resultBridge.isUnbundlePackage = YES;
@@ -306,24 +306,24 @@ static int g_bridge_GUID = 0;
 - (void)bridgeDidLoadFailed:(NSNotification *)notify {
     NSDictionary *userInfo = notify.userInfo;
     RCTBridge *bridge = userInfo[@"bridge"];
-    bridge = [RCTBridge realCRNBridge:bridge];
+    bridge = [RCTBridge realGRNBridge:bridge];
     
     if (bridge.bridgeState == Bridge_State_Loading || bridge.bridgeState == Bridge_State_None) {
         bridge.bridgeState = Bridge_State_Error;
-        [CRNBridgeManager notifyCRNViewLoadFailedForBridge:bridge code:-505];
+        [GRNBridgeManager notifyGRNViewLoadFailedForBridge:bridge code:-505];
     }
 }
 
 - (void)bridgeDidLoadSuccess:(NSNotification *)notify {
     NSDictionary *userInfo = notify.userInfo;
     RCTBridge *bridge = userInfo[@"bridge"];
-    bridge = [RCTBridge realCRNBridge:bridge];
+    bridge = [RCTBridge realGRNBridge:bridge];
     bridge.bridgeReadyTime = [[NSDate date] timeIntervalSince1970];
     if (bridge.isUnbundlePackage) {
         bridge.bridgeState = Bridge_State_Ready;
         if (bridge.businessURL != NULL) {//进入业务模块，bridge加载完成
-            [CRNUtils emitEventForBridge:bridge
-                                    name:kCRNStartLoadEvent
+            [GRNUtils emitEventForBridge:bridge
+                                    name:kGRNStartLoadEvent
                                     info:@{@"startLoadTime":@(bridge.enterViewTime*1000)}];
             [self emitRequirePackageEntryMessage:bridge isFromCacheBridge:NO];
         }
@@ -386,7 +386,7 @@ static int g_bridge_GUID = 0;
     }
 }
 
-- (void)CRNViewControllerDidReleased:(NSNotification *)notification {
+- (void)GRNViewControllerDidReleased:(NSNotification *)notification {
     RCTBridge *cachedBridge = [notification.userInfo valueForKey:@"bridge"];
     @synchronized(self) {
         cachedBridge.inUseCount -= 1;
@@ -396,7 +396,7 @@ static int g_bridge_GUID = 0;
     }
 }
 
-- (void)CRNViewControllerDidUsed:(NSNotification *)notification {
+- (void)GRNViewControllerDidUsed:(NSNotification *)notification {
     RCTBridge *cachedBridge = [notification.userInfo valueForKey:@"bridge"];
     @synchronized(self) {
         cachedBridge.inUseCount += 1;
@@ -409,7 +409,7 @@ static int g_bridge_GUID = 0;
     if (bridge.bundleURL.absoluteString.length > 0) {
         return bridge.bundleURL;
     }else{
-        return [CRNURL commonJSURL];
+        return [GRNURL commonJSURL];
     }
 }
 
@@ -426,8 +426,8 @@ static int g_bridge_GUID = 0;
         }];
     }
     else{
-        if (access([[CRNURL commonJSPath] UTF8String], 0) == 0) {
-            [RCTJavaScriptLoader loadBundleAtURL:[CRNURL commonJSURL] onProgress:^(RCTLoadingProgress *progressData) {
+        if (access([[GRNURL commonJSPath] UTF8String], 0) == 0) {
+            [RCTJavaScriptLoader loadBundleAtURL:[GRNURL commonJSURL] onProgress:^(RCTLoadingProgress *progressData) {
                 NSLog(@"progressData.....");
             } onComplete:^(NSError *error, RCTSource *source) {
                 loadCallback(error, source);
@@ -450,32 +450,32 @@ static int g_bridge_GUID = 0;
         //首屏rendersuccess
         bridge.renderDoneTime = [[NSDate date] timeIntervalSince1970];
         double totalTime = bridge.renderDoneTime  - bridge.enterViewTime;
-        [CRNUtils emitEventForBridge:bridge name:kCRNLoadSuccessEvent info:@{@"time":@(totalTime*1000)}];
+        [GRNUtils emitEventForBridge:bridge name:kGRNLoadSuccessEvent info:@{@"time":@(totalTime*1000)}];
         bridge.isRenderSuccess = YES;
-        [[NSNotificationCenter defaultCenter] postNotificationName:CRNViewDidRenderSuccess
+        [[NSNotificationCenter defaultCenter] postNotificationName:GRNViewDidRenderSuccess
                                                             object:nil
                                                           userInfo:@{@"bridge":bridge}];
-        if (CRN_DEV) { //加载时间
-            [CRNUtils showToast:[NSString stringWithFormat:@"加载时间：%.2f",totalTime]];
+        if (GRN_DEV) { //加载时间
+            [GRNUtils showToast:[NSString stringWithFormat:@"加载时间：%.2f",totalTime]];
         }
     }
 }
 
-+ (void)notifyCRNViewLoadFailedForBridge:(RCTBridge *)bridged code:(int)errorCode {
++ (void)notifyGRNViewLoadFailedForBridge:(RCTBridge *)bridged code:(int)errorCode {
     if (bridged == NULL) {
         return;
     }
     NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithCapacity:1];
     [userInfo setValue:bridged forKey:@"bridge"];
     [userInfo setValue:@(errorCode) forKey:@"errorCode"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:CRNViewLoadFailedNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:GRNViewLoadFailedNotification
                                                         object:nil
                                                       userInfo:userInfo];
 }
 
 
 #pragma mark - ---- private
-- (BOOL)isReuseInstance:(CRNURL *)crnurl{
+- (BOOL)isReuseInstance:(GRNURL *)grnurl{
     return NO;
 }
 

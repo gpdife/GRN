@@ -166,10 +166,10 @@ void JSIExecutor::loadApplicationScript(
 }
 
 //GRN BEGIN
-void JSIExecutor::setCRNModuleIdConfig(const folly::dynamic& config) {
-    m_CRNJSModuleConfig = config;
-    LOG(ERROR) << "setCRNModuleIdConfig start 1" << m_isBindCRNNativeRequire;
-    if (!m_isBindCRNNativeRequire) {
+void JSIExecutor::setGRNModuleIdConfig(const folly::dynamic& config) {
+    m_GRNJSModuleConfig = config;
+    LOG(ERROR) << "setGRNModuleIdConfig start 1" << m_isBindGRNNativeRequire;
+    if (!m_isBindGRNNativeRequire) {
         runtime_->global().setProperty(
             *runtime_,
             "nativeRequire",
@@ -182,9 +182,9 @@ void JSIExecutor::setCRNModuleIdConfig(const folly::dynamic& config) {
                     const facebook::jsi::Value&,
                     const facebook::jsi::Value* args,
                     size_t count) { return nativeRequire(args, count); }));
-        m_isBindCRNNativeRequire = true;
+        m_isBindGRNNativeRequire = true;
     }
-    LOG(ERROR) << "setCRNModuleIdConfig start 2" << m_isBindCRNNativeRequire;
+    LOG(ERROR) << "setGRNModuleIdConfig start 2" << m_isBindGRNNativeRequire;
 }
 //GRN END
 
@@ -379,16 +379,16 @@ void JSIExecutor::flush() {
 }
 
 //GRN BEGIN
-    void JSIExecutor::loadModuleForCRN(std::string &modulePath, std::string &moduleDiffPath) {
+    void JSIExecutor::loadModuleForGRN(std::string &modulePath, std::string &moduleDiffPath) {
         // auto sourceUrl = String::createExpectingAscii(m_context, modulePath);
 
-        std::string code = readScriptFromFileForCRN(modulePath, moduleDiffPath);
+        std::string code = readScriptFromFileForGRN(modulePath, moduleDiffPath);
         // auto source = adoptString(std::unique_ptr<JSBigString>(new JSBigStdString(code)));
         // evaluateScript(m_context, source, sourceUrl);
         runtime_->evaluateJavaScript(std::make_unique<StringBuffer>(code), modulePath);
     }
 
-    std::string JSIExecutor::readScriptFromFileForCRN(const std::string& solidFile, const std::string &diffFile) {
+    std::string JSIExecutor::readScriptFromFileForGRN(const std::string& solidFile, const std::string &diffFile) {
         if (!diffFile.empty()) {
             std::ifstream jsDiffFile(diffFile);
             if (jsDiffFile) {
@@ -443,24 +443,24 @@ Value JSIExecutor::nativeRequire(const Value* args, size_t count) {
 
       if (!moduleId.empty()) {
           try {
-              if (m_isBindCRNNativeRequire && m_CRNJSModuleConfig.size() > 1) {
+              if (m_isBindGRNNativeRequire && m_GRNJSModuleConfig.size() > 1) {
 
                   std::string moduleFilePath = "", moduleDiffFilePath = "";
                   //如果只包含modulePath和moduleDiff两个值，则值直接走最新module加载逻辑，否则老的config配置加载处理
-                  if (m_CRNJSModuleConfig.size() > 2) {
-                      moduleFilePath = m_CRNJSModuleConfig.getDefault(moduleId, "666666").getString().c_str();
+                  if (m_GRNJSModuleConfig.size() > 2) {
+                      moduleFilePath = m_GRNJSModuleConfig.getDefault(moduleId, "666666").getString().c_str();
                   } else {
-                      std::string moduleDiffPath = m_CRNJSModuleConfig.getDefault("moduleDiff", "js-diffs").getString().c_str();
+                      std::string moduleDiffPath = m_GRNJSModuleConfig.getDefault("moduleDiff", "js-diffs").getString().c_str();
                       if (!moduleDiffPath.empty()) {
                         moduleDiffFilePath = moduleDiffPath + "/" + moduleId + ".js";
                       }
 
-                      std::string modulePath = m_CRNJSModuleConfig.getDefault("modulePath", "js-modules").getString().c_str();
+                      std::string modulePath = m_GRNJSModuleConfig.getDefault("modulePath", "js-modules").getString().c_str();
                       if (!modulePath.empty()) {
                           moduleFilePath = modulePath + "/" + moduleId + ".js";
                       }
                   }
-                  loadModuleForCRN(moduleFilePath, moduleDiffFilePath);
+                  loadModuleForGRN(moduleFilePath, moduleDiffFilePath);
               } else {
                   uint32_t moduleIdInt = folly::to<uint32_t>(args[0].getNumber());
                   LOG(ERROR) << "nativeRequire error, module: " << moduleId;

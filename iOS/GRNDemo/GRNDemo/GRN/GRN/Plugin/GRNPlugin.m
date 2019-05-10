@@ -1,20 +1,20 @@
 //
-//  CRNPlugin.m
+//  GRNPlugin.m
 //  CTBusiness
 //
 //  Created by GRN on 15/11/18.
 //  Copyright © 2015年 Ctrip. All rights reserved.
 //
 
-#import "CRNPlugin.h"
+#import "GRNPlugin.h"
 
-#import "CRNView.h"
+#import "GRNView.h"
 #import <objc/message.h>
 #import "RCTBridge+GRN.h"
 
 #import <React/RCTUtils.h>
 #import <React/RCTRootView.h>
-@implementation CRNPlugin
+@implementation GRNPlugin
 
 + (void)callModule:(NSString *)moduleName
           function:(NSString *)functionName
@@ -26,11 +26,11 @@
     RCTAssert(functionName, @"function name should not be null.");
     NSString *moduleClassName = [[@"GRN" stringByAppendingString:moduleName] stringByAppendingString:@"Plugin"];
     
-    CRNPlugin *object = [CRNPlugin pluginObjectForBridge:bridge moduleClass:moduleClassName];
+    GRNPlugin *object = [GRNPlugin pluginObjectForBridge:bridge moduleClass:moduleClassName];
     [object callFunction:functionName parameters:parameters callback:callback];
 }
 
-+ (CRNPlugin *)pluginObjectForBridge:(RCTBridge *)bridge moduleClass:(NSString *)moduleClassName{
++ (GRNPlugin *)pluginObjectForBridge:(RCTBridge *)bridge moduleClass:(NSString *)moduleClassName{
     if (bridge == NULL || ![moduleClassName isKindOfClass:[NSString class]]) {
         return NULL;
     }
@@ -40,7 +40,7 @@
         bridge = [bridge valueForKey:@"parentBridge"];
     }
     
-    CRNPlugin *object = nil;
+    GRNPlugin *object = nil;
     if (bridge && [bridge isKindOfClass:[RCTBridge class]]) {
         @synchronized(bridge.pluginObjectsDict){
             object = [bridge.pluginObjectsDict valueForKey:moduleClassName];
@@ -68,19 +68,19 @@
     //subclass override.
 }
 
-- (UIView *)crnView{
-    if (_crnView) {
-        return _crnView;
+- (UIView *)grnView{
+    if (_grnView) {
+        return _grnView;
     } else {
         if (_bridge && [_bridge isKindOfClass:[RCTBridge class]]) {
-            if (_bridge.crnView && [_bridge.crnView isKindOfClass:[CRNView class]]) {
-                CRNView *view  = (CRNView *)_bridge.crnView;
-                _crnView = view;
-                return _crnView;
+            if (_bridge.grnView && [_bridge.grnView isKindOfClass:[GRNView class]]) {
+                GRNView *view  = (GRNView *)_bridge.grnView;
+                _grnView = view;
+                return _grnView;
             }
         }
     }
-    return _crnView;
+    return _grnView;
 }
 
 - (void)clear {

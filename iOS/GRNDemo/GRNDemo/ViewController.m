@@ -1,28 +1,28 @@
 //
 //  ViewController.m
-//  CRNDemo
+//  GRNDemo
 //
 //  Created by GRN on 2019/1/25.
 //  Copyright © 2019 com.ctrip. All rights reserved.
 //
 
 #import "ViewController.h"
-#import "CRNURLHandler.h"
-#import "CRNUtils.h"
+#import "GRNURLHandler.h"
+#import "GRNUtils.h"
 
 @interface ViewController ()<UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate,UIActionSheetDelegate>
 
 
 @property (nonatomic, strong) NSMutableArray *rnBundles;
-@property (nonatomic, strong) NSMutableArray *crnBundles;
+@property (nonatomic, strong) NSMutableArray *grnBundles;
 
 @property (nonatomic, copy) NSString *selectedRNBundle;
-@property (nonatomic, copy) NSString *selectedCRNBundle;
+@property (nonatomic, copy) NSString *selectedGRNBundle;
 
 @property (strong, nonatomic) UITextField *urlField;
 
 @property (nonatomic, strong) UIButton *RNBundlePickerBtn;
-@property (nonatomic, strong) UIButton *CRNBundlePickerBtn;
+@property (nonatomic, strong) UIButton *GRNBundlePickerBtn;
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *itemList;
@@ -44,12 +44,12 @@
     self.navigationController.navigationBar.barTintColor = CTColorHex(0x099fde);
     [self.navigationController.navigationBar setBackgroundImage:[self navBarBackgroungImage] forBarMetrics:UIBarMetricsDefault];
 
-    self.title = @"CRNDemo";
+    self.title = @"GRNDemo";
 
     [self getBundlesList];
 
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 160, 40)];
-    label.text = @"CRN框架预加载开关";
+    label.text = @"GRN框架预加载开关";
     label.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:label];
     
@@ -63,32 +63,32 @@
     line0.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:line0];
     
-    self.CRNBundlePickerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.CRNBundlePickerBtn.frame = CGRectMake(20, 60, [UIScreen mainScreen].bounds.size.width - 160, 40);
-    NSString *ctitle = @"请选择CRNbundle";
-    if (self.crnBundles.count > 0) {
-        ctitle = [self.crnBundles firstObject];
+    self.GRNBundlePickerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.GRNBundlePickerBtn.frame = CGRectMake(20, 60, [UIScreen mainScreen].bounds.size.width - 160, 40);
+    NSString *ctitle = @"请选择GRNbundle";
+    if (self.grnBundles.count > 0) {
+        ctitle = [self.grnBundles firstObject];
     }
-    [self.CRNBundlePickerBtn setTitle:ctitle forState:UIControlStateNormal];
-    self.CRNBundlePickerBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    [self.CRNBundlePickerBtn setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
-    [self.CRNBundlePickerBtn addTarget:self action:@selector(selectCRNBundle) forControlEvents:UIControlEventTouchUpInside];
-    self.CRNBundlePickerBtn.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1];
-    self.CRNBundlePickerBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [self.view addSubview:self.CRNBundlePickerBtn];
+    [self.GRNBundlePickerBtn setTitle:ctitle forState:UIControlStateNormal];
+    self.GRNBundlePickerBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [self.GRNBundlePickerBtn setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
+    [self.GRNBundlePickerBtn addTarget:self action:@selector(selectGRNBundle) forControlEvents:UIControlEventTouchUpInside];
+    self.GRNBundlePickerBtn.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1];
+    self.GRNBundlePickerBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [self.view addSubview:self.GRNBundlePickerBtn];
     
     UIImageView *iconView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_arrow_down"]];
     iconView2.contentMode = UIViewContentModeScaleAspectFit;
-    iconView2.frame = CGRectMake(self.CRNBundlePickerBtn.frame.size.width-30, 10, 20, 20);
-    [self.CRNBundlePickerBtn addSubview:iconView2];
+    iconView2.frame = CGRectMake(self.GRNBundlePickerBtn.frame.size.width-30, 10, 20, 20);
+    [self.GRNBundlePickerBtn addSubview:iconView2];
     
-    UIButton *openCRNBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    openCRNBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-130, 60, 130, 40);
-    [openCRNBtn setTitle:@"加载CRNBundle" forState:UIControlStateNormal];
-    openCRNBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    openCRNBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [openCRNBtn addTarget:self action:@selector(openCRNBundle) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:openCRNBtn];
+    UIButton *openGRNBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    openGRNBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-130, 60, 130, 40);
+    [openGRNBtn setTitle:@"加载GRNBundle" forState:UIControlStateNormal];
+    openGRNBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    openGRNBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [openGRNBtn addTarget:self action:@selector(openGRNBundle) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:openGRNBtn];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(20, 110, [UIScreen mainScreen].bounds.size.width, 0.5)];
     line.backgroundColor = [UIColor lightGrayColor];
@@ -131,7 +131,7 @@
     self.urlField.keyboardType = UIKeyboardTypeURL;
     self.urlField.returnKeyType = UIReturnKeyDone;
     self.urlField.delegate = self;
-    self.urlField.placeholder = @"请输入CRN测试url";
+    self.urlField.placeholder = @"请输入GRN测试url";
     self.urlField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     [self.view addSubview:self.urlField];
     
@@ -147,7 +147,7 @@
     }
     [self.itemList addObjectsFromArray:[dfts valueForKey:kItemListKey]];
     
-//    NSString *testUrlStr = @"http://localhost:8081/index.bundle?CRNModuleName=CRNDemo&CRNType=1&platform=ios";
+//    NSString *testUrlStr = @"http://localhost:8081/index.bundle?GRNModuleName=GRNDemo&GRNType=1&platform=ios";
 
     NSString *rnDebugURLPath = @"/tmp/.__RN_Debug_URL.log";
     NSString *testUrlStr = [NSString stringWithContentsOfFile:rnDebugURLPath
@@ -185,12 +185,12 @@
 
 - (void)getBundlesList{
     self.rnBundles = [NSMutableArray array];
-    self.crnBundles = [NSMutableArray array];
+    self.grnBundles = [NSMutableArray array];
     NSArray* fileArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:kWebAppDirPath error:nil];
     for (NSString* fileName in fileArray) {
-        NSString *unBundlFilePath = [[kWebAppDirPath stringByAppendingString:fileName] stringByAppendingPathComponent:@"_crn_unbundle"];
+        NSString *unBundlFilePath = [[kWebAppDirPath stringByAppendingString:fileName] stringByAppendingPathComponent:@"_grn_unbundle"];
         if (access([unBundlFilePath UTF8String], 0) == 0) {
-            [self.crnBundles addObject:fileName];
+            [self.grnBundles addObject:fileName];
         }else if (![fileName isEqualToString:@"rn_common"]){
             [self.rnBundles addObject:fileName];
         }
@@ -198,8 +198,8 @@
     if (self.rnBundles.count > 0) {
         self.selectedRNBundle = [self.rnBundles firstObject];
     }
-    if (self.crnBundles.count > 0) {
-        self.selectedCRNBundle = [self.crnBundles firstObject];
+    if (self.grnBundles.count > 0) {
+        self.selectedGRNBundle = [self.grnBundles firstObject];
     }
 }
 
@@ -209,22 +209,22 @@
     if ([self.rnModuleNameMap valueForKey:self.selectedRNBundle]) {
         moduleName = [self.rnModuleNameMap valueForKey:self.selectedRNBundle];
     }
-    NSString *url = [NSString stringWithFormat:@"/%@/main.js?CRNModuleName=%@&CRNType=1",self.selectedRNBundle,moduleName];
-    [CRNURLHandler openURLString:url fromViewController:self];
+    NSString *url = [NSString stringWithFormat:@"/%@/main.js?GRNModuleName=%@&GRNType=1",self.selectedRNBundle,moduleName];
+    [GRNURLHandler openURLString:url fromViewController:self];
 }
 
-- (IBAction)openCRNBundle {
-    NSString *url = [NSString stringWithFormat:@"/%@/main.js?CRNModuleName=CRNApp&CRNType=1",self.selectedCRNBundle];
-    [CRNURLHandler openURLString:url fromViewController:self];
+- (IBAction)openGRNBundle {
+    NSString *url = [NSString stringWithFormat:@"/%@/main.js?GRNModuleName=GRNApp&GRNType=1",self.selectedGRNBundle];
+    [GRNURLHandler openURLString:url fromViewController:self];
 }
 
 - (void)switchAction:(UISwitch *)sender {
     if (!sender.on) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"disable_common_preload"];
-        [CRNUtils showToast:@"已关闭预加载，请重启App生效"];
+        [GRNUtils showToast:@"已关闭预加载，请重启App生效"];
     }else{
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"disable_common_preload"];
-        [CRNUtils showToast:@"已打开预加载，请重启App生效"];
+        [GRNUtils showToast:@"已打开预加载，请重启App生效"];
     }
 }
 
@@ -241,14 +241,14 @@
     [as showInView:[UIApplication sharedApplication].keyWindow];
 }
 
-- (void)selectCRNBundle{
+- (void)selectGRNBundle{
     UIActionSheet * as = [[UIActionSheet alloc] initWithTitle:nil
                                                      delegate:self
                                             cancelButtonTitle:nil
                                        destructiveButtonTitle:nil
                                             otherButtonTitles:nil];
     as.tag = 10002;
-    for (NSString * itemTitle in self.crnBundles){
+    for (NSString * itemTitle in self.grnBundles){
         [as addButtonWithTitle:itemTitle];
     }
     [as showInView:[UIApplication sharedApplication].keyWindow];
@@ -261,8 +261,8 @@
         self.selectedRNBundle = buttonTitle;
         [self.RNBundlePickerBtn setTitle:buttonTitle forState:UIControlStateNormal];
     }else if (actionSheet.tag == 10002){
-        self.selectedCRNBundle = buttonTitle;
-        [self.CRNBundlePickerBtn setTitle:buttonTitle forState:UIControlStateNormal];
+        self.selectedGRNBundle = buttonTitle;
+        [self.GRNBundlePickerBtn setTitle:buttonTitle forState:UIControlStateNormal];
     }
 }
 
@@ -356,8 +356,8 @@
     [tableView_ deselectRowAtIndexPath:indexPath animated:YES];
     NSString *urlStr = [self.itemList objectAtIndex:indexPath.row];
     NSURL *url = [NSURL URLWithString:urlStr];
-    if ([CRNURL isCRNURL:urlStr]) {
-        [CRNURLHandler openURLString:urlStr fromViewController:self];;
+    if ([GRNURL isGRNURL:urlStr]) {
+        [GRNURLHandler openURLString:urlStr fromViewController:self];;
     }
     else if ([[UIApplication sharedApplication] canOpenURL:url]) {
         [[UIApplication sharedApplication] openURL:url];

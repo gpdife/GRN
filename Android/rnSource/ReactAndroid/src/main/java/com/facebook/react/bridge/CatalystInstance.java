@@ -107,9 +107,9 @@ public interface CatalystInstance
 
   //GRN BEGIN
 
-  public void setCRNModuleIdConfig(HashMap<String,String> moduleIdConfig);
+  public void setGRNModuleIdConfig(HashMap<String,String> moduleIdConfig);
 
-  public void setCRNGlobalVariable(String propertyName, String jsonEncodedValue);
+  public void setGRNGlobalVariable(String propertyName, String jsonEncodedValue);
 
   public String getModulePath();
 

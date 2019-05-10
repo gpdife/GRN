@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 
-import ctrip.grn.instance.CRNInstanceInfo;
+import ctrip.grn.instance.GRNInstanceInfo;
 
 /**
  * Builder class for {@link ReactInstanceManager}
@@ -61,7 +61,7 @@ public class ReactInstanceManagerBuilder {
 
   //GRN BEGIN
 
-  private CRNInstanceInfo mCRNInstanceInfo;
+  private GRNInstanceInfo mGRNInstanceInfo;
 
   public ReactInstanceManagerBuilder() {
   }
@@ -272,11 +272,11 @@ public class ReactInstanceManagerBuilder {
   }
 
   /**
-   * 设置和初始化CRNInstanceInfo
-   * @param crnInstanceInfo crnInstanceInfo
+   * 设置和初始化GRNInstanceInfo
+   * @param grnInstanceInfo grnInstanceInfo
    */
-  public ReactInstanceManagerBuilder setCRNInstanceInfo(CRNInstanceInfo crnInstanceInfo) {
-    this.mCRNInstanceInfo = crnInstanceInfo;
+  public ReactInstanceManagerBuilder setGRNInstanceInfo(GRNInstanceInfo grnInstanceInfo) {
+    this.mGRNInstanceInfo = grnInstanceInfo;
     return this;
   }
 
@@ -338,7 +338,7 @@ public class ReactInstanceManagerBuilder {
         mMinTimeLeftInFrameForNonBatchedOperationMs,
         mJSIModulesPackage,
         mCustomPackagerCommandHandlers,
-        mCRNInstanceInfo
+        mGRNInstanceInfo
     );
   }
 }

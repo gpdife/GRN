@@ -71,8 +71,8 @@ public:
 
   void handleMemoryPressure(int pressureLevel);
   
-#ifdef CRN_OPT
-  void configCRNRequire(std::unordered_map<std::string, std::string> moduleIdConfig);
+#ifdef GRN_OPT
+  void configGRNRequire(std::unordered_map<std::string, std::string> moduleIdConfig);
 #endif
   
 private:

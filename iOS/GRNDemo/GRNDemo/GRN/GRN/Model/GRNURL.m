@@ -1,5 +1,5 @@
 //
-//  CRNURL.m
+//  GRNURL.m
 //  CTBusiness
 //
 //  Created by GRN on 5/26/16.
@@ -7,16 +7,16 @@
 //
 
 
-#import "CRNURL.h"
-#import "CRNDefine.h"
+#import "GRNURL.h"
+#import "GRNDefine.h"
 #import "RCTBridge+GRN.h"
 #import "NSString+URL.h"
-#import "CRNUtils.h"
+#import "GRNUtils.h"
 
 
-#define kUnbundleFileName   @"_crn_unbundle"
+#define kUnbundleFileName   @"_grn_unbundle"
 
-@interface CRNURL()
+@interface GRNURL()
 
 @property (nonatomic, copy) NSString *fileAbsolutePath;
 @property (nonatomic, copy)  NSString *moduleName;
@@ -28,14 +28,14 @@
 
 @end
 
-@implementation CRNURL
+@implementation GRNURL
 
-+ (BOOL)isCRNURL:(NSString *)url {
++ (BOOL)isGRNURL:(NSString *)url {
     NSString *lurl = url.lowercaseString;
-    BOOL isCRNCommonURL = [lurl isEqualToString:[[self commonJSURL] absoluteString].lowercaseString];
-    BOOL isCRNBizURL = [lurl containsString:kCRNModuleName.lowercaseString] &&
-    [lurl containsString:kCRNModuleType.lowercaseString];
-    return isCRNBizURL || isCRNCommonURL;
+    BOOL isGRNCommonURL = [lurl isEqualToString:[[self commonJSURL] absoluteString].lowercaseString];
+    BOOL isGRNBizURL = [lurl containsString:kGRNModuleName.lowercaseString] &&
+    [lurl containsString:kGRNModuleType.lowercaseString];
+    return isGRNBizURL || isGRNCommonURL;
 
 }
 
@@ -45,7 +45,7 @@
 }
 
 + (NSString *)commonJSPath {
-    return [kWebAppDirPath stringByAppendingFormat:@"%@/%@", kCRNCommonJsBundleDirName, kCRNCommonJsBundleFileName];
+    return [kWebAppDirPath stringByAppendingFormat:@"%@/%@", kGRNCommonJsBundleDirName, kGRNCommonJsBundleFileName];
 }
 
 - (BOOL)isUnbundleRNURL {
@@ -77,18 +77,18 @@
             }
             //read unbundle file path
             [self readUnbundleFilePathIfNeed];
-            self.productName = [CRNUtils getPackageNameFromURLString:self.fileAbsolutePath];
+            self.productName = [GRNUtils getPackageNameFromURLString:self.fileAbsolutePath];
         }
         
         NSDictionary *query = [self.bundleURL.absoluteString query];
         for (NSString *key in query.allKeys) {
-            if ([key.lowercaseString isEqualToString:@"crnmodulename"]) {
+            if ([key.lowercaseString isEqualToString:@"grnmodulename"]) {
                 self.moduleName = query[key];
                 if ([self.bundleURL isFileURL] && [self isUnbundleRNURL]) {
                     self.moduleName = [RCTBridge productNameFromFileURL:self.bundleURL];
                 }
             }
-            else if ([key.lowercaseString isEqualToString:@"crntitle"]) {
+            else if ([key.lowercaseString isEqualToString:@"grntitle"]) {
                 self.title = query[key];
             }
         }

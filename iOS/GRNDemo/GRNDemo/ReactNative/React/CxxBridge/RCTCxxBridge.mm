@@ -134,7 +134,7 @@ static void registerPerformanceLoggerHooks(RCTPerformanceLogger *performanceLogg
 @property (nonatomic, weak, readonly) RCTBridge *parentBridge;
 @property (nonatomic, assign, readonly) BOOL moduleSetupComplete;
 
-#ifdef CRN_OPT
+#ifdef GRN_OPT
 @property (nonatomic, strong) NSDictionary *moduleIdConfig;
 #endif
 
@@ -929,7 +929,7 @@ struct RCTInstanceCallback : public InstanceCallback {
       [self.redBox showErrorMessage:[error localizedDescription]
                        withRawStack:[error userInfo][RCTJSRawStackTraceKey]];
     }
-#ifdef CRN_OPT
+#ifdef GRN_OPT
     [error setErrorTag:@"error_from_handle_error"];
     [error setErrorBridge:self];
 #endif
@@ -968,7 +968,7 @@ struct RCTInstanceCallback : public InstanceCallback {
       [redBox showErrorMessage:[error localizedDescription]
                   withRawStack:[error userInfo][RCTJSRawStackTraceKey]];
     }
-#ifdef CRN_OPT
+#ifdef GRN_OPT
     [error setErrorTag:@"error_from_handle_error2"];
     [error setErrorBridge:self];
 #endif
@@ -1398,7 +1398,7 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithBundleURL:(__unused NSURL *)bundleUR
   return _reactInstance->getJavaScriptContext();
 }
 
-#ifdef CRN_OPT
+#ifdef GRN_OPT
 
 - (void)updateModuleIdConfig:(NSDictionary *)moduleIdConfig {
   if (self.moduleIdConfig == NULL && moduleIdConfig!= NULL) {
@@ -1411,7 +1411,7 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithBundleURL:(__unused NSURL *)bundleUR
       xbundleConfig.emplace(key.UTF8String, obj.UTF8String);
     }];
     
-    self->_reactInstance->configCRNRequire(std::move(xbundleConfig));
+    self->_reactInstance->configGRNRequire(std::move(xbundleConfig));
   }
 }
 

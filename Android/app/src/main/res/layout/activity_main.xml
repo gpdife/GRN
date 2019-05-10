@@ -12,7 +12,7 @@
 
     <Switch
         android:layout_width="wrap_content"
-        android:text="CRN预加载开关"
+        android:text="GRN预加载开关"
         android:id="@+id/preloadCommon"
         android:textSize="15dip"
         android:layout_height="48dp" />
@@ -25,18 +25,18 @@
 
         <Spinner
             android:layout_width="200dip"
-            android:id="@+id/crnBundleSpinner"
+            android:id="@+id/grnBundleSpinner"
             android:textSize="15dip"
             android:paddingLeft="0dip"
             android:gravity="left"
             android:layout_height="48dp" />
 
         <Button
-            android:id="@+id/loadCRN"
+            android:id="@+id/loadGRN"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:textSize="15dip"
-            android:text="加载CRN bundle"
+            android:text="加载GRN bundle"
             android:textAllCaps="false" />
     </LinearLayout>
 
@@ -74,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18dip"
-            android:text="http://127.0.0.1:8081/index.bundle?CRNModuleName=CRNDemo&amp;CRNType=1" />
+            android:text="http://127.0.0.1:8081/index.bundle?GRNModuleName=GRNDemo&amp;GRNType=1" />
 
         <Button
             android:id="@+id/gotoCustomUrl"

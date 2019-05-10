@@ -210,7 +210,7 @@ static RCTBridge *RCTCurrentBridgeInstance = nil;
     _moduleProvider = block;
     _launchOptions = [launchOptions copy];
     
-#ifdef CRN_OPT
+#ifdef GRN_OPT
     if ([_delegate respondsToSelector:@selector(bridgeInitialized:)]) {
       [_delegate bridgeInitialized:self];
     };
@@ -409,8 +409,8 @@ RCT_NOT_IMPLEMENTED(- (instancetype)init)
   [self.batchedBridge registerSegmentWithId:segmentId path:path];
 }
 
-#ifdef CRN_OPT
-+ (RCTBridge *)realCRNBridge:(RCTBridge *)bridged {
+#ifdef GRN_OPT
++ (RCTBridge *)realGRNBridge:(RCTBridge *)bridged {
   if (bridged == NULL) {
     return NULL;
   }
@@ -429,27 +429,27 @@ RCT_NOT_IMPLEMENTED(- (instancetype)init)
 
 @end
 
-#ifdef CRN_OPT
-static char kCRNErrorTag;
-static char kCRNErrorBridgeTag;
+#ifdef GRN_OPT
+static char kGRNErrorTag;
+static char kGRNErrorBridgeTag;
 
 @implementation NSError (GRN)
 
 - (NSString *)errorTag {
-  NSString *tagd = objc_getAssociatedObject(self, &kCRNErrorTag);
+  NSString *tagd = objc_getAssociatedObject(self, &kGRNErrorTag);
   return tagd;
 }
 
 - (void)setErrorTag:(NSString *)tag {
-  objc_setAssociatedObject(self, &kCRNErrorTag, tag, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  objc_setAssociatedObject(self, &kGRNErrorTag, tag, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (RCTBridge *)errorBridge {
-  return objc_getAssociatedObject(self, &kCRNErrorBridgeTag);
+  return objc_getAssociatedObject(self, &kGRNErrorBridgeTag);
 }
 
 - (void)setErrorBridge:(RCTBridge *)errorBridge_ {
-  objc_setAssociatedObject(self, &kCRNErrorBridgeTag, errorBridge_, OBJC_ASSOCIATION_ASSIGN);
+  objc_setAssociatedObject(self, &kGRNErrorBridgeTag, errorBridge_, OBJC_ASSOCIATION_ASSIGN);
 }
 
 @end

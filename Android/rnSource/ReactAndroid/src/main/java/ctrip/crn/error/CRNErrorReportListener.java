@@ -3,7 +3,7 @@ package ctrip.grn.error;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.ReadableArray;
 
-public interface CRNErrorReportListener {
+public interface GRNErrorReportListener {
 
     /**
      * throw js-fatal exception

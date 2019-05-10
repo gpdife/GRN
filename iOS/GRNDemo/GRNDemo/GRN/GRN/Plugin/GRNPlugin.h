@@ -1,5 +1,5 @@
 //
-//  CRNPlugin.h
+//  GRNPlugin.h
 //  CTBusiness
 //
 //  Created by GRN on 15/11/18.
@@ -7,17 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CRNDefine.h"
+#import "GRNDefine.h"
 #import <React/RCTBridgeModule.h>
 #import <React/RCTAssert.h>
 
-#define CRNResult(s, k, v) [CRNPlugin RNResultWithStatusCode:(s) methodName:(k) errorDesc:(v)]
+#define GRNResult(s, k, v) [GRNPlugin RNResultWithStatusCode:(s) methodName:(k) errorDesc:(v)]
 
-@interface CRNPlugin : NSObject
+@interface GRNPlugin : NSObject
 
 @property (nonatomic, weak) RCTBridge *bridge;
 
-@property (nonatomic, weak) UIView *crnView;
+@property (nonatomic, weak) UIView *grnView;
 
 + (void)callModule:(NSString *)moduleName
           function:(NSString *)functionName

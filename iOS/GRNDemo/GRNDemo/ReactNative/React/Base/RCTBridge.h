@@ -235,15 +235,15 @@ RCT_EXTERN void RCTEnableTurboModule(BOOL enabled);
  */
 - (BOOL)isBatchActive;
 
-#ifdef CRN_OPT
+#ifdef GRN_OPT
 - (void)updateModuleIdConfig:(NSDictionary *)moduleIdConfig_;
-+ (RCTBridge *)realCRNBridge:(RCTBridge *)bridged;
++ (RCTBridge *)realGRNBridge:(RCTBridge *)bridged;
 #endif
 
 @end
 
 
-#ifdef CRN_OPT
+#ifdef GRN_OPT
 @interface NSError(GRN)
 @property (nonatomic, readwrite) NSString *errorTag;
 @property (nonatomic, readwrite) RCTBridge *errorBridge;

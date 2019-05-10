@@ -1,6 +1,6 @@
 //
-//  CRNUtils.h
-//  CTCRN
+//  GRNUtils.h
+//  CTGRN
 //
 //  Created by GRN on 2019/2/22.
 //  Copyright © 2019 zlp. All rights reserved.
@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class RCTBridge;
 
-@interface CRNUtils : NSObject
+@interface GRNUtils : NSObject
 
 /**
  *@description 从URL中获取模块名

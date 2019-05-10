@@ -1,34 +1,34 @@
 //
-//  CRNDispatcher.m
+//  GRNDispatcher.m
 //  CTBusiness
 //
 //  Created by GRN on 5/16/16.
 //  Copyright © 2016 Ctrip. All rights reserved.
 //
 
-#import "CRNURLHandler.h"
-#import "CRNViewController.h"
-#import "CRNURL.h"
+#import "GRNURLHandler.h"
+#import "GRNViewController.h"
+#import "GRNURL.h"
 
 
-@implementation CRNURLHandler
+@implementation GRNURLHandler
 
 + (BOOL)openURLString:(NSString *)urlString fromViewController:(UIViewController *)vc
 {
-    if (![CRNURL isCRNURL:urlString] || vc == NULL) {
+    if (![GRNURL isGRNURL:urlString] || vc == NULL) {
         return NO;
     }
-    CRNURL *url = [[CRNURL alloc] initWithPath:urlString];
+    GRNURL *url = [[GRNURL alloc] initWithPath:urlString];
     return [self openURL:url fromViewController:vc];
 }
 
-+ (BOOL)openURL:(CRNURL *)url fromViewController:(UIViewController *)vc
++ (BOOL)openURL:(GRNURL *)url fromViewController:(UIViewController *)vc
 {
     if (url == NULL || vc == NULL) {
         return NO;
     }
     
-    CRNViewController *rvc = [[CRNViewController alloc] initWithURL:url];
+    GRNViewController *rvc = [[GRNViewController alloc] initWithURL:url];
 
     rvc.title = url.rnTitle;
     BOOL ret = NO;

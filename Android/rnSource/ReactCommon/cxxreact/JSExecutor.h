@@ -85,7 +85,7 @@ public:
   virtual void setGlobalVariable(std::string propName, std::unique_ptr<const JSBigString> jsonValue) = 0;
 //GRN BEGIN
 
-    virtual void setCRNModuleIdConfig(const folly::dynamic& config) = 0;
+    virtual void setGRNModuleIdConfig(const folly::dynamic& config) = 0;
 
   //GRN END
   virtual void* getJavaScriptContext() {

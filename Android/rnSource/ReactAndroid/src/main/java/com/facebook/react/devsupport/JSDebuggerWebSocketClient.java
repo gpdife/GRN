@@ -112,7 +112,7 @@ public class JSDebuggerWebSocketClient extends WebSocketListener {
   //GRN BEGIN
   //增加插入全局变量方法
 
-  public void injectCRNGlobalObject(String key, String value) {
+  public void injectGRNGlobalObject(String key, String value) {
     if (TextUtils.isEmpty(key) || TextUtils.isEmpty(value)) {
       return;
     }

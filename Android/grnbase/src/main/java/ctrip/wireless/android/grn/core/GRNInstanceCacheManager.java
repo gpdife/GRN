@@ -23,36 +23,36 @@ import com.facebook.react.ReactInstanceManager;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import ctrip.grn.instance.CRNInstanceInfo;
-import ctrip.grn.instance.CRNInstanceState;
+import ctrip.grn.instance.GRNInstanceInfo;
+import ctrip.grn.instance.GRNInstanceState;
 import ctrip.wireless.android.grn.utils.StringUtil;
 
-public class CRNInstanceCacheManager {
+public class GRNInstanceCacheManager {
 
     private static ArrayList<ReactInstanceManager> mCachedInstanceList = new ArrayList<>();
     private static final int MAX_DIRTY_INSTANCE_COUNT = 6;
 
     /**
-     * 获取CRNInstance
+     * 获取GRNInstance
      */
-    public static ReactInstanceManager getInstanceIfExist(CRNURL crnurl) {
-        if (crnurl == null) {
+    public static ReactInstanceManager getInstanceIfExist(GRNURL grnurl) {
+        if (grnurl == null) {
             return null;
         }
-        boolean ignoreCache = crnurl.ignoreCache();
+        boolean ignoreCache = grnurl.ignoreCache();
 
         ReactInstanceManager readyToUseInstance = null;
 
         if (!ignoreCache) {
             // 闲置的Dirty/ReadyInstance将被重用
             for (ReactInstanceManager mng : mCachedInstanceList) {
-                CRNInstanceInfo instanceInfo = null;
-                if (mng == null || ((instanceInfo = mng.getCRNInstanceInfo()) == null)) {
+                GRNInstanceInfo instanceInfo = null;
+                if (mng == null || ((instanceInfo = mng.getGRNInstanceInfo()) == null)) {
                     continue;
                 }
-                boolean instanceStatusOK = instanceInfo.instanceState == CRNInstanceState.Dirty || instanceInfo.instanceState == CRNInstanceState.Ready;
+                boolean instanceStatusOK = instanceInfo.instanceState == GRNInstanceState.Dirty || instanceInfo.instanceState == GRNInstanceState.Ready;
                 if (instanceStatusOK && instanceInfo.inUseCount == 0
-                        && StringUtil.equalsIgnoreCase(crnurl.urlStr, instanceInfo.businessURL)) {
+                        && StringUtil.equalsIgnoreCase(grnurl.urlStr, instanceInfo.businessURL)) {
                     readyToUseInstance = mng;
                     continue;
                 }
@@ -67,17 +67,17 @@ public class CRNInstanceCacheManager {
     }
 
     /**
-     * 获取Common CRNInstance
+     * 获取Common GRNInstance
      */
     public static ReactInstanceManager getCacheCommonReactInstance() {
         for (ReactInstanceManager mng : mCachedInstanceList) {
-            CRNInstanceInfo instanceInfo = null;
-            if (mng == null || ((instanceInfo = mng.getCRNInstanceInfo()) == null)) {
+            GRNInstanceInfo instanceInfo = null;
+            if (mng == null || ((instanceInfo = mng.getGRNInstanceInfo()) == null)) {
                 continue;
             }
 
-            if (instanceInfo.instanceState == CRNInstanceState.Ready
-                    && instanceInfo.inUseCount == 0 && CRNURL.COMMON_BUNDLE_PATH.equalsIgnoreCase(instanceInfo.businessURL)) {
+            if (instanceInfo.instanceState == GRNInstanceState.Ready
+                    && instanceInfo.inUseCount == 0 && GRNURL.COMMON_BUNDLE_PATH.equalsIgnoreCase(instanceInfo.businessURL)) {
                 return mng;
             }
         }
@@ -87,8 +87,8 @@ public class CRNInstanceCacheManager {
     static int getCacheCommonReactInstanceCount() {
         int readyCount = 0;
         for (ReactInstanceManager mng : mCachedInstanceList) {
-            CRNInstanceState instanceState = mng.getCRNInstanceInfo().instanceState;
-            if (instanceState == CRNInstanceState.Ready) {
+            GRNInstanceState instanceState = mng.getGRNInstanceInfo().instanceState;
+            if (instanceState == GRNInstanceState.Ready) {
                 readyCount++;
             }
         }
@@ -104,7 +104,7 @@ public class CRNInstanceCacheManager {
         if (manager == null) {
             return;
         }
-        synchronized (CRNInstanceCacheManager.class) {
+        synchronized (GRNInstanceCacheManager.class) {
             if (!mCachedInstanceList.contains(manager)) {
                 mCachedInstanceList.add(manager);
             }
@@ -115,7 +115,7 @@ public class CRNInstanceCacheManager {
      * 维护Instance缓存策略，释放error状态instance
      */
     static void performLRUCheck() {
-        synchronized (CRNInstanceCacheManager.class) {
+        synchronized (GRNInstanceCacheManager.class) {
             int dirtyCount = 0;
             ReactInstanceManager olderMng = null;
             Iterator<ReactInstanceManager> iterator = mCachedInstanceList.listIterator();
@@ -123,15 +123,15 @@ public class CRNInstanceCacheManager {
                 ReactInstanceManager manager = iterator.next();
                 if (manager == null) {
                     iterator.remove();
-                } else if (manager.getCRNInstanceInfo().instanceState == CRNInstanceState.Error) {
+                } else if (manager.getGRNInstanceInfo().instanceState == GRNInstanceState.Error) {
                     releaseReactInstance(manager);
                     iterator.remove();
-                } else if (manager.getCRNInstanceInfo() != null
-                        && manager.getCRNInstanceInfo().inUseCount <= 0
-                        && manager.getCRNInstanceInfo().instanceState == CRNInstanceState.Dirty) {
+                } else if (manager.getGRNInstanceInfo() != null
+                        && manager.getGRNInstanceInfo().inUseCount <= 0
+                        && manager.getGRNInstanceInfo().instanceState == GRNInstanceState.Dirty) {
                     dirtyCount++;
                     if (olderMng == null
-                            || olderMng.getCRNInstanceInfo().usedTimestamp > manager.getCRNInstanceInfo().usedTimestamp) {
+                            || olderMng.getGRNInstanceInfo().usedTimestamp > manager.getGRNInstanceInfo().usedTimestamp) {
                         olderMng = manager;
                     }
                 }
@@ -171,16 +171,16 @@ public class CRNInstanceCacheManager {
      *
      * @param url url
      */
-    static void invalidateDirtyBridgeForURL(CRNURL url) {
+    static void invalidateDirtyBridgeForURL(GRNURL url) {
         if (url == null || TextUtils.isEmpty(url.getUrl())) {
             return;
         }
         synchronized (mCachedInstanceList) {
             for (ReactInstanceManager bridge : mCachedInstanceList) {
-                if ((bridge != null && bridge.getCRNInstanceInfo() != null && bridge.getCRNInstanceInfo().businessURL != null)) {
-                    CRNURL bridgeUrl = new CRNURL(bridge.getCRNInstanceInfo().businessURL);
+                if ((bridge != null && bridge.getGRNInstanceInfo() != null && bridge.getGRNInstanceInfo().businessURL != null)) {
+                    GRNURL bridgeUrl = new GRNURL(bridge.getGRNInstanceInfo().businessURL);
                     if (StringUtil.equalsIgnoreCase(url.getProductName(), bridgeUrl.getProductName())) {
-                        bridge.getCRNInstanceInfo().instanceState = CRNInstanceState.Error;
+                        bridge.getGRNInstanceInfo().instanceState = GRNInstanceState.Error;
                     }
                 }
             }

@@ -8,24 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		44D5A61F225E09EB00A10DCC /* RCTBridge+GRN.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A606225E09EB00A10DCC /* RCTBridge+GRN.m */; };
-		44D5A620225E09EB00A10DCC /* CRNUnbundlePackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A607225E09EB00A10DCC /* CRNUnbundlePackage.m */; };
-		44D5A621225E09EB00A10DCC /* CRNURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A60A225E09EB00A10DCC /* CRNURL.m */; };
+		44D5A620225E09EB00A10DCC /* GRNUnbundlePackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A607225E09EB00A10DCC /* GRNUnbundlePackage.m */; };
+		44D5A621225E09EB00A10DCC /* GRNURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A60A225E09EB00A10DCC /* GRNURL.m */; };
 		44D5A622225E09EB00A10DCC /* NSString+URL.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A60D225E09EB00A10DCC /* NSString+URL.m */; };
-		44D5A623225E09EB00A10DCC /* CRNDefine.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A60F225E09EB00A10DCC /* CRNDefine.m */; };
-		44D5A624225E09EB00A10DCC /* CRNURLHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A610225E09EB00A10DCC /* CRNURLHandler.m */; };
-		44D5A625225E09EB00A10DCC /* CRNUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A611225E09EB00A10DCC /* CRNUtils.m */; };
-		44D5A626225E09EB00A10DCC /* CRNPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A616225E09EB00A10DCC /* CRNPlugin.m */; };
-		44D5A627225E09EB00A10DCC /* CRNBridgeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A61A225E09EB00A10DCC /* CRNBridgeManager.m */; };
-		44D5A628225E09EB00A10DCC /* CRNView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A61B225E09EB00A10DCC /* CRNView.m */; };
-		44D5A629225E09EB00A10DCC /* CRNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A61D225E09EB00A10DCC /* CRNViewController.m */; };
-		44D5A630225E0E1F00A10DCC /* CRNURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A608225E09EB00A10DCC /* CRNURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		44D5A631225E0E1F00A10DCC /* CRNURLHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A614225E09EB00A10DCC /* CRNURLHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		44D5A632225E0E1F00A10DCC /* CRNUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A60E225E09EB00A10DCC /* CRNUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		44D5A633225E0E1F00A10DCC /* CRNViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A619225E09EB00A10DCC /* CRNViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		44D5A634225E0E1F00A10DCC /* CRNBridgeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A61C225E09EB00A10DCC /* CRNBridgeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		44D5A635225E0E1F00A10DCC /* CRNView.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A61E225E09EB00A10DCC /* CRNView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		44D5A636225E0EF200A10DCC /* CRNPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A617225E09EB00A10DCC /* CRNPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		44D5A637225E0EF200A10DCC /* CRNDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A613225E09EB00A10DCC /* CRNDefine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		44D5A623225E09EB00A10DCC /* GRNDefine.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A60F225E09EB00A10DCC /* GRNDefine.m */; };
+		44D5A624225E09EB00A10DCC /* GRNURLHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A610225E09EB00A10DCC /* GRNURLHandler.m */; };
+		44D5A625225E09EB00A10DCC /* GRNUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A611225E09EB00A10DCC /* GRNUtils.m */; };
+		44D5A626225E09EB00A10DCC /* GRNPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A616225E09EB00A10DCC /* GRNPlugin.m */; };
+		44D5A627225E09EB00A10DCC /* GRNBridgeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A61A225E09EB00A10DCC /* GRNBridgeManager.m */; };
+		44D5A628225E09EB00A10DCC /* GRNView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A61B225E09EB00A10DCC /* GRNView.m */; };
+		44D5A629225E09EB00A10DCC /* GRNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A61D225E09EB00A10DCC /* GRNViewController.m */; };
+		44D5A630225E0E1F00A10DCC /* GRNURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A608225E09EB00A10DCC /* GRNURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		44D5A631225E0E1F00A10DCC /* GRNURLHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A614225E09EB00A10DCC /* GRNURLHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		44D5A632225E0E1F00A10DCC /* GRNUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A60E225E09EB00A10DCC /* GRNUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		44D5A633225E0E1F00A10DCC /* GRNViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A619225E09EB00A10DCC /* GRNViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		44D5A634225E0E1F00A10DCC /* GRNBridgeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A61C225E09EB00A10DCC /* GRNBridgeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		44D5A635225E0E1F00A10DCC /* GRNView.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A61E225E09EB00A10DCC /* GRNView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		44D5A636225E0EF200A10DCC /* GRNPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A617225E09EB00A10DCC /* GRNPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		44D5A637225E0EF200A10DCC /* GRNDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A613225E09EB00A10DCC /* GRNDefine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		44D5A64B225E11CE00A10DCC /* CTToastTipView.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A649225E11CE00A10DCC /* CTToastTipView.h */; };
 		44D5A64C225E11CE00A10DCC /* CTToastTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D5A64A225E11CE00A10DCC /* CTToastTipView.m */; };
 		44D5A64F225E11EB00A10DCC /* CTFullScreenMaskView.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D5A64D225E11EB00A10DCC /* CTFullScreenMaskView.h */; };
@@ -45,29 +45,29 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		44D5A592225E072000A10DCC /* libCRN.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCRN.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		44D5A592225E072000A10DCC /* libGRN.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGRN.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		44D5A606225E09EB00A10DCC /* RCTBridge+GRN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RCTBridge+GRN.m"; sourceTree = "<group>"; };
-		44D5A607225E09EB00A10DCC /* CRNUnbundlePackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRNUnbundlePackage.m; sourceTree = "<group>"; };
-		44D5A608225E09EB00A10DCC /* CRNURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRNURL.h; sourceTree = "<group>"; };
-		44D5A609225E09EB00A10DCC /* CRNUnbundlePackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRNUnbundlePackage.h; sourceTree = "<group>"; };
-		44D5A60A225E09EB00A10DCC /* CRNURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRNURL.m; sourceTree = "<group>"; };
+		44D5A607225E09EB00A10DCC /* GRNUnbundlePackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRNUnbundlePackage.m; sourceTree = "<group>"; };
+		44D5A608225E09EB00A10DCC /* GRNURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRNURL.h; sourceTree = "<group>"; };
+		44D5A609225E09EB00A10DCC /* GRNUnbundlePackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRNUnbundlePackage.h; sourceTree = "<group>"; };
+		44D5A60A225E09EB00A10DCC /* GRNURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRNURL.m; sourceTree = "<group>"; };
 		44D5A60B225E09EB00A10DCC /* RCTBridge+GRN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RCTBridge+GRN.h"; sourceTree = "<group>"; };
 		44D5A60D225E09EB00A10DCC /* NSString+URL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URL.m"; sourceTree = "<group>"; };
-		44D5A60E225E09EB00A10DCC /* CRNUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRNUtils.h; sourceTree = "<group>"; };
-		44D5A60F225E09EB00A10DCC /* CRNDefine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRNDefine.m; sourceTree = "<group>"; };
-		44D5A610225E09EB00A10DCC /* CRNURLHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRNURLHandler.m; sourceTree = "<group>"; };
-		44D5A611225E09EB00A10DCC /* CRNUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRNUtils.m; sourceTree = "<group>"; };
+		44D5A60E225E09EB00A10DCC /* GRNUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRNUtils.h; sourceTree = "<group>"; };
+		44D5A60F225E09EB00A10DCC /* GRNDefine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRNDefine.m; sourceTree = "<group>"; };
+		44D5A610225E09EB00A10DCC /* GRNURLHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRNURLHandler.m; sourceTree = "<group>"; };
+		44D5A611225E09EB00A10DCC /* GRNUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRNUtils.m; sourceTree = "<group>"; };
 		44D5A612225E09EB00A10DCC /* NSString+URL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URL.h"; sourceTree = "<group>"; };
-		44D5A613225E09EB00A10DCC /* CRNDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRNDefine.h; sourceTree = "<group>"; };
-		44D5A614225E09EB00A10DCC /* CRNURLHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRNURLHandler.h; sourceTree = "<group>"; };
-		44D5A616225E09EB00A10DCC /* CRNPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRNPlugin.m; sourceTree = "<group>"; };
-		44D5A617225E09EB00A10DCC /* CRNPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRNPlugin.h; sourceTree = "<group>"; };
-		44D5A619225E09EB00A10DCC /* CRNViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRNViewController.h; sourceTree = "<group>"; };
-		44D5A61A225E09EB00A10DCC /* CRNBridgeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRNBridgeManager.m; sourceTree = "<group>"; };
-		44D5A61B225E09EB00A10DCC /* CRNView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRNView.m; sourceTree = "<group>"; };
-		44D5A61C225E09EB00A10DCC /* CRNBridgeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRNBridgeManager.h; sourceTree = "<group>"; };
-		44D5A61D225E09EB00A10DCC /* CRNViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRNViewController.m; sourceTree = "<group>"; };
-		44D5A61E225E09EB00A10DCC /* CRNView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRNView.h; sourceTree = "<group>"; };
+		44D5A613225E09EB00A10DCC /* GRNDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRNDefine.h; sourceTree = "<group>"; };
+		44D5A614225E09EB00A10DCC /* GRNURLHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRNURLHandler.h; sourceTree = "<group>"; };
+		44D5A616225E09EB00A10DCC /* GRNPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRNPlugin.m; sourceTree = "<group>"; };
+		44D5A617225E09EB00A10DCC /* GRNPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRNPlugin.h; sourceTree = "<group>"; };
+		44D5A619225E09EB00A10DCC /* GRNViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRNViewController.h; sourceTree = "<group>"; };
+		44D5A61A225E09EB00A10DCC /* GRNBridgeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRNBridgeManager.m; sourceTree = "<group>"; };
+		44D5A61B225E09EB00A10DCC /* GRNView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRNView.m; sourceTree = "<group>"; };
+		44D5A61C225E09EB00A10DCC /* GRNBridgeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRNBridgeManager.h; sourceTree = "<group>"; };
+		44D5A61D225E09EB00A10DCC /* GRNViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRNViewController.m; sourceTree = "<group>"; };
+		44D5A61E225E09EB00A10DCC /* GRNView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRNView.h; sourceTree = "<group>"; };
 		44D5A649225E11CE00A10DCC /* CTToastTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTToastTipView.h; sourceTree = "<group>"; };
 		44D5A64A225E11CE00A10DCC /* CTToastTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTToastTipView.m; sourceTree = "<group>"; };
 		44D5A64D225E11EB00A10DCC /* CTFullScreenMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTFullScreenMaskView.h; sourceTree = "<group>"; };
@@ -96,7 +96,7 @@
 		44D5A593225E072000A10DCC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				44D5A592225E072000A10DCC /* libCRN.a */,
+				44D5A592225E072000A10DCC /* libGRN.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -115,10 +115,10 @@
 		44D5A605225E09EB00A10DCC /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				44D5A609225E09EB00A10DCC /* CRNUnbundlePackage.h */,
-				44D5A607225E09EB00A10DCC /* CRNUnbundlePackage.m */,
-				44D5A608225E09EB00A10DCC /* CRNURL.h */,
-				44D5A60A225E09EB00A10DCC /* CRNURL.m */,
+				44D5A609225E09EB00A10DCC /* GRNUnbundlePackage.h */,
+				44D5A607225E09EB00A10DCC /* GRNUnbundlePackage.m */,
+				44D5A608225E09EB00A10DCC /* GRNURL.h */,
+				44D5A60A225E09EB00A10DCC /* GRNURL.m */,
 				44D5A60B225E09EB00A10DCC /* RCTBridge+GRN.h */,
 				44D5A606225E09EB00A10DCC /* RCTBridge+GRN.m */,
 			);
@@ -129,12 +129,12 @@
 			isa = PBXGroup;
 			children = (
 				44D5A648225E11CE00A10DCC /* Toast */,
-				44D5A60F225E09EB00A10DCC /* CRNDefine.m */,
-				44D5A613225E09EB00A10DCC /* CRNDefine.h */,
-				44D5A614225E09EB00A10DCC /* CRNURLHandler.h */,
-				44D5A610225E09EB00A10DCC /* CRNURLHandler.m */,
-				44D5A60E225E09EB00A10DCC /* CRNUtils.h */,
-				44D5A611225E09EB00A10DCC /* CRNUtils.m */,
+				44D5A60F225E09EB00A10DCC /* GRNDefine.m */,
+				44D5A613225E09EB00A10DCC /* GRNDefine.h */,
+				44D5A614225E09EB00A10DCC /* GRNURLHandler.h */,
+				44D5A610225E09EB00A10DCC /* GRNURLHandler.m */,
+				44D5A60E225E09EB00A10DCC /* GRNUtils.h */,
+				44D5A611225E09EB00A10DCC /* GRNUtils.m */,
 				44D5A612225E09EB00A10DCC /* NSString+URL.h */,
 				44D5A60D225E09EB00A10DCC /* NSString+URL.m */,
 			);
@@ -144,8 +144,8 @@
 		44D5A615225E09EB00A10DCC /* Plugin */ = {
 			isa = PBXGroup;
 			children = (
-				44D5A617225E09EB00A10DCC /* CRNPlugin.h */,
-				44D5A616225E09EB00A10DCC /* CRNPlugin.m */,
+				44D5A617225E09EB00A10DCC /* GRNPlugin.h */,
+				44D5A616225E09EB00A10DCC /* GRNPlugin.m */,
 			);
 			path = Plugin;
 			sourceTree = "<group>";
@@ -153,12 +153,12 @@
 		44D5A618225E09EB00A10DCC /* View */ = {
 			isa = PBXGroup;
 			children = (
-				44D5A619225E09EB00A10DCC /* CRNViewController.h */,
-				44D5A61D225E09EB00A10DCC /* CRNViewController.m */,
-				44D5A61C225E09EB00A10DCC /* CRNBridgeManager.h */,
-				44D5A61A225E09EB00A10DCC /* CRNBridgeManager.m */,
-				44D5A61E225E09EB00A10DCC /* CRNView.h */,
-				44D5A61B225E09EB00A10DCC /* CRNView.m */,
+				44D5A619225E09EB00A10DCC /* GRNViewController.h */,
+				44D5A61D225E09EB00A10DCC /* GRNViewController.m */,
+				44D5A61C225E09EB00A10DCC /* GRNBridgeManager.h */,
+				44D5A61A225E09EB00A10DCC /* GRNBridgeManager.m */,
+				44D5A61E225E09EB00A10DCC /* GRNView.h */,
+				44D5A61B225E09EB00A10DCC /* GRNView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -182,15 +182,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				44D5A64B225E11CE00A10DCC /* CTToastTipView.h in Headers */,
-				44D5A630225E0E1F00A10DCC /* CRNURL.h in Headers */,
-				44D5A631225E0E1F00A10DCC /* CRNURLHandler.h in Headers */,
-				44D5A632225E0E1F00A10DCC /* CRNUtils.h in Headers */,
-				44D5A633225E0E1F00A10DCC /* CRNViewController.h in Headers */,
+				44D5A630225E0E1F00A10DCC /* GRNURL.h in Headers */,
+				44D5A631225E0E1F00A10DCC /* GRNURLHandler.h in Headers */,
+				44D5A632225E0E1F00A10DCC /* GRNUtils.h in Headers */,
+				44D5A633225E0E1F00A10DCC /* GRNViewController.h in Headers */,
 				44D5A64F225E11EB00A10DCC /* CTFullScreenMaskView.h in Headers */,
-				44D5A634225E0E1F00A10DCC /* CRNBridgeManager.h in Headers */,
-				44D5A635225E0E1F00A10DCC /* CRNView.h in Headers */,
-				44D5A636225E0EF200A10DCC /* CRNPlugin.h in Headers */,
-				44D5A637225E0EF200A10DCC /* CRNDefine.h in Headers */,
+				44D5A634225E0E1F00A10DCC /* GRNBridgeManager.h in Headers */,
+				44D5A635225E0E1F00A10DCC /* GRNView.h in Headers */,
+				44D5A636225E0EF200A10DCC /* GRNPlugin.h in Headers */,
+				44D5A637225E0EF200A10DCC /* GRNDefine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,7 +212,7 @@
 			);
 			name = GRN;
 			productName = GRN;
-			productReference = 44D5A592225E072000A10DCC /* libCRN.a */;
+			productReference = 44D5A592225E072000A10DCC /* libGRN.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -251,19 +251,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44D5A626225E09EB00A10DCC /* CRNPlugin.m in Sources */,
+				44D5A626225E09EB00A10DCC /* GRNPlugin.m in Sources */,
 				44D5A64C225E11CE00A10DCC /* CTToastTipView.m in Sources */,
-				44D5A624225E09EB00A10DCC /* CRNURLHandler.m in Sources */,
-				44D5A629225E09EB00A10DCC /* CRNViewController.m in Sources */,
+				44D5A624225E09EB00A10DCC /* GRNURLHandler.m in Sources */,
+				44D5A629225E09EB00A10DCC /* GRNViewController.m in Sources */,
 				44D5A61F225E09EB00A10DCC /* RCTBridge+GRN.m in Sources */,
-				44D5A620225E09EB00A10DCC /* CRNUnbundlePackage.m in Sources */,
-				44D5A625225E09EB00A10DCC /* CRNUtils.m in Sources */,
-				44D5A627225E09EB00A10DCC /* CRNBridgeManager.m in Sources */,
-				44D5A628225E09EB00A10DCC /* CRNView.m in Sources */,
-				44D5A621225E09EB00A10DCC /* CRNURL.m in Sources */,
+				44D5A620225E09EB00A10DCC /* GRNUnbundlePackage.m in Sources */,
+				44D5A625225E09EB00A10DCC /* GRNUtils.m in Sources */,
+				44D5A627225E09EB00A10DCC /* GRNBridgeManager.m in Sources */,
+				44D5A628225E09EB00A10DCC /* GRNView.m in Sources */,
+				44D5A621225E09EB00A10DCC /* GRNURL.m in Sources */,
 				44D5A650225E11EB00A10DCC /* CTFullScreenMaskView.m in Sources */,
 				44D5A622225E09EB00A10DCC /* NSString+URL.m in Sources */,
-				44D5A623225E09EB00A10DCC /* CRNDefine.m in Sources */,
+				44D5A623225E09EB00A10DCC /* GRNDefine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
